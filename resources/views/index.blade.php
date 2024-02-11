@@ -222,57 +222,26 @@
     <section class="disease-wise-medicine section--padding pb-0">
         <div class="container">
             <div class="section__heading text-center mb-35">
-                <h2 class="section__heading--maintitle">Disease wise medicine</h2>
+                <h2 class="section__heading--maintitle">Disease wise medicines</h2>
             </div>
             <div class="row">
                 <div class="col-12">
                     <div class="disease-wise-slider swiper">
                         <div class="swiper-wrapper">
+
                             <!-- Single Card -->
+                            @foreach ($diseases as $disease)
                             <a href="{{url('disease/wise/medicine')}}/234UY" class="swiper-slide disease-wise-card">
                                 <div class="disease-wise-card-img">
                                     <img src="https://placehold.co/320x240/EEE/31343C" alt="#" />
                                 </div>
                                 <div class="disease-wise-card-info">
-                                    <h4>Disease name here</h4>
+                                    <h4>{{$disease->name}}</h4>
                                 </div>
                             </a>
-                            <!-- Single Card -->
-                            <a href="{{url('disease/wise/medicine')}}/234UY" class="swiper-slide disease-wise-card">
-                                <div class="disease-wise-card-img">
-                                    <img src="https://placehold.co/320x240/EEE/31343C" alt="#" />
-                                </div>
-                                <div class="disease-wise-card-info">
-                                    <h4>Disease name here</h4>
-                                </div>
-                            </a>
-                            <!-- Single Card -->
-                            <a href="{{url('disease/wise/medicine')}}/234UY" class="swiper-slide disease-wise-card">
-                                <div class="disease-wise-card-img">
-                                    <img src="https://placehold.co/320x240/EEE/31343C" alt="#" />
-                                </div>
-                                <div class="disease-wise-card-info">
-                                    <h4>Disease name here</h4>
-                                </div>
-                            </a>
-                            <!-- Single Card -->
-                            <a href="{{url('disease/wise/medicine')}}/234UY" class="swiper-slide disease-wise-card">
-                                <div class="disease-wise-card-img">
-                                    <img src="https://placehold.co/320x240/EEE/31343C" alt="#" />
-                                </div>
-                                <div class="disease-wise-card-info">
-                                    <h4>Disease name here</h4>
-                                </div>
-                            </a>
-                            <!-- Single Card -->
-                            <a href="{{url('disease/wise/medicine')}}/234UY" class="swiper-slide disease-wise-card">
-                                <div class="disease-wise-card-img">
-                                    <img src="https://placehold.co/320x240/EEE/31343C" alt="#" />
-                                </div>
-                                <div class="disease-wise-card-info">
-                                    <h4>Disease name here</h4>
-                                </div>
-                            </a>
+                            @endforeach
+
+
                         </div>
                         <div class="swiper__nav--btn swiper-button-next"></div>
                         <div class="swiper__nav--btn swiper-button-prev"></div>

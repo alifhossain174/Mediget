@@ -10,7 +10,8 @@ class FrontendController extends Controller
     public function index(){
         $featuedCategories = DB::table('categories')->where([['status', 1], ['featured', 1], ['show_on_navbar', 0]])->orderBy('serial', 'asc')->get();
         $flags = DB::table('flags')->where('status', 1)->orderBy('serial', 'asc')->get();
-        return view('index', compact('featuedCategories', 'flags'));
+        $diseases = DB::table('diseases')->where('status', 1)->get();
+        return view('index', compact('featuedCategories', 'flags', 'diseases'));
     }
 
     public function otc(){

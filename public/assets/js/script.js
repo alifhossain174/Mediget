@@ -158,7 +158,7 @@ var swiper = new Swiper(".hero__slider--activation", {
   //   Disease Wise Slider
   swiper = new Swiper(".disease-wise-slider", {
     slidesPerView: 4,
-    loop: !0,
+    loop: false,
     clickable: !0,
     spaceBetween: 24,
     breakpoints: {
