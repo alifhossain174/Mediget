@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="zxx">
 
+@php
+    $categoriesForMenu = DB::table('categories')
+        ->select('name', 'id', 'slug')
+        ->where('status', 1)
+        ->where('show_on_navbar', 1)
+        ->orderBy('serial', 'asc')
+        ->get();
+@endphp
+
 <head>
     <meta charset="utf-8" />
     <title>Mediget</title>
@@ -21,11 +30,7 @@
     <link rel="stylesheet" href="{{url('assets')}}/css/plugins/datepicker.css" />
 
     <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap" rel="stylesheet" />
-
-    <!-- Plugin css -->
     <link rel="stylesheet" href="{{url('assets')}}/css/vendor/bootstrap.min.css" />
-
-    <!-- Custom Style CSS -->
     <link rel="stylesheet" href="{{url('assets')}}/css/style.css" />
 </head>
 
@@ -41,7 +46,8 @@
                     <div class="main__logo">
                         <h1 class="main__logo--title">
                             <a class="main__logo--link" href="{{url('/')}}">
-                                <img class="main__logo--img" src="{{url('assets')}}/img/logo/logo-black.svg" alt="logo-img" /></a>
+                                <img class="main__logo--img" src="{{url('assets')}}/img/logo/logo-black.svg" alt="logo-img" />
+                            </a>
                         </h1>
                     </div>
                     <div class="offcanvas__header--menu__open">
@@ -108,8 +114,7 @@
         </div>
         <div class="header__bottom">
             <div class="container">
-                <div
-                    class="header__bottom--inner position__relative d-none d-lg-flex justify-content-between align-items-center">
+                <div class="header__bottom--inner position__relative d-none d-lg-flex justify-content-between align-items-center">
                     <div class="header__menu">
                         <nav class="header__menu--navigation">
                             <ul class="d-flex">
@@ -117,46 +122,15 @@
                                     <a class="header__menu--link" href="{{url('/')}}">Home </a>
                                 </li>
                                 <li class="header__menu--items mega__menu--items">
-                                    <a class="header__menu--link" href="{{url('otc')}}">OTC medicines
-                                    </a>
+                                    <a class="header__menu--link" href="{{url('otc')}}">OTC medicines</a>
                                 </li>
-                                <li class="header__menu--items">
-                                    <a class="header__menu--link" href="{{url('category')}}/345354YTUT">Healthcare products</a>
-                                </li>
-                                <li class="header__menu--items">
-                                    <a class="header__menu--link" href="{{url('category')}}/345354YTUT">Prescription medicines
-                                    </a>
-                                </li>
-                                <li class="header__menu--items">
-                                    <a class="header__menu--link" href="{{url('category')}}/345354YTUT">Baby care</a>
-                                </li>
-                                <li class="header__menu--items">
-                                    <a class="header__menu--link" href="{{url('category')}}/345354YTUT">Device & equipment</a>
-                                </li>
-                                <li class="header__menu--items">
-                                    <a class="header__menu--link" href="{{url('category')}}/345354YTUT">Men’s products</a>
-                                </li>
-                                <li class="header__menu--items">
-                                    <a class="header__menu--link" href="{{url('category')}}/345354YTUT">Women’s products</a>
-                                </li>
-                                <li class="header__menu--items">
-                                    <a class="header__menu--link" href="#">More
-                                        <svg class="menu__arrowdown--icon" xmlns="http://www.w3.org/2000/svg"
-                                            width="12" height="7.41" viewBox="0 0 12 7.41">
-                                            <path d="M16.59,8.59,12,13.17,7.41,8.59,6,10l6,6,6-6Z"
-                                                transform="translate(-6 -8.59)" fill="currentColor" opacity="0.7" />
-                                        </svg>
-                                    </a>
-                                    <ul class="header__sub--menu">
-                                        <li class="header__sub--menu__items">
-                                            <a href="{{url('doctors')}}" class="header__sub--menu__link">Doctor List</a>
-                                        </li>
-                                        <li class="header__sub--menu__items">
-                                            <a href="{{url('doctor/details')}}/2354IYTUI" class="header__sub--menu__link">Doctor
-                                                Details</a>
-                                        </li>
-                                    </ul>
-                                </li>
+
+                                @foreach ($categoriesForMenu as $category)
+                                    <li class="header__menu--items">
+                                        <a class="header__menu--link" href="{{url('category')}}/{{$category->slug}}">{{$category->name}}</a>
+                                    </li>
+                                @endforeach
+
                             </ul>
                         </nav>
                     </div>
@@ -181,35 +155,13 @@
                         <li class="offcanvas__menu_li">
                             <a class="offcanvas__menu_item" href="{{url('otc')}}">OTC medicines</a>
                         </li>
-                        <li class="offcanvas__menu_li">
-                            <a class="offcanvas__menu_item" href="{{url('category')}}/345354YTUT">Healthcare products</a>
-                        </li>
-                        <li class="offcanvas__menu_li">
-                            <a class="offcanvas__menu_item" href="{{url('category')}}/345354YTUT">Prescription medicines</a>
-                        </li>
-                        <li class="offcanvas__menu_li">
-                            <a class="offcanvas__menu_item" href="{{url('category')}}/345354YTUT">Baby care</a>
-                        </li>
-                        <li class="offcanvas__menu_li">
-                            <a class="offcanvas__menu_item" href="{{url('category')}}/345354YTUT">Device & equipment</a>
-                        </li>
-                        <li class="offcanvas__menu_li">
-                            <a class="offcanvas__menu_item" href="{{url('category')}}/345354YTUT">Men’s products</a>
-                        </li>
-                        <li class="offcanvas__menu_li">
-                            <a class="offcanvas__menu_item" href="{{url('category')}}/345354YTUT">Women’s products</a>
-                        </li>
-                        <li class="offcanvas__menu_li">
-                            <a class="offcanvas__menu_item" href="#">More</a>
-                            <ul class="offcanvas__sub_menu">
-                                <li class="offcanvas__sub_menu_li">
-                                    <a href="{{url('doctors')}}" class="offcanvas__sub_menu_item">Doctor List</a>
-                                </li>
-                                <li class="offcanvas__sub_menu_li">
-                                    <a href="{{url('doctor/details')}}/2354IYTUI" class="offcanvas__sub_menu_item">Doctor Details</a>
-                                </li>
-                            </ul>
-                        </li>
+
+                        @foreach ($categoriesForMenu as $category)
+                            <li class="offcanvas__menu_li">
+                                <a class="offcanvas__menu_item" href="{{url('category')}}/{{$category->slug}}">{{$category->name}}</a>
+                            </li>
+                        @endforeach
+
                     </ul>
                     <div class="offcanvas__account--items">
                         <!-- Single Mobile Sidebar Item -->

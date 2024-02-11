@@ -176,7 +176,7 @@ var swiper = new Swiper(".hero__slider--activation", {
   //   Category Wise Product Slider
   swiper = new Swiper(".category-wise-product-slider", {
     slidesPerView: 5,
-    loop: !0,
+    loop: false,
     clickable: !0,
     spaceBetween: 24,
     breakpoints: {
