@@ -3,71 +3,7 @@
 @section('content')
 
     @include('homepage_sections.sliders')
-
-
-    <!-- Service section -->
-    <section class="service-area section--padding">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="service-card-grid">
-                        <!-- Single Service -->
-                        <a href="{{url('nursing/service/request')}}" class="single-service-card">
-                            <div class="service-card-img">
-                                <img src="https://placehold.co/200x170/EEE/31343C" alt="#" />
-                            </div>
-                            <div class="single-service-content">
-                                <h4>Nursing Service</h4>
-                                <p>This is subtitle</p>
-                            </div>
-                        </a>
-                        <!-- Single Service -->
-                        <a href="{{url('doctors')}}" class="single-service-card">
-                            <div class="service-card-img">
-                                <img src="https://placehold.co/200x170/EEE/31343C" alt="#" />
-                            </div>
-                            <div class="single-service-content">
-                                <h4>Doctor Appoinment</h4>
-                                <p>This is subtitle</p>
-                            </div>
-                        </a>
-                        <!-- Single Service -->
-                        <a href="#" class="single-service-card">
-                            <div class="service-card-img">
-                                <img src="https://placehold.co/200x170/EEE/31343C" alt="#" />
-                            </div>
-                            <div class="single-service-content">
-                                <h4>Ambulance Service</h4>
-                                <p>This is subtitle</p>
-                            </div>
-                        </a>
-                        <!-- Single Service -->
-                        <a href="#" class="single-service-card">
-                            <div class="service-card-img">
-                                <img src="https://placehold.co/200x170/EEE/31343C" alt="#" />
-                            </div>
-                            <div class="single-service-content">
-                                <h4>Pharmacist Service</h4>
-                                <p>This is subtitle</p>
-                            </div>
-                        </a>
-                        <!-- Single Service -->
-                        <a href="#" class="single-service-card">
-                            <div class="service-card-img">
-                                <img src="https://placehold.co/200x170/EEE/31343C" alt="#" />
-                            </div>
-                            <div class="single-service-content">
-                                <h4>Diagonistic Service</h4>
-                                <p>This is subtitle</p>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- End Service section -->
-
+    @include('homepage_sections.services')
 
     <!-- Start banner section -->
     <section class="banner__section section--padding pt-0">
@@ -108,42 +44,7 @@
     </section>
     <!-- End banner section -->
 
-
-    <!-- Disease Wise Medicine Area -->
-    <section class="disease-wise-medicine section--padding pb-0">
-        <div class="container">
-            <div class="section__heading text-center mb-35">
-                <h2 class="section__heading--maintitle">Disease wise medicines</h2>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="disease-wise-slider swiper">
-                        <div class="swiper-wrapper">
-
-                            <!-- Single Card -->
-                            @foreach ($diseases as $disease)
-                            <a href="{{url('disease/wise/medicine')}}/{{$disease->slug}}" class="swiper-slide disease-wise-card">
-                                <div class="disease-wise-card-img">
-                                    <img src="{{env('ADMIN_URL').'/'.$disease->image}}" alt="" />
-                                </div>
-                                <div class="disease-wise-card-info">
-                                    <h4>{{$disease->name}}</h4>
-                                </div>
-                            </a>
-                            @endforeach
-
-
-                        </div>
-                        <div class="swiper__nav--btn swiper-button-next"></div>
-                        <div class="swiper__nav--btn swiper-button-prev"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Disease Wise Medicine Area -->
-
-
+    @include('homepage_sections.diseases')
     @include('homepage_sections.featured_category')
 
 
@@ -185,7 +86,7 @@
                 <div class="col-12">
                     <div class="download-app-inner">
                         <div class="download-app-img">
-                            <img src="https://placehold.co/700x520/EEE/31343C" alt="#" />
+                            <img src="https://placehold.co/700x520/EEE/31343C" alt="" />
                         </div>
                         <div class="download-app-content">
                             <h2>Download the Mediget mobile app</h2>
@@ -206,10 +107,10 @@
                             </form>
                             <div class="download-app-links">
                                 <a href="https://play.google.com/store/" target="_blank">
-                                    <img src="{{url('assets')}}/img/icon/google-play.svg" alt="#" />
+                                    <img src="{{url('assets')}}/img/icon/google-play.svg" alt="" />
                                 </a>
                                 <a href="https://www.apple.com/app-store/" target="_blank">
-                                    <img src="{{url('assets')}}/img/icon/app-store.svg" alt="#" />
+                                    <img src="{{url('assets')}}/img/icon/app-store.svg" alt="" />
                                 </a>
                             </div>
                         </div>

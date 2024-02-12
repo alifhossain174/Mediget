@@ -31,7 +31,7 @@
                     <div class="doctor-details-widget">
                         <div class="doctor-details-card">
                             <div class="doctor-details-card-img">
-                                <img src="https://placehold.co/280x280/EEE/31343C" alt="#" />
+                                <img src="https://placehold.co/280x280/EEE/31343C" alt="" />
                             </div>
                             <div class="doctor-details-card-info">
                                 <h4>Dr. Khalid Abbed</h4>

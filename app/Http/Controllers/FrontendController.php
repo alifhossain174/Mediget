@@ -21,18 +21,59 @@ class FrontendController extends Controller
 
     public function shop(Request $request){
 
-        $products = DB::table('products')
-                    ->leftJoin('medicine_types', 'products.medicine_type_id', 'medicine_types.id')
-                    ->leftJoin('flags', 'products.flag_id', 'flags.id')
-                    ->select('products.id', 'products.slug', 'products.price', 'products.discount_price', 'products.name', 'products.strength', 'products.image', 'medicine_types.name as medicine_type', 'flags.name as flag_name')
-                    ->orderBy('id', 'desc')
-                    ->paginate(16);
+        $query = DB::table('products')
+                ->leftJoin('medicine_types', 'products.medicine_type_id', 'medicine_types.id')
+                ->leftJoin('flags', 'products.flag_id', 'flags.id')
+                ->select('products.id', 'products.slug', 'products.price', 'products.discount_price', 'products.name', 'products.stock', 'products.strength', 'products.image', 'medicine_types.name as medicine_type', 'flags.name as flag_name')
+                ->orderBy('id', 'desc');
 
-        return view('shop', compact('products'));
-    }
+        $parameters = '';
+        $pageTitle = env('APP_NAME');
 
-    public function flagWiseProducts(){
-        return view('flag_wise_products');
+
+        // category filter start
+        $category_slug = isset($request->category) ? $request->category : '';
+        if($category_slug){
+            $categoryInfo = DB::table('categories')->where('slug', $category_slug)->first();
+            if($categoryInfo){
+                $pageTitle = $categoryInfo->name;
+                $query->where('products.category_id', $categoryInfo->id);
+            }
+            $parameters .= '?category=' . $category_slug;
+        }
+        // category filter end
+
+
+        // diseases filter start
+        $disease_slug = isset($request->disease) ? $request->disease : '';
+        if($disease_slug){
+            $diseaseInfo = DB::table('diseases')->where('slug', $disease_slug)->first();
+            if($diseaseInfo){
+                $pageTitle = $diseaseInfo->name;
+                $query->where('products.disease_id', $diseaseInfo->id);
+            }
+            $parameters .= '?disease=' . $disease_slug;
+        }
+        // diseases filter end
+
+
+        // flag filter start
+        $flag_slug = isset($request->flag) ? $request->flag : '';
+        if($flag_slug){
+            $flagInfo = DB::table('flags')->where('slug', $flag_slug)->first();
+            if($flagInfo){
+                $pageTitle = $flagInfo->name;
+                $query->where('products.flag_id', $flagInfo->id);
+            }
+            $parameters .= '?flag=' . $flag_slug;
+        }
+        // flag filter end
+
+
+        $products = $query->paginate(16);
+        $products->withPath('/shop'.$parameters);
+
+        return view('shop.shop', compact('products', 'pageTitle'));
     }
 
     public function nursingService(){
@@ -49,10 +90,6 @@ class FrontendController extends Controller
 
     public function uploadPrescription(){
         return view('upload_prescription');
-    }
-
-    public function diseaseWiseMedicine(){
-        return view('disease_wise_medicine');
     }
 
     public function productDetails(){

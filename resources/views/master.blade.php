@@ -20,6 +20,7 @@
     <title>Mediget</title>
     <meta name="description" content="Morden Bootstrap HTML5 Template" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.svg" />
 
     <!-- ======= All CSS Plugins here ======== -->
@@ -37,6 +38,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="{{url('assets')}}/css/vendor/bootstrap.min.css" />
     <link rel="stylesheet" href="{{url('assets')}}/css/style.css" />
+    <link rel="stylesheet" href="{{url('assets')}}/css/toastr.min.css">
 
     @yield('header_css')
 
@@ -46,7 +48,7 @@
             padding-bottom: 10px
         }
         .page-link {
-            font-size: 16px !important;
+            font-size: 18px !important;
             padding: 8px 10px;
         }
         .active>.page-link,
@@ -663,6 +665,94 @@
 
     <!-- Customscript js -->
     <script src="{{url('assets')}}/js/script.js"></script>
+
+
+    {{-- for lazy load image --}}
+    <script>
+        function renderLazyImage() {
+            var lazyloadImages;
+            if ("IntersectionObserver" in window) {
+                lazyloadImages = document.querySelectorAll(".lazy");
+                var imageObserver = new IntersectionObserver(function(entries, observer) {
+                    entries.forEach(function(entry) {
+                        if (entry.isIntersecting) {
+                            var image = entry.target;
+                            image.src = image.dataset.src;
+                            image.classList.remove("lazy");
+                            imageObserver.unobserve(image);
+                        }
+                    });
+                });
+
+                lazyloadImages.forEach(function(image) {
+                    imageObserver.observe(image);
+                });
+            } else {
+                var lazyloadThrottleTimeout;
+                lazyloadImages = document.querySelectorAll(".lazy");
+
+                function lazyload() {
+                    if (lazyloadThrottleTimeout) {
+                        clearTimeout(lazyloadThrottleTimeout);
+                    }
+
+                    lazyloadThrottleTimeout = setTimeout(function() {
+                        var scrollTop = window.pageYOffset;
+                        lazyloadImages.forEach(function(img) {
+                            if (img.offsetTop < (window.innerHeight + scrollTop)) {
+                                img.src = img.dataset.src;
+                                img.classList.remove('lazy');
+                            }
+                        });
+                        if (lazyloadImages.length == 0) {
+                            document.removeEventListener("scroll", lazyload);
+                            window.removeEventListener("resize", lazyload);
+                            window.removeEventListener("orientationChange", lazyload);
+                        }
+                    }, 20);
+                }
+
+                document.addEventListener("scroll", lazyload);
+                window.addEventListener("resize", lazyload);
+                window.addEventListener("orientationChange", lazyload);
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            renderLazyImage();
+        })
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $('body').on('click', '.add__to--cart', function() {
+            // var id = $(this).data('id');
+            // $.get("{{ url('add/to/cart') }}" + '/' + id, function(data) {
+                toastr.options.positionClass = 'toast-bottom-right';
+                toastr.options.timeOut = 1000;
+                toastr.success("Added to Cart");
+            //     $(".offCanvas__minicart").html(data.rendered_cart);
+            //     $("a.minicart__open--btn span.items__count").html(data.cartTotalQty);
+            // })
+            // $(this).html(
+            //     "<span class='add__to--cart__text'> Remove</span>"
+            // );
+            // $(this).removeClass("addToCart");
+            // $(this).addClass("removeFromCart");
+            // $(this).blur();
+        });
+    </script>
+
+
+    @yield('footer_js')
+
+    {!! $generalInfo->footer_script !!}
+
+    <script src="{{ url('assets') }}/js/toastr.min.js"></script>
+    {!! Toastr::message() !!}
 
 
 </body>
