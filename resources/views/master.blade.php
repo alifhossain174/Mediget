@@ -135,7 +135,7 @@
                                     data-offcanvas>
                                     <div class="header__account--btn-icon">
                                         <i class="fi fi-rs-shopping-cart"></i>
-                                        <span class="items__count wishlist">2</span>
+                                        <span class="items__count wishlist">{{ session('cart') ? count(session('cart')) : 0 }}</span>
                                     </div>
                                     <span class="header__account--btn__text">Cart items</span>
                                 </a>
@@ -311,104 +311,7 @@
 
         <!-- Start offCanvas minicart -->
         <div class="offCanvas__minicart">
-            <div class="minicart__header">
-                <div class="minicart__header--top d-flex justify-content-between align-items-center">
-                    <h2 class="minicart__title h3">Shopping Cart</h2>
-                    <button class="minicart__close--btn" aria-label="minicart close button" data-offcanvas>
-                        <svg class="minicart__close--icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                            <path fill="currentColor" stroke="currentColor" stroke-linecap="round"
-                                stroke-linejoin="round" stroke-width="32" d="M368 368L144 144M368 144L144 368" />
-                        </svg>
-                    </button>
-                </div>
-                <p class="minicart__header--desc">
-                    Clothing and fashion products are limited
-                </p>
-            </div>
-            <div class="minicart__product">
-                <div class="minicart__product--items d-flex">
-                    <div class="minicart__thumb">
-                        <a href="{{url('product/details')}}/234UY"><img src="https://placehold.co/120x120/EEE/31343C"
-                                alt="prduct-img" /></a>
-                    </div>
-                    <div class="minicart__text">
-                        <h3 class="minicart__subtitle h4">
-                            <a href="{{url('product/details')}}/234UY">Clopid 75</a>
-                        </h3>
-                        <span class="color__variant"><b>Category:</b> Tablet</span>
-                        <div class="minicart__price">
-                            <span class="current__price">125 BDT</span>
-                            <span class="old__price">140 BDT</span>
-                        </div>
-                        <div class="minicart__text--footer d-flex align-items-center">
-                            <div class="quantity__box minicart__quantity">
-                                <button type="button" class="quantity__value decrease" aria-label="quantity value"
-                                    value="Decrease Value">
-                                    -
-                                </button>
-                                <label>
-                                    <input type="number" class="quantity__number" value="1" data-counter />
-                                </label>
-                                <button type="button" class="quantity__value increase" value="Increase Value">
-                                    +
-                                </button>
-                            </div>
-                            <button class="minicart__product--remove">Remove</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="minicart__product--items d-flex">
-                    <div class="minicart__thumb">
-                        <a href="{{url('product/details')}}/234UY"><img src="https://placehold.co/120x120/EEE/31343C"
-                                alt="prduct-img" /></a>
-                    </div>
-                    <div class="minicart__text">
-                        <h3 class="minicart__subtitle h4">
-                            <a href="{{url('product/details')}}/234UY">Clopid 75</a>
-                        </h3>
-                        <span class="color__variant"><b>Category:</b> Tablet</span>
-                        <div class="minicart__price">
-                            <span class="current__price">115 BDT</span>
-                            <span class="old__price">130.00 BDT</span>
-                        </div>
-                        <div class="minicart__text--footer d-flex align-items-center">
-                            <div class="quantity__box minicart__quantity">
-                                <button type="button" class="quantity__value decrease" aria-label="quantity value"
-                                    value="Decrease Value">
-                                    -
-                                </button>
-                                <label>
-                                    <input type="number" class="quantity__number" value="1" data-counter />
-                                </label>
-                                <button type="button" class="quantity__value increase" aria-label="quantity value"
-                                    value="Increase Value">
-                                    +
-                                </button>
-                            </div>
-                            <button class="minicart__product--remove">Remove</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="minicart__amount">
-                <div class="minicart__amount_list d-flex justify-content-between">
-                    <span>Sub Total:</span>
-                    <span><b>$240.00</b></span>
-                </div>
-                <div class="minicart__amount_list d-flex justify-content-between">
-                    <span>Total:</span>
-                    <span><b>$240.00</b></span>
-                </div>
-            </div>
-            <div class="minicart__conditions text-center">
-                <input class="minicart__conditions--input" id="accept" type="checkbox" />
-                <label class="minicart__conditions--label" for="accept">I agree with the
-                    <a class="minicart__conditions--link" href="privacy-policy.html">Privacy and Policy</a></label>
-            </div>
-            <div class="minicart__button d-flex justify-content-center">
-                <a class="primary__btn minicart__button--link" href="cart.html">View cart</a>
-                <a class="primary__btn minicart__button--link" href="checkout.html">Checkout</a>
-            </div>
+            @include('sidebar_cart')
         </div>
         <!-- End offCanvas minicart -->
 
@@ -743,7 +646,7 @@
                 toastr.options.timeOut = 1000;
                 toastr.success("Added to Cart");
                 // $(".offCanvas__minicart").html(data.rendered_cart);
-                // $("a.minicart__open--btn span.items__count").html(data.cartTotalQty);
+                $("a.minicart__open--btn span.items__count").html(data.cartTotalQty);
             })
 
             $(this).html(
@@ -762,7 +665,7 @@
                 toastr.options.timeOut = 1000;
                 toastr.error("Removed from cart")
                 // $(".offCanvas__minicart").html(data.rendered_cart);
-                // $("a.minicart__open--btn span.items__count").html(data.cartTotalQty)
+                $("a.minicart__open--btn span.items__count").html(data.cartTotalQty);
             })
 
             $(this).html("<i class='fi fi-rs-shopping-cart'></i> Add to cart</span>");

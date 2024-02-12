@@ -29,10 +29,8 @@ class CartController extends Controller
         }
 
         session()->put('cart', $cart);
-
-        // $returnHTML = view('sidebar_cart')->render();
-        // return response()->json(['rendered_cart' => $returnHTML, 'cartTotalQty' => count(session('cart'))]);
-        return response()->json(['cartTotalQty' => count(session('cart'))]);
+        $returnHTML = view('sidebar_cart')->render();
+        return response()->json(['rendered_cart' => $returnHTML, 'cartTotalQty' => count(session('cart'))]);
     }
 
     public function removeCartTtem($id){
