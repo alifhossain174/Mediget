@@ -8,7 +8,8 @@ Auth::routes();
 
 Route::get('/', [App\Http\Controllers\FrontendController::class, 'index'])->name('Index');
 Route::get('/otc', [App\Http\Controllers\FrontendController::class, 'otc'])->name('Otc');
-Route::get('/category/{slug}', [App\Http\Controllers\FrontendController::class, 'categoryWiseProducts'])->name('CategoryWiseProducts');
+Route::get('/shop', [App\Http\Controllers\FrontendController::class, 'shop'])->name('Shop');
+
 Route::get('/flag/{slug}', [App\Http\Controllers\FrontendController::class, 'flagWiseProducts'])->name('FlagWiseProducts');
 Route::get('/nursing/service/request', [App\Http\Controllers\FrontendController::class, 'nursingService'])->name('NursingService');
 Route::get('/doctors', [App\Http\Controllers\FrontendController::class, 'doctors'])->name('Doctors');

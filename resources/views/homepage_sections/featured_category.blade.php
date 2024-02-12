@@ -9,7 +9,7 @@
                 <div class="shop-category-inner">
 
                     @foreach ($featuedCategories as $category)
-                        <a href="{{url('category')}}/{{$category->slug}}" class="shop-category-card">
+                        <a href="{{url('shop')}}?category={{$category->slug}}" class="shop-category-card">
                             <div class="shop-category-icon">
                                 <img src="{{env('ADMIN_URL').'/'.$category->icon}}" alt="" />
                             </div>

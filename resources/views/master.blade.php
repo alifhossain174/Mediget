@@ -2,6 +2,11 @@
 <html lang="zxx">
 
 @php
+    $generalInfo = DB::table('general_infos')
+        ->select('logo_dark', 'logo', 'fav_icon', 'company_name', 'email', 'address', 'custom_css', 'header_script', 'footer_script', 'payment_banner', 'play_store_link', 'contact', 'footer_copyright_text', 'app_store_link', 'whatsapp', 'messenger', 'telegram', 'youtube', 'facebook', 'twitter', 'linkedin', 'instagram', 'primary_color', 'secondary_color', 'tertiary_color', 'title_color', 'paragraph_color', 'border_color', 'google_tag_manager_status', 'google_tag_manager_id', 'google_analytic_status', 'google_analytic_tracking_id', 'fb_pixel_status', 'fb_pixel_app_id', 'tawk_chat_status', 'tawk_chat_link', 'messenger_chat_status', 'fb_page_id', 'short_description')
+        ->where('id', 1)
+        ->first();
+
     $categoriesForMenu = DB::table('categories')
         ->select('name', 'id', 'slug')
         ->where('status', 1)
@@ -32,6 +37,32 @@
     <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="{{url('assets')}}/css/vendor/bootstrap.min.css" />
     <link rel="stylesheet" href="{{url('assets')}}/css/style.css" />
+
+    @yield('header_css')
+
+    <style>
+        /* default pagination start */
+        li.page-item {
+            padding-bottom: 10px
+        }
+        .page-link {
+            font-size: 16px !important;
+            padding: 8px 10px;
+        }
+        .active>.page-link,
+        .page-link.active {
+            color: white !important;
+            background-color: {{ $generalInfo->secondary_color }} !important;
+            border-color: {{ $generalInfo->secondary_color }} !important;
+        }
+
+        .page-link {
+            color: {{ $generalInfo->secondary_color }} !important;
+        }
+        /* default pagination end */
+    </style>
+
+
 </head>
 
 <body>
@@ -127,7 +158,7 @@
 
                                 @foreach ($categoriesForMenu as $category)
                                     <li class="header__menu--items">
-                                        <a class="header__menu--link" href="{{url('category')}}/{{$category->slug}}">{{$category->name}}</a>
+                                        <a class="header__menu--link" href="{{ url('shop') }}?category={{$category->slug}}">{{$category->name}}</a>
                                     </li>
                                 @endforeach
 
@@ -158,7 +189,7 @@
 
                         @foreach ($categoriesForMenu as $category)
                             <li class="offcanvas__menu_li">
-                                <a class="offcanvas__menu_item" href="{{url('category')}}/{{$category->slug}}">{{$category->name}}</a>
+                                <a class="offcanvas__menu_item" href="{{ url('shop') }}?category={{$category->slug}}">{{$category->name}}</a>
                             </li>
                         @endforeach
 
@@ -208,7 +239,7 @@
                     </a>
                 </li>
                 <li class="offcanvas__stikcy--toolbar__list">
-                    <a class="offcanvas__stikcy--toolbar__btn" href="{{url('category')}}/345354YTUT">
+                    <a class="offcanvas__stikcy--toolbar__btn" href="{{ url('shop') }}">
                         <span class="offcanvas__stikcy--toolbar__icon">
                             <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="18.51"
                                 height="17.443" viewBox="0 0 448 512">
@@ -491,25 +522,13 @@
                             <li class="footer__widget--menu__list">
                                 <a class="footer__widget--menu__text" href="{{url('otc')}}">OTC Medicines</a>
                             </li>
+
+                            @foreach ($categoriesForMenu as $category)
                             <li class="footer__widget--menu__list">
-                                <a class="footer__widget--menu__text" href="{{url('category')}}/345354YTUT">Prescription
-                                    Medicines</a>
+                                <a class="footer__widget--menu__text" href="{{ url('shop') }}?category={{$category->slug}}">{{$category->name}}</a>
                             </li>
-                            <li class="footer__widget--menu__list">
-                                <a class="footer__widget--menu__text" href="{{url('category')}}/345354YTUT">Kid's Products</a>
-                            </li>
-                            <li class="footer__widget--menu__list">
-                                <a class="footer__widget--menu__text" href="{{url('category')}}/345354YTUT">Men's Products</a>
-                            </li>
-                            <li class="footer__widget--menu__list">
-                                <a class="footer__widget--menu__text" href="{{url('category')}}/345354YTUT">Women's Products</a>
-                            </li>
-                            <li class="footer__widget--menu__list">
-                                <a class="footer__widget--menu__text" href="{{url('category')}}/345354YTUT">Device and equipment</a>
-                            </li>
-                            <li class="footer__widget--menu__list">
-                                <a class="footer__widget--menu__text" href="{{url('category')}}/345354YTUT">Healthcare products</a>
-                            </li>
+                            @endforeach
+
                         </ul>
                     </div>
                 </div>

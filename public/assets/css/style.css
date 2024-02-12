@@ -3797,14 +3797,22 @@ input[type="number"]::-webkit-outer-spin-button {
   }
 }
 .product__items--action__btn {
-  background: var(--secondary-color);
-  height: 4.4rem;
-  line-height: 4rem;
-  padding: 0 0.6rem;
-  color: var(--white-color);
-  border-radius: 0.3rem;
-  display: block;
+	background: var(--secondary-color);
+	height: 4.4rem;
+	line-height: 4rem;
+	padding: 0 0.6rem;
+	color: var(--white-color);
+	border-radius: 0.3rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
+.product__items--action__btn i {
+	margin-right: 8px;
+	position: relative;
+	top: 2px;
+}
+
 
 @media only screen and (min-width: 992px) {
   .product__items--action__btn {
@@ -8120,6 +8128,14 @@ input.quickview__value--number {
   display: block;
   cursor: pointer;
   object-fit: cover;
+}
+
+.swiper-slide-thumb-active .product__media--nav__items {
+	border: 1px solid var(--secondary-color);
+}
+.swiper-slide.swiper-slide-visible {
+	width: 84px !important;
+	height: 84px !important;
 }
 @media only screen and (min-width: 768px) {
   .product__details--info {
@@ -13894,7 +13910,7 @@ details > summary::-webkit-details-marker {
 ==============================================================================================*/
 
 /*============================================================================================
-  Confirmation Email Modal 
+  Confirmation Email Modal
 ==============================================================================================*/
 #backdrop {
   display: none;
@@ -14006,7 +14022,7 @@ details > summary::-webkit-details-marker {
   color: var(--white-color);
 }
 /*============================================================================================
-  Confirmation Email Modal 
+  Confirmation Email Modal
 ==============================================================================================*/
 
 /* Responsive CSS */
@@ -14042,7 +14058,7 @@ details > summary::-webkit-details-marker {
     width: 172px;
     height: 152px;
   }
-  
+
 }
 @media only screen and (min-width: 768px) and (max-width: 991.99px) {
   .service-card-grid {
@@ -14246,7 +14262,7 @@ details > summary::-webkit-details-marker {
     grid-template-columns: repeat(1, 1fr);
   }
   .product__items--img {
-    height: 200px;
+    height: 144px;
   }
   .category-cta-content {
     left: 16px;
@@ -14306,7 +14322,7 @@ details > summary::-webkit-details-marker {
     display: block;
   }
   .product__section--inner.style-2 {
-    grid-template-columns: repeat(1, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
   .shop__header {
     padding: 0;

@@ -107,7 +107,7 @@ scrollTop &&
   }));
 var swiper = new Swiper(".hero__slider--activation", {
     slidesPerView: 1,
-    loop: !0,
+    loop: false,
     clickable: !0,
     speed: 800,
     spaceBetween: 30,
