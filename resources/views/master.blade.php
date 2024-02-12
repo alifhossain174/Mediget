@@ -43,6 +43,14 @@
     @yield('header_css')
 
     <style>
+        .toast {
+            font-size: 14px;
+        }
+
+        a.product__items--action__btn.add__to--cart.removeFromCart{
+            background: var(--alert-color);
+        }
+
         /* default pagination start */
         li.page-item {
             padding-bottom: 10px
@@ -728,21 +736,39 @@
             }
         });
 
-        $('body').on('click', '.add__to--cart', function() {
-            // var id = $(this).data('id');
-            // $.get("{{ url('add/to/cart') }}" + '/' + id, function(data) {
+        $('body').on('click', '.addToCart', function() {
+            var id = $(this).data('id');
+            $.get("{{ url('add/to/cart') }}" + '/' + id, function(data) {
                 toastr.options.positionClass = 'toast-bottom-right';
                 toastr.options.timeOut = 1000;
                 toastr.success("Added to Cart");
-            //     $(".offCanvas__minicart").html(data.rendered_cart);
-            //     $("a.minicart__open--btn span.items__count").html(data.cartTotalQty);
-            // })
-            // $(this).html(
-            //     "<span class='add__to--cart__text'> Remove</span>"
-            // );
-            // $(this).removeClass("addToCart");
-            // $(this).addClass("removeFromCart");
-            // $(this).blur();
+                // $(".offCanvas__minicart").html(data.rendered_cart);
+                // $("a.minicart__open--btn span.items__count").html(data.cartTotalQty);
+            })
+
+            $(this).html(
+                "<i class='fi fi-rs-shopping-cart'></i> <span class='add__to--cart__text'> Remove</span>"
+            );
+            $(this).removeClass("addToCart");
+            $(this).addClass("removeFromCart");
+            $(this).blur();
+        });
+
+        $('body').on('click', '.removeFromCart', function() {
+            var id = $(this).data('id');
+            $.get("{{ url('remove/cart/item') }}" + '/' + id, function(data) {
+
+                toastr.options.positionClass = 'toast-bottom-right';
+                toastr.options.timeOut = 1000;
+                toastr.error("Removed from cart")
+                // $(".offCanvas__minicart").html(data.rendered_cart);
+                // $("a.minicart__open--btn span.items__count").html(data.cartTotalQty)
+            })
+
+            $(this).html("<i class='fi fi-rs-shopping-cart'></i> Add to cart</span>");
+            $(this).removeClass("removeFromCart");
+            $(this).addClass("addToCart");
+            $(this).blur();
         });
     </script>
 
