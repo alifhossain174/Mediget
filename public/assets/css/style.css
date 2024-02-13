@@ -3754,7 +3754,7 @@ input[type="number"]::-webkit-outer-spin-button {
   gap: 24px;
 }
 .product__section--inner.style-2 {
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
 }
 .product__items--img {
   display: block;
@@ -8333,6 +8333,31 @@ input.quickview__value--number {
   background: var(--secondary-color);
   color: var(--white-color);
 }
+.product-d-info-wishlist-btn a {
+  background: var(--white-color);
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  line-height: 150%;
+  font-size: 14px;
+}
+.product-d-info-wishlist-btn a i {
+  margin-right: 4px;
+  position: relative;
+  top: 2px;
+}
+.product-d-info-wishlist-btn a:hover {
+  background: var(--secondary-color);
+  color: var(--white-color);
+}
+.product-d-info-wishlist-btn a.removeFromWishlist {
+  background: var(--alert-color);
+  color: var(--white-color-2);
+}
+.product-d-info-wishlist-btn a.removeFromWishlist:hover {
+  background: var(--white-color);
+  color: var(--alert-color);
+}
 .product-d-info-main-price p {
   font-size: 16px;
   font-weight: 400;
@@ -11597,12 +11622,12 @@ details > summary::-webkit-details-marker {
 }
 .disease-wise-card-img img {
   width: 100%;
-  height: 240px;
+  height: 190px;
   border-radius: 8px 8px 0px 0px;
   object-fit: cover;
 }
 .disease-wise-card-info {
-  padding: 24px;
+  padding: 18px;
   text-align: center;
 }
 .disease-wise-card-info h4 {
@@ -14084,7 +14109,7 @@ details > summary::-webkit-details-marker {
     height: 240px;
   }
   .disease-wise-card-img img {
-    height: 200px;
+    height: 180px;
   }
   .product__section--inner {
     grid-template-columns: repeat(3, 1fr);
@@ -14272,7 +14297,7 @@ details > summary::-webkit-details-marker {
     font-size: 26px;
   }
   .disease-wise-card-img img {
-    height: 200px;
+    height: 180px;
   }
   .category-cta-inner {
     padding: 24px;

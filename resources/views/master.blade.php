@@ -21,7 +21,7 @@
     <meta name="description" content="Morden Bootstrap HTML5 Template" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.svg" />
+    <link rel="shortcut icon" type="image/x-icon" href="{{url('assets')}}/img/favicon.svg" />
 
     <!-- ======= All CSS Plugins here ======== -->
     <link rel="stylesheet" href="{{url('assets')}}/css/plugins/animate.min.css" />
@@ -610,7 +610,7 @@
                     lazyloadThrottleTimeout = setTimeout(function() {
                         var scrollTop = window.pageYOffset;
                         lazyloadImages.forEach(function(img) {
-                            if (img.offsetTop < (window.innerHeight + scrollTop)) {
+                            if (img.offsetTop <script (window.innerHeight + scrollTop)) {
                                 img.src = img.dataset.src;
                                 img.classList.remove('lazy');
                             }
@@ -632,12 +632,20 @@
         document.addEventListener("DOMContentLoaded", function() {
             renderLazyImage();
         })
+    </script>
 
+    {{-- cart related function --}}
+    <script>
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+
+        function closeMiniCart() {
+            $($('.offCanvas__minicart')[0]).removeClass('active');
+            $('body').removeClass('offCanvas__minicart_active');
+        }
 
         $('body').on('click', '.addToCart', function() {
             var id = $(this).data('id');
@@ -645,7 +653,7 @@
                 toastr.options.positionClass = 'toast-bottom-right';
                 toastr.options.timeOut = 1000;
                 toastr.success("Added to Cart");
-                // $(".offCanvas__minicart").html(data.rendered_cart);
+                $(".offCanvas__minicart").html(data.rendered_cart);
                 $("a.minicart__open--btn span.items__count").html(data.cartTotalQty);
             })
 
@@ -664,7 +672,7 @@
                 toastr.options.positionClass = 'toast-bottom-right';
                 toastr.options.timeOut = 1000;
                 toastr.error("Removed from cart")
-                // $(".offCanvas__minicart").html(data.rendered_cart);
+                $(".offCanvas__minicart").html(data.rendered_cart);
                 $("a.minicart__open--btn span.items__count").html(data.cartTotalQty);
             })
 
@@ -672,6 +680,69 @@
             $(this).removeClass("removeFromCart");
             $(this).addClass("addToCart");
             $(this).blur();
+        });
+
+        $('body').on('click', '.sidebar-product-remove', function() {
+            var id = $(this).data('id');
+            var cartItem = this.closest(".minicart__product--items");
+
+            $.get("{{ url('remove/cart/item') }}" + '/' + id, function(data) {
+                $(".offCanvas__minicart").html(data.rendered_cart);
+                $("a.minicart__open--btn span.items__count").html(data.cartTotalQty)
+                // cartSidebarQtyButtons();
+                // $("table.cart-single-product-table tbody").html(data.checkoutCartItems);
+                // $(".order-review-summary").html(data.checkoutTotalAmount);
+            })
+
+            $('.cart-' + id).html("<i class='fi fi-rs-shopping-cart'></i> Add to cart</span>");
+            $('.cart-' + id).attr('data-id', id).removeClass("removeFromCart");
+            $('.cart-' + id).attr('data-id', id).addClass("addToCart");
+            $('.cart-' + id).blur();
+
+            // $('.cart-qty-' + id).html("Add to cart");
+            // $('.cart-qty-' + id).attr('data-id', id).removeClass("removeFromCartQty");
+            // $('.cart-qty-' + id).attr('data-id', id).addClass("addToCartWithQty");
+            // $('.cart-qty-' + id).blur();
+        });
+
+
+        $('body').on('click', '.quantity__value', function() {
+            var id = $(this).data('id');
+            var quantityInput = this.parentElement.querySelector("input");
+            var currentQuantity = parseInt(quantityInput.value);
+
+            if (this.classList.contains("decrease")) {
+                quantityInput.value = Math.max(currentQuantity - 1, 1);
+            } else if (this.classList.contains("increase")) {
+                quantityInput.value = currentQuantity + 1;
+            }
+
+            // in product details page qty button
+            // $("#product_details_cart_qty").val(quantityInput.value);
+
+            var formData = new FormData();
+            formData.append("cart_id", id);
+            formData.append("cart_qty", quantityInput.value);
+            $.ajax({
+                data: formData,
+                url: "{{ url('update/cart/qty') }}",
+                type: "POST",
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function(data) {
+                    // updateCartTotal();
+                    // cartSidebarQtyButtons();
+                    $(".offCanvas__minicart").html(data.rendered_cart);
+                    // $("table.cart-single-product-table tbody").html(data.checkoutCartItems);
+                    // $(".order-review-summary").html(data.checkoutTotalAmount);
+                },
+                error: function(data) {
+                    console.log('Error:', data);
+                }
+            });
+
+            // $("#quantity-number-" + id).html(quantityInput.value);
         });
     </script>
 

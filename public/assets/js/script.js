@@ -140,7 +140,7 @@ var swiper = new Swiper(".hero__slider--activation", {
   }),
   swiper = new Swiper(".product__swiper--column4__activation", {
     slidesPerView: 5,
-    loop: !0,
+    loop: false,
     clickable: !0,
     spaceBetween: 30,
     breakpoints: {
@@ -157,13 +157,13 @@ var swiper = new Swiper(".hero__slider--activation", {
   }),
   //   Disease Wise Slider
   swiper = new Swiper(".disease-wise-slider", {
-    slidesPerView: 4,
+    slidesPerView: 5,
     loop: false,
     clickable: !0,
     spaceBetween: 24,
     breakpoints: {
-      1200: { slidesPerView: 4 },
-      992: { slidesPerView: 3 },
+      1200: { slidesPerView: 5 },
+      992: { slidesPerView: 4 },
       768: { slidesPerView: 3, spaceBetween: 24 },
       280: { slidesPerView: 1, spaceBetween: 12 },
       0: { slidesPerView: 1 },
@@ -256,7 +256,7 @@ var swiper = new Swiper(".hero__slider--activation", {
     pagination: { el: ".swiper-pagination", clickable: !0 },
   }),
   swiper = new Swiper(".product__media--nav", {
-    loop: !0,
+    loop: false,
     spaceBetween: 10,
     slidesPerView: 5,
     freeMode: !0,
@@ -509,29 +509,29 @@ const offcanvasHeader = function () {
       });
 };
 offcanvasHeader();
-const quantityWrapper = document.querySelectorAll(".quantity__box");
-quantityWrapper &&
-  quantityWrapper.forEach(function (singleItem) {
-    let increaseButton = singleItem.querySelector(".increase"),
-      decreaseButton = singleItem.querySelector(".decrease");
-    increaseButton.addEventListener("click", function (e) {
-      let input = e.target.previousElementSibling.children[0];
-      if (null != input.dataset.counter) {
-        let value = parseInt(input.value, 10);
-        (value = isNaN(value) ? 0 : value), value++, (input.value = value);
-      }
-    }),
-      decreaseButton.addEventListener("click", function (e) {
-        let input = e.target.nextElementSibling.children[0];
-        if (null != input.dataset.counter) {
-          let value = parseInt(input.value, 10);
-          (value = isNaN(value) ? 0 : value),
-            value < 1 && (value = 1),
-            value--,
-            (input.value = value);
-        }
-      });
-  });
+// const quantityWrapper = document.querySelectorAll(".quantity__box");
+// quantityWrapper &&
+//   quantityWrapper.forEach(function (singleItem) {
+//     let increaseButton = singleItem.querySelector(".increase"),
+//       decreaseButton = singleItem.querySelector(".decrease");
+//     increaseButton.addEventListener("click", function (e) {
+//       let input = e.target.previousElementSibling.children[0];
+//       if (null != input.dataset.counter) {
+//         let value = parseInt(input.value, 10);
+//         (value = isNaN(value) ? 0 : value), value++, (input.value = value);
+//       }
+//     }),
+//       decreaseButton.addEventListener("click", function (e) {
+//         let input = e.target.nextElementSibling.children[0];
+//         if (null != input.dataset.counter) {
+//           let value = parseInt(input.value, 10);
+//           (value = isNaN(value) ? 0 : value),
+//             value < 1 && (value = 1),
+//             value--,
+//             (input.value = value);
+//         }
+//       });
+//   });
 const openEls = document.querySelectorAll("[data-open]"),
   closeEls = document.querySelectorAll("[data-close]"),
   isVisible = "is-visible";

@@ -1,7 +1,7 @@
 <div class="minicart__header">
     <div class="minicart__header--top d-flex justify-content-between align-items-center">
         <h2 class="minicart__title h3">Shopping Cart</h2>
-        <button class="minicart__close--btn" aria-label="minicart close button" data-offcanvas>
+        <button class="minicart__close--btn" onclick="closeMiniCart()" aria-label="minicart close button" data-offcanvas>
             <svg class="minicart__close--icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                 <path fill="currentColor" stroke="currentColor" stroke-linecap="round"
                     stroke-linejoin="round" stroke-width="32" d="M368 368L144 144M368 144L144 368" />
@@ -18,7 +18,7 @@
         <div class="minicart__product--items d-flex">
             <div class="minicart__thumb">
                 <a href="{{ url('product/details') }}/{{ $details['slug'] }}">
-                    <img class="lazy" src="{{url('assets')}}/img/product-load.gif" data-src="{{ url(env('ADMIN_URL')."/".$details['image']) }}" alt="" />
+                    <img src="{{ url(env('ADMIN_URL')."/".$details['image']) }}" alt="" />
                 </a>
             </div>
             <div class="minicart__text">
@@ -41,13 +41,13 @@
                 </div>
                 <div class="minicart__text--footer d-flex align-items-center">
                     <div class="quantity__box minicart__quantity">
-                        <button type="button" class="quantity__value decrease" aria-label="quantity value" value="Decrease Value">-</button>
+                        <button type="button" class="quantity__value decrease" data-id="{{$id}}" aria-label="quantity value" value="Decrease Value">-</button>
                         <label>
-                            <input type="number" class="quantity__number" value="1" data-counter />
+                            <input type="number" class="quantity__number" value="{{$details['quantity']}}" data-counter />
                         </label>
-                        <button type="button" class="quantity__value increase" value="Increase Value">+</button>
+                        <button type="button" class="quantity__value increase" data-id="{{$id}}" value="Increase Value">+</button>
                     </div>
-                    <button class="minicart__product--remove">Remove</button>
+                    <button type="button" class="minicart__product--remove sidebar-product-remove" data-id="{{$id}}">Remove</button>
                 </div>
             </div>
         </div>
@@ -72,7 +72,7 @@
 @else
     <div style="display:block; width: 100%; height: 100%; text-align:center; position: relative;">
         <div style="width: 100%; position: absolute; top: 45%; left: 50%; transform: translate(-50%, -50%);">
-            <img src="{{url('frontend_assets')}}/img/empty_cart.png" alt="Empty Cart">
+            <img src="{{url('assets')}}/img/empty_cart.png" alt="Empty Cart">
             <h5>There are no more items in your cart!</h5>
             <a href="javascript:void(0)" onclick="closeMiniCart()" class="auth-card-form-btn primary__btn" style="width: 220px; margin: auto;">Continue Shopping</a>
         </div>

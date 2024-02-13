@@ -40,10 +40,24 @@ class CartController extends Controller
             session()->put('cart', $cart);
         }
 
-        // $returnHTML = view('sidebar_cart')->render();
+        $returnHTML = view('sidebar_cart')->render();
         // $checkoutCartItems = view('checkout.cart_items')->render();
         // $checkoutTotalAmount = view('checkout.order_total')->render();
         // return response()->json(['rendered_cart' => $returnHTML, 'checkoutCartItems' => $checkoutCartItems, 'checkoutTotalAmount' => $checkoutTotalAmount, 'cartTotalQty' => count(session('cart'))]);
-        return response()->json(['cartTotalQty' => count(session('cart'))]);
+        return response()->json(['rendered_cart' => $returnHTML, 'cartTotalQty' => count(session('cart'))]);
+    }
+
+    public function updateCartQty(Request $request){
+        $cart = session()->get('cart');
+        if(isset($cart[$request->cart_id])) {
+            $cart[$request->cart_id]['quantity'] = $request->cart_qty;
+            session()->put('cart', $cart);
+        }
+
+        $returnHTML = view('sidebar_cart')->render();
+        // $checkoutCartItems = view('checkout.cart_items')->render();
+        // $checkoutTotalAmount = view('checkout.order_total')->render();
+        // return response()->json(['rendered_cart' => $returnHTML, 'checkoutCartItems' => $checkoutCartItems, 'checkoutTotalAmount' => $checkoutTotalAmount, 'success' => 'Cart Qty Updated']);
+        return response()->json(['rendered_cart' => $returnHTML, 'success' => 'Cart Qty Updated']);
     }
 }
