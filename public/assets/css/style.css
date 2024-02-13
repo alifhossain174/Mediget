@@ -8483,6 +8483,16 @@ input.quickview__value--number {
   color: var(--white-color);
 }
 
+.primary__btn.stock-out-btn {
+    background: #fff3f0;
+    color: var(--alert-color);
+    cursor: not-allowed;
+}
+.primary__btn.stock-out-btn:hover {
+    background: var(--alert-color);
+    color: var(--white-color);
+}
+
 /* Product Delivery Info */
 .product-delivery-info {
   padding-bottom: 48px;

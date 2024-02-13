@@ -49,74 +49,24 @@
 
                                         @if($variants && count($variants) > 0)
                                         <div class="product-d-info-main-bottom">
+
                                             <!-- Single Quantity Widget -->
                                             <div class="product-d-info-quantity">
                                                 <label class="form-check-label" for="exampleRadios1">
                                                     <div class="product-d-info-quantity-left">
-                                                        <input class="form-check-input" type="radio"
-                                                            name="exampleRadios" id="exampleRadios1" value="option1" />
+                                                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" />
                                                         <p>Piece</p>
                                                     </div>
                                                     <div class="product-d-info-quantity-right">
                                                         <div class="product-d-info-quantity-increment-decrement">
-                                                            <span class="quantity-btn"
-                                                                onclick="decrementQuantity('quantity1')"><i
-                                                                    class="fi-rr-minus"></i></span>
-                                                            <input type="text" class="quantity-input" id="quantity1"
-                                                                value="1" readonly />
-                                                            <span class="quantity-btn"
-                                                                onclick="incrementQuantity('quantity1')"><i
-                                                                    class="fi-rr-plus"></i></span>
+                                                            <span class="quantity-btn" onclick="decrementQuantity('quantity1')"><i class="fi-rr-minus"></i></span>
+                                                            <input type="text" class="quantity-input" id="quantity1" value="1" readonly />
+                                                            <span class="quantity-btn" onclick="incrementQuantity('quantity1')"><i class="fi-rr-plus"></i></span>
                                                         </div>
                                                     </div>
                                                 </label>
                                             </div>
-                                            <!-- Single Quantity Widget -->
-                                            <div class="product-d-info-quantity">
-                                                <label class="form-check-label" for="exampleRadios2">
-                                                    <div class="product-d-info-quantity-left">
-                                                        <input class="form-check-input" type="radio"
-                                                            name="exampleRadios" id="exampleRadios2" value="option2" />
 
-                                                        <p>Stripe</p>
-                                                    </div>
-                                                    <div class="product-d-info-quantity-right">
-                                                        <div class="product-d-info-quantity-increment-decrement">
-                                                            <span class="quantity-btn"
-                                                                onclick="decrementQuantity('quantity2')"><i
-                                                                    class="fi-rr-minus"></i></span>
-                                                            <input type="text" class="quantity-input" id="quantity2"
-                                                                value="1" readonly />
-                                                            <span class="quantity-btn"
-                                                                onclick="incrementQuantity('quantity2')"><i
-                                                                    class="fi-rr-plus"></i></span>
-                                                        </div>
-                                                    </div>
-                                                </label>
-                                            </div>
-                                            <!-- Single Quantity Widget -->
-                                            <div class="product-d-info-quantity">
-                                                <label class="form-check-label" for="exampleRadios3">
-                                                    <div class="product-d-info-quantity-left">
-                                                        <input class="form-check-input" type="radio"
-                                                            name="exampleRadios" id="exampleRadios3" value="option3" />
-
-                                                        <p>Box</p>
-                                                    </div>
-                                                    <div class="product-d-info-quantity-right">
-                                                        <div class="product-d-info-quantity-increment-decrement">
-                                                            <span class="quantity-btn"
-                                                                onclick="decrementQuantity('quantity3')"><i
-                                                                    class="fi-rr-minus"></i></span>
-                                                            <input type="text" class="quantity-input" id="quantity3"
-                                                                value="1" readonly />
-                                                            <span class="quantity-btn"
-                                                                onclick="incrementQuantity('quantity3')"><i
-                                                                    class="fi-rr-plus"></i></span>
-                                                        </div>
-                                                    </div>
-                                                </label>
-                                            </div>
                                         </div>
                                         @endif
 
@@ -129,18 +79,21 @@
                                     </div>
                                     @endif
 
-                                    <div class="product-d-info-btn">
-                                        <div class="product-d-info-single-btn">
-                                            <button type="button" class="primary__btn add-to-cart">
-                                                <i class="fi-rr-shopping-bag-add"></i>Add to cart
-                                            </button>
-                                        </div>
-                                        <div class="product-d-info-single-btn">
-                                            <a href="index.html" class="primary__btn buy-now-btn">
-                                                <i class="fi-rr-shopping-bag"></i>Buy now
-                                            </a>
-                                        </div>
-                                    </div>
+
+                                    @if($variants && count($variants) > 0)
+                                        @if($totalStockAllVariants > 0)
+                                            @include('product_details.cart_buy_now')
+                                        @else
+                                            @include('product_details.stock_out')
+                                        @endif
+                                    @else
+                                        @if($product->stock && $product->stock > 0)
+                                            @include('product_details.cart_buy_now')
+                                        @else
+                                            @include('product_details.stock_out')
+                                        @endif
+                                    @endif
+
                                 </div>
 
 
@@ -158,4 +111,8 @@
     @if(count($mayLikedProducts) > 0)
         @include('product_details.you_may_like')
     @endif
+@endsection
+
+@section('footer_js')
+
 @endsection
