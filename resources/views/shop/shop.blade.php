@@ -5,7 +5,8 @@
     <div class="offcanvas__filter--sidebar widget__area">
         <button type="button" class="offcanvas__filter--close" data-offcanvas>
             <svg class="minicart__close--icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                <path fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M368 368L144 144M368 144L144 368"></path>
+                <path fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"
+                    d="M368 368L144 144M368 144L144 368"></path>
             </svg>
             <span class="offcanvas__filter--close__text">Close</span>
         </button>
@@ -49,7 +50,6 @@
 @endpush
 
 @section('content')
-
     @include('shop.breadcrumb')
 
     <!-- Start shop section -->
@@ -72,11 +72,75 @@
                     </div>
 
                     <div class="pagination-wrapper pt-5 mt-3 text-center">
-                        {{$products->links()}}
+                        {{ $products->links() }}
                     </div>
                 </div>
             </div>
         </div>
     </section>
     <!-- End shop section -->
+@endsection
+
+@section('footer_js')
+    <script>
+        function filterProducts() {
+
+            // fetching filter values
+            var per_page = Number($("#filter_data_per_page").val());
+            var sort_by = Number($("#filter_sort_by").val());
+            var min_price = Number($("#filter_min_price").val());
+            var max_price = Number($("#filter_max_price").val());
+
+
+            // setting up get url with filter parameters
+            var baseUrl = window.location.pathname;
+
+            if (per_page && per_page > 0) {
+                str.includes('?') ? baseUrl += '&per_page=' + per_page : baseUrl += '?per_page=' + per_page;
+            }
+            if (sort_by && sort_by > 0) {
+                str.includes('?') ? baseUrl += '&sort_by=' + sort_by : baseUrl += '?sort_by=' + sort_by;
+            }
+            if (min_price && min_price > 0) {
+                str.includes('?') ? baseUrl += '&min_price=' + min_price : baseUrl += '?min_price=' + min_price;
+            }
+            if (max_price && max_price > 0) {
+                str.includes('?') ? baseUrl += '&max_price=' + max_price : baseUrl += '?max_price=' + max_price;
+            }
+
+            history.pushState(null, null, baseUrl);
+
+
+            // sending request
+            var formData = new FormData();
+            formData.append("per_page", per_page);
+            formData.append("sort_by", sort_by);
+            formData.append("min_price", min_price);
+            formData.append("max_price", max_price);
+            formData.append("path_name", window.location.pathname);
+
+
+            $.ajax({
+                data: formData,
+                url: "{{ url('filter/products') }}",
+                type: "POST",
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function(data) {
+                    $('.shop__product--wrapper').fadeOut(function() {
+                        $(this).html(data.rendered_view);
+                        $(this).fadeIn();
+                        renderLazyImage()
+                    });
+                    $(".product__showing--count").html(data.showingResults);
+                },
+                error: function(data) {
+                    toastr.options.positionClass = 'toast-bottom-right';
+                    toastr.options.timeOut = 1000;
+                    toastr.error("Something Went Wrong");
+                }
+            });
+        }
+    </script>
 @endsection

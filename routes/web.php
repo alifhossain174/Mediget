@@ -5,12 +5,14 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\FilterController;
 
 Auth::routes();
 
 Route::get('/', [FrontendController::class, 'index'])->name('Index');
 Route::get('/otc', [FrontendController::class, 'otc'])->name('Otc');
 Route::get('/shop', [FrontendController::class, 'shop'])->name('Shop');
+Route::post('filter/products', [FilterController::class, 'filterProducts'])->name('FilterProducts');
 Route::get('/product/details/{slug}', [FrontendController::class, 'productDetails'])->name('ProductDetails');
 
 

@@ -23,7 +23,7 @@
     <div class="product__view--mode__list product__short--by align-items-center d-none d-lg-flex">
         <label class="product__view--label">Show Items :</label>
         <div class="select shop__header--select">
-            <select class="product__view--select" name="data_per_page" id="data_per_page">
+            <select class="product__view--select" id="filter_data_per_page" onchange="filterProducts()">
                 <option value="20" selected>20</option>
                 <option value="40">40</option>
                 <option value="80">80</option>
@@ -31,14 +31,13 @@
             </select>
         </div>
     </div>
-    <div class="product__view--mode__list product__short--by align-items-center d-none d-lg-flex">
+    <div class="product__view--mode__list product__short--by align-items-center d-none d-lg-flex" onchange="filterProducts()">
         <label class="product__view--label">Sort By :</label>
         <div class="select shop__header--select">
-            <select class="product__view--select">
-                <option selected value="1">Sort by Price</option>
-                <option value="2">Sort by popularity</option>
-                <option value="3">Sort by newness</option>
-                <option value="4">Sort by rating</option>
+            <select class="product__view--select" id="filter_sort_by">
+                <option value="">Select One</option>
+                <option value="1">Price Low to High</option>
+                <option value="2">Price High to Low</option>
             </select>
         </div>
     </div>
@@ -50,7 +49,7 @@
                     <div class="price__filter--input border-radius-5 d-flex align-items-center">
                         <span class="price__filter--currency">৳</span>
                         <label>
-                            <input class="price__filter--input__field border-0" style="padding: 12px 0px;" id="min_price" name="min_price" type="number" placeholder="10" min="0"/>
+                            <input class="price__filter--input__field border-0" style="padding: 12px 0px;" id="filter_min_price" type="number" placeholder="10" min="0"/>
                         </label>
                     </div>
                 </div>
@@ -61,12 +60,12 @@
                     <div class="price__filter--input border-radius-5 d-flex align-items-center">
                         <span class="price__filter--currency">৳</span>
                         <label>
-                            <input class="price__filter--input__field border-0" style="padding: 12px 0px;" id="max_price" name="max_price" type="number" placeholder="250" min="0"/>
+                            <input class="price__filter--input__field border-0" style="padding: 12px 0px;" id="filter_max_price" type="number" placeholder="250" min="0"/>
                         </label>
                     </div>
                 </div>
             </div>
-            <button class="price__filter--btn primary__btn" type="button">
+            <button class="price__filter--btn primary__btn" type="button" onchange="filterProducts()">
                 Filter
             </button>
         </form>
