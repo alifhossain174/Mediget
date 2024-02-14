@@ -17,7 +17,7 @@
                         <div class="price__filter--group">
                             <label class="price__filter--label" for="fromPrice">From</label>
                             <div class="price__filter--input border-radius-5 d-flex align-items-center">
-                                <span class="price__filter--currency">$</span>
+                                <span class="price__filter--currency">৳</span>
                                 <label>
                                     <input class="price__filter--input__field border-0" id="fromPrice" type="number"
                                         placeholder="0" min="0" max="250.00" />
@@ -30,7 +30,7 @@
                         <div class="price__filter--group">
                             <label class="price__filter--label" for="toPrice">To</label>
                             <div class="price__filter--input border-radius-5 d-flex align-items-center">
-                                <span class="price__filter--currency">$</span>
+                                <span class="price__filter--currency">৳</span>
                                 <label>
                                     <input class="price__filter--input__field border-0" id="toPrice" type="number"
                                         min="0" placeholder="250.00" max="250.00" />

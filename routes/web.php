@@ -16,6 +16,7 @@ Route::get('/product/details/{slug}', [FrontendController::class, 'productDetail
 
 // cart related routes
 Route::get('add/to/cart/{id}', [CartController::class, 'addToCart'])->name('AddToCart');
+Route::post('add/to/cart/with/qty', [CartController::class, 'addToCartWithQty'])->name('AddToCartWithQty');
 Route::get('remove/cart/item/{id}', [CartController::class, 'removeCartTtem'])->name('RemoveCartTtem');
 Route::post('update/cart/qty', [CartController::class, 'updateCartQty'])->name('UpdateCartQty');
 

@@ -689,6 +689,7 @@
             $.get("{{ url('remove/cart/item') }}" + '/' + id, function(data) {
                 $(".offCanvas__minicart").html(data.rendered_cart);
                 $("a.minicart__open--btn span.items__count").html(data.cartTotalQty)
+                $(".product-d-info-btn").html(data.details_button);
                 // cartSidebarQtyButtons();
                 // $("table.cart-single-product-table tbody").html(data.checkoutCartItems);
                 // $(".order-review-summary").html(data.checkoutTotalAmount);

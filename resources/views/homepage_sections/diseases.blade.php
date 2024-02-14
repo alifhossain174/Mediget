@@ -12,15 +12,9 @@
                         <!-- Single Card -->
                         @foreach ($diseases as $disease)
                         <a href="{{url('shop')}}?disease={{$disease->slug}}" class="swiper-slide disease-wise-card">
-                            <div class="disease-wise-card-img">
-                                <img class="lazy" src="{{url('assets')}}/img/product-load.gif" data-src="{{env('ADMIN_URL').'/'.$disease->image}}" alt="" />
-                            </div>
-                            <div class="disease-wise-card-info">
-                                <h4>{{$disease->name}}</h4>
-                            </div>
+                            @include('homepage_sections.disease_card')
                         </a>
                         @endforeach
-
 
                     </div>
                     <div class="swiper__nav--btn swiper-button-next"></div>

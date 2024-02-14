@@ -16,7 +16,16 @@ class FrontendController extends Controller
     }
 
     public function otc(){
-        return view('otc');
+
+        $data = DB::table('products')
+                ->leftJoin('diseases', 'products.disease_id', 'diseases.id')
+                ->select('diseases.*')
+                ->where('is_otc', 1)
+                ->orderBy('diseases.serial', 'asc')
+                ->groupBy('products.disease_id')
+                ->paginate(12);
+
+        return view('otc', compact('data'));
     }
 
     public function shop(Request $request){
@@ -53,6 +62,12 @@ class FrontendController extends Controller
                 $query->where('products.disease_id', $diseaseInfo->id);
             }
             $parameters .= '?disease=' . $disease_slug;
+
+            $otc_slug = isset($request->otc) ? $request->otc : '';
+            if($otc_slug){
+                $query->where('products.is_otc', 1);
+                $parameters .= '&otc=1';
+            }
         }
         // diseases filter end
 

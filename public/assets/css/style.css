@@ -11652,7 +11652,7 @@ details > summary::-webkit-details-marker {
 
 .disease-wise-medicine-category {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 24px;
 }
 .disease-wise-medicine-category .disease-wise-card {

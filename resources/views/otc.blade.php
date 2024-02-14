@@ -8,14 +8,14 @@
                 <div class="col">
                     <div class="breadcrumb__content text-center">
                         <h1 class="breadcrumb__content--title mb-25">
-                            Disease Wise Medicine
+                            OTC Medicines
                         </h1>
                         <ul class="breadcrumb__content--menu d-flex justify-content-center">
                             <li class="breadcrumb__content--menu__items">
                                 <a href="{{url('/')}}">Home</a>
                             </li>
                             <li class="breadcrumb__content--menu__items">
-                                <span>Disease Wise Medicine</span>
+                                <span>OTC Medicines</span>
                             </li>
                         </ul>
                     </div>
@@ -31,114 +31,15 @@
             <div class="row">
                 <div class="col-12">
                     <div class="disease-wise-medicine-category">
+
                         <!-- Single Card -->
-                        <a href="{{url('category')}}/345UYT" class="disease-wise-card">
-                            <div class="disease-wise-card-img">
-                                <img src="https://placehold.co/320x240/EEE/31343C" alt="#" />
-                            </div>
-                            <div class="disease-wise-card-info">
-                                <h4>Disease name here</h4>
-                            </div>
+                        @foreach ($data as $disease)
+                        <a href="{{url('shop')}}?disease={{$disease->slug}}&otc=1" class="swiper-slide disease-wise-card">
+                            @include('homepage_sections.disease_card')
                         </a>
+                        @endforeach
                         <!-- Single Card -->
-                        <a href="{{url('category')}}/345UYT" class="disease-wise-card">
-                            <div class="disease-wise-card-img">
-                                <img src="https://placehold.co/320x240/EEE/31343C" alt="#" />
-                            </div>
-                            <div class="disease-wise-card-info">
-                                <h4>Disease name here</h4>
-                            </div>
-                        </a>
-                        <!-- Single Card -->
-                        <a href="{{url('category')}}/345UYT" class="disease-wise-card">
-                            <div class="disease-wise-card-img">
-                                <img src="https://placehold.co/320x240/EEE/31343C" alt="#" />
-                            </div>
-                            <div class="disease-wise-card-info">
-                                <h4>Disease name here</h4>
-                            </div>
-                        </a>
-                        <!-- Single Card -->
-                        <a href="{{url('category')}}/345UYT" class="disease-wise-card">
-                            <div class="disease-wise-card-img">
-                                <img src="https://placehold.co/320x240/EEE/31343C" alt="#" />
-                            </div>
-                            <div class="disease-wise-card-info">
-                                <h4>Disease name here</h4>
-                            </div>
-                        </a>
-                        <!-- Single Card -->
-                        <a href="{{url('category')}}/345UYT" class="disease-wise-card">
-                            <div class="disease-wise-card-img">
-                                <img src="https://placehold.co/320x240/EEE/31343C" alt="#" />
-                            </div>
-                            <div class="disease-wise-card-info">
-                                <h4>Disease name here</h4>
-                            </div>
-                        </a>
-                        <!-- Single Card -->
-                        <a href="{{url('category')}}/345UYT" class="disease-wise-card">
-                            <div class="disease-wise-card-img">
-                                <img src="https://placehold.co/320x240/EEE/31343C" alt="#" />
-                            </div>
-                            <div class="disease-wise-card-info">
-                                <h4>Disease name here</h4>
-                            </div>
-                        </a>
-                        <!-- Single Card -->
-                        <a href="{{url('category')}}/345UYT" class="disease-wise-card">
-                            <div class="disease-wise-card-img">
-                                <img src="https://placehold.co/320x240/EEE/31343C" alt="#" />
-                            </div>
-                            <div class="disease-wise-card-info">
-                                <h4>Disease name here</h4>
-                            </div>
-                        </a>
-                        <!-- Single Card -->
-                        <a href="{{url('category')}}/345UYT" class="disease-wise-card">
-                            <div class="disease-wise-card-img">
-                                <img src="https://placehold.co/320x240/EEE/31343C" alt="#" />
-                            </div>
-                            <div class="disease-wise-card-info">
-                                <h4>Disease name here</h4>
-                            </div>
-                        </a>
-                        <!-- Single Card -->
-                        <a href="{{url('category')}}/345UYT" class="disease-wise-card">
-                            <div class="disease-wise-card-img">
-                                <img src="https://placehold.co/320x240/EEE/31343C" alt="#" />
-                            </div>
-                            <div class="disease-wise-card-info">
-                                <h4>Disease name here</h4>
-                            </div>
-                        </a>
-                        <!-- Single Card -->
-                        <a href="{{url('category')}}/345UYT" class="disease-wise-card">
-                            <div class="disease-wise-card-img">
-                                <img src="https://placehold.co/320x240/EEE/31343C" alt="#" />
-                            </div>
-                            <div class="disease-wise-card-info">
-                                <h4>Disease name here</h4>
-                            </div>
-                        </a>
-                        <!-- Single Card -->
-                        <a href="{{url('category')}}/345UYT" class="disease-wise-card">
-                            <div class="disease-wise-card-img">
-                                <img src="https://placehold.co/320x240/EEE/31343C" alt="#" />
-                            </div>
-                            <div class="disease-wise-card-info">
-                                <h4>Disease name here</h4>
-                            </div>
-                        </a>
-                        <!-- Single Card -->
-                        <a href="{{url('category')}}/345UYT" class="disease-wise-card">
-                            <div class="disease-wise-card-img">
-                                <img src="https://placehold.co/320x240/EEE/31343C" alt="#" />
-                            </div>
-                            <div class="disease-wise-card-info">
-                                <h4>Disease name here</h4>
-                            </div>
-                        </a>
+
                     </div>
                 </div>
             </div>

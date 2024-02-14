@@ -8,16 +8,26 @@
     <span class="widget__filter--btn__text">Filter</span>
 </button>
 
+<style>
+    ::placeholder {
+        color: #b7b7b7;
+        opacity: 1;
+    }
+
+    ::-ms-input-placeholder {
+        color: #b7b7b7;
+    }
+</style>
+
 <div class="product__view--mode d-flex align-items-center">
     <div class="product__view--mode__list product__short--by align-items-center d-none d-lg-flex">
-        <label class="product__view--label">Prev Page :</label>
+        <label class="product__view--label">Show Items :</label>
         <div class="select shop__header--select">
-            <select class="product__view--select">
-                <option selected value="1">65</option>
-                <option value="2">40</option>
-                <option value="3">42</option>
-                <option value="4">57</option>
-                <option value="5">60</option>
+            <select class="product__view--select" name="data_per_page" id="data_per_page">
+                <option value="20" selected>20</option>
+                <option value="40">40</option>
+                <option value="80">80</option>
+                <option value="100">100</option>
             </select>
         </div>
     </div>
@@ -25,7 +35,7 @@
         <label class="product__view--label">Sort By :</label>
         <div class="select shop__header--select">
             <select class="product__view--select">
-                <option selected value="1">Sort by latest</option>
+                <option selected value="1">Sort by Price</option>
                 <option value="2">Sort by popularity</option>
                 <option value="3">Sort by newness</option>
                 <option value="4">Sort by rating</option>
@@ -34,14 +44,13 @@
     </div>
     <div class="product__view--mode__list product__short--by align-items-center d-none d-lg-flex">
         <label class="product__view--label">Filter By Price:</label>
-        <form class="price__filter--form" action="#" method="post">
+        <form class="price__filter--form">
             <div class="price__filter--form__inner d-flex align-items-center">
                 <div class="price__filter--group">
                     <div class="price__filter--input border-radius-5 d-flex align-items-center">
-                        <span class="price__filter--currency">$</span>
+                        <span class="price__filter--currency">৳</span>
                         <label>
-                            <input class="price__filter--input__field border-0" name="filter.v.price.gte"
-                                type="number" placeholder="0" min="0" max="250.00" />
+                            <input class="price__filter--input__field border-0" style="padding: 12px 0px;" id="min_price" name="min_price" type="number" placeholder="10" min="0"/>
                         </label>
                     </div>
                 </div>
@@ -50,15 +59,14 @@
                 </div>
                 <div class="price__filter--group">
                     <div class="price__filter--input border-radius-5 d-flex align-items-center">
-                        <span class="price__filter--currency">$</span>
+                        <span class="price__filter--currency">৳</span>
                         <label>
-                            <input class="price__filter--input__field border-0" name="filter.v.price.lte"
-                                type="number" min="0" placeholder="250.00" max="250.00" />
+                            <input class="price__filter--input__field border-0" style="padding: 12px 0px;" id="max_price" name="max_price" type="number" placeholder="250" min="0"/>
                         </label>
                     </div>
                 </div>
             </div>
-            <button class="price__filter--btn primary__btn" type="submit">
+            <button class="price__filter--btn primary__btn" type="button">
                 Filter
             </button>
         </form>
