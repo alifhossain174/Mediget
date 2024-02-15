@@ -1,5 +1,5 @@
 
-3. Authentication
+3. Authentication (Ongoing)
 4. Checkout & Order
 5. Header, Footer & SEO
 6. User Dashboard
