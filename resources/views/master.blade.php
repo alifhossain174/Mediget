@@ -134,14 +134,29 @@
                                     <span class="header__account--btn__text">Cart items</span>
                                 </a>
                             </li>
+
+                            @auth
                             <li class="header__account--items d-none d-lg-block">
-                                <a class="header__account--btn" href="login.html">
+                                <a class="header__account--btn" href="{{url('/home')}}">
                                     <div class="header__account--btn-icon">
                                         <i class="fi fi-rr-user"></i>
                                     </div>
                                     <span class="header__account--btn__text">My account</span>
                                 </a>
                             </li>
+                            @endauth
+
+                            @guest
+                            <li class="header__account--items d-none d-lg-block">
+                                <a class="header__account--btn" href="{{url('/login')}}">
+                                    <div class="header__account--btn-icon">
+                                        <i class="fi fi-rr-user"></i>
+                                    </div>
+                                    <span class="header__account--btn__text">Login/Register</span>
+                                </a>
+                            </li>
+                            @endguest
+
                         </ul>
                     </div>
                 </div>
@@ -207,19 +222,24 @@
                             <span class="offcanvas__account--items__label">Track your order</span>
                         </a>
                         <!-- Single Mobile Sidebar Item -->
-                        <a class="offcanvas__account--items__btn d-flex align-items-center" href="cart.html">
-                            <span class="offcanvas__account--items__icon">
-                                <i class="fi fi-rs-shopping-cart"></i>
-                            </span>
-                            <span class="offcanvas__account--items__label">Cart</span>
-                        </a>
-                        <!-- Single Mobile Sidebar Item -->
-                        <a class="offcanvas__account--items__btn d-flex align-items-center" href="login.html">
+                        @auth
+                        <a class="offcanvas__account--items__btn d-flex align-items-center" href="{{url('/home')}}">
                             <span class="offcanvas__account--items__icon">
                                 <i class="fi fi-rr-user"></i>
                             </span>
                             <span class="offcanvas__account--items__label">My account</span>
                         </a>
+                        @endauth
+
+                        @guest
+                        <a class="offcanvas__account--items__btn d-flex align-items-center" href="{{url('/login')}}">
+                            <span class="offcanvas__account--items__icon">
+                                <i class="fi fi-rr-user"></i>
+                            </span>
+                            <span class="offcanvas__account--items__label">Login/Register</span>
+                        </a>
+                        @endguest
+
                     </div>
                 </nav>
             </div>
@@ -271,8 +291,7 @@
                     </a>
                 </li>
                 <li class="offcanvas__stikcy--toolbar__list">
-                    <a class="offcanvas__stikcy--toolbar__btn minicart__open--btn" href="javascript:void(0)"
-                        data-offcanvas>
+                    <a class="offcanvas__stikcy--toolbar__btn minicart__open--btn" href="javascript:void(0)" data-offcanvas>
                         <span class="offcanvas__stikcy--toolbar__icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="18.51" height="15.443"
                                 viewBox="0 0 18.51 15.443">
@@ -313,17 +332,14 @@
         <div class="predictive__search--box">
             <div class="predictive__search--box__inner">
                 <h2 class="predictive__search--title">Search Products</h2>
-                <form class="predictive__search--form" action="#">
+                <form class="predictive__search--form" action="{{url('search/for/products')}}" method="GET">
                     <label>
-                        <input class="predictive__search--input" placeholder="Search Here" type="text" />
+                        <input class="predictive__search--input" id="search_keyword" @if(isset($keyword) && $keyword != '') value="{{$keyword}}" @endif name="search_keyword" placeholder="Search Here" type="text" />
                     </label>
                     <button class="predictive__search--button" aria-label="search button" type="submit">
-                        <svg class="header__search--button__svg" xmlns="http://www.w3.org/2000/svg" width="30.51"
-                            height="25.443" viewBox="0 0 512 512">
-                            <path d="M221.09 64a157.09 157.09 0 10157.09 157.09A157.1 157.1 0 00221.09 64z"
-                                fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32" />
-                            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10"
-                                stroke-width="32" d="M338.29 338.29L448 448" />
+                        <svg class="header__search--button__svg" xmlns="http://www.w3.org/2000/svg" width="30.51" height="25.443" viewBox="0 0 512 512">
+                            <path d="M221.09 64a157.09 157.09 0 10157.09 157.09A157.1 157.1 0 00221.09 64z" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32" />
+                            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="32" d="M338.29 338.29L448 448" />
                         </svg>
                     </button>
                 </form>

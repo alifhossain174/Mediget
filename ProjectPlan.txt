@@ -1,7 +1,8 @@
 
 3. Authentication
 4. Checkout & Order
-5. User Dashboard
-6. Nursing Service
-7. Doctor Service
-8. Medicine Request
+5. Header, Footer & SEO
+6. User Dashboard
+7. Nursing Service
+8. Doctor Service
+9. Medicine Request
