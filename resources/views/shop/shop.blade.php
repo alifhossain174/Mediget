@@ -70,6 +70,7 @@
             var disease_slug = $("#filter_disease_slug").val();
             var flag_slug = $("#filter_flag_slug").val();
             var otc_status = $("#filter_otc_status").val();
+            var keyword = $("#search_keyword").val();
 
             // fetching filter values
             var per_page = Number($("#filter_data_per_page").val());
@@ -96,6 +97,9 @@
             }
 
 
+            if (keyword && keyword != '') {
+                baseUrl.includes('?') ? baseUrl += '&keyword=' + keyword : baseUrl += '?keyword=' + keyword;
+            }
             if (per_page && per_page > 0) {
                 baseUrl.includes('?') ? baseUrl += '&per_page=' + per_page : baseUrl += '?per_page=' + per_page;
             }
@@ -119,6 +123,7 @@
             formData.append("disease_slug", disease_slug);
             formData.append("flag_slug", flag_slug);
             formData.append("otc_status", otc_status);
+            formData.append("keyword", keyword);
 
             formData.append("per_page", per_page);
             formData.append("sort_by", sort_by);

@@ -15,6 +15,7 @@ class FilterController extends Controller
         // main query
         $query = DB::table('products')
                 ->leftJoin('medicine_types', 'products.medicine_type_id', 'medicine_types.id')
+                ->leftJoin('medicine_generics', 'products.generic_id', 'medicine_generics.id')
                 ->leftJoin('flags', 'products.flag_id', 'flags.id')
                 ->select('products.id', 'products.slug', 'products.price', 'products.discount_price', 'products.name', 'products.stock', 'products.strength', 'products.image', 'medicine_types.name as medicine_type', 'flags.name as flag_name')
                 ->where('products.status', 1);
@@ -78,6 +79,13 @@ class FilterController extends Controller
         }
         if($max_price && $max_price > 0){
             $query->where('products.discount_price', '<', $max_price)->where('products.price', '<', $max_price);
+        }
+
+        // search keyword
+        $keyword = '';
+        if(isset($request->keyword) && $request->keyword != ''){
+            $keyword = $request->keyword;
+            $query->where('products.name', 'LIKE', '%'.$keyword.'%')->orWhere('medicine_generics.name', 'LIKE', '%'.$keyword.'%');
         }
         // ========== filter parameters query end ============
 

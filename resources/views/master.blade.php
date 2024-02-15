@@ -105,7 +105,7 @@
                         <form class="d-flex header__search--form" action="{{url('search/for/products')}}" method="GET">
                             <div class="header__search--box">
                                 <label>
-                                    <input class="header__search--input" placeholder="Search Meidcine..." type="text" />
+                                    <input class="header__search--input" id="search_keyword" @if(isset($keyword) && $keyword != '') value="{{$keyword}}" @endif name="search_keyword" placeholder="Search Meidcine..." type="text" />
                                 </label>
                                 <button class="header__search--button bg__secondary text-white" type="submit" aria-label="search button">
                                     <svg class="header__search--button__svg" xmlns="http://www.w3.org/2000/svg" width="27.51" height="26.443" viewBox="0 0 512 512">

@@ -1,7 +1,6 @@
-1. Shop Filter and Mobile Canvas Filter (Done)
-2. Search Products (Ongoing)
-3. Checkout & Order
-4. Authentication
+
+3. Authentication
+4. Checkout & Order
 5. User Dashboard
 6. Nursing Service
 7. Doctor Service

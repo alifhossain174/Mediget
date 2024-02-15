@@ -32,6 +32,7 @@ class FrontendController extends Controller
 
         $query = DB::table('products')
                 ->leftJoin('medicine_types', 'products.medicine_type_id', 'medicine_types.id')
+                ->leftJoin('medicine_generics', 'products.generic_id', 'medicine_generics.id')
                 ->leftJoin('flags', 'products.flag_id', 'flags.id')
                 ->select('products.id', 'products.slug', 'products.price', 'products.discount_price', 'products.name', 'products.stock', 'products.strength', 'products.image', 'medicine_types.name as medicine_type', 'flags.name as flag_name')
                 ->where('products.status', 1);
@@ -85,6 +86,16 @@ class FrontendController extends Controller
         // flag filter end
 
 
+        // search keyword
+        $keyword = '';
+        if(isset($request->keyword) && $request->keyword != ''){
+            $keyword = $request->keyword;
+            $pageTitle = "Search Results for: '".$keyword."'";
+            $query->where('products.name', 'LIKE', '%'.$keyword.'%')->orWhere('medicine_generics.name', 'LIKE', '%'.$keyword.'%');
+            $parameters .= '?keyword='.$request->keyword;
+        }
+
+
         $sort_by = $request->sort_by;
         if($sort_by && $sort_by > 0){
             if($sort_by == 1){
@@ -120,13 +131,11 @@ class FrontendController extends Controller
         $products = $query->paginate($per_page);
         $products->withPath('/shop'.$parameters);
 
-        return view('shop.shop', compact('products', 'pageTitle', 'category_slug', 'disease_slug', 'flag_slug', 'otc_status', 'per_page', 'sort_by', 'min_price', 'max_price'));
+        return view('shop.shop', compact('products', 'pageTitle', 'category_slug', 'disease_slug', 'flag_slug', 'otc_status', 'per_page', 'sort_by', 'min_price', 'max_price', 'keyword'));
     }
 
     public function searchForProducts(Request $request){
-        // $category = isset($request->category) ? $request->category : '';
-        // $searchKeyword = $request->filter_search_keyword;
-        // return redirect('shop?category='.$category.'&search_keyword='.$searchKeyword);
+        return redirect('shop?keyword='.$request->search_keyword);
     }
 
     public function productDetails($slug){
