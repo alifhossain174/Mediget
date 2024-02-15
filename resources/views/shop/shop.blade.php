@@ -5,45 +5,14 @@
     <div class="offcanvas__filter--sidebar widget__area">
         <button type="button" class="offcanvas__filter--close" data-offcanvas>
             <svg class="minicart__close--icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                <path fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"
-                    d="M368 368L144 144M368 144L144 368"></path>
+                <path fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M368 368L144 144M368 144L144 368"></path>
             </svg>
             <span class="offcanvas__filter--close__text">Close</span>
         </button>
         <div class="offcanvas__filter--sidebar__inner">
-            <div class="single__widget price__filter widget__bg">
-                <h2 class="widget__title h3">Filter By Price</h2>
-                <form class="price__filter--form" action="#">
-                    <div class="price__filter--form__inner d-flex align-items-center">
-                        <div class="price__filter--group">
-                            <label class="price__filter--label" for="fromPrice">From</label>
-                            <div class="price__filter--input border-radius-5 d-flex align-items-center">
-                                <span class="price__filter--currency">৳</span>
-                                <label>
-                                    <input class="price__filter--input__field border-0" id="fromPrice" type="number"
-                                        placeholder="0" min="0" max="250.00" />
-                                </label>
-                            </div>
-                        </div>
-                        <div class="price__divider">
-                            <span>-</span>
-                        </div>
-                        <div class="price__filter--group">
-                            <label class="price__filter--label" for="toPrice">To</label>
-                            <div class="price__filter--input border-radius-5 d-flex align-items-center">
-                                <span class="price__filter--currency">৳</span>
-                                <label>
-                                    <input class="price__filter--input__field border-0" id="toPrice" type="number"
-                                        min="0" placeholder="250.00" max="250.00" />
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <button class="price__filter--btn primary__btn" type="submit">
-                        Filter
-                    </button>
-                </form>
-            </div>
+
+            {{-- filter code in mobile device will be here using js --}}
+
         </div>
     </div>
     <!-- End offcanvas filter sidebar -->
@@ -77,6 +46,23 @@
 
 @section('footer_js')
     <script>
+
+        if (isMobileDevice()) {
+            console.log("Detected device is a mobile");
+            var htmlContent = $(".product__view--mode").html();
+            $(".offcanvas__filter--sidebar__inner").html(htmlContent);
+            $(".product__view--mode").html("");
+            $(".product__view--mode__list").removeClass('d-none');
+            $(".product__view--mode__list").css('margin', '15px');
+            $(".product__view--select").css('width', '100%');
+        } else {
+            $(".offcanvas__filter--sidebar__inner").html("");
+        }
+
+        function isMobileDevice() {
+            return window.matchMedia("only screen and (max-width: 760px)").matches;
+        }
+
         function filterProducts() {
 
             // default filter values

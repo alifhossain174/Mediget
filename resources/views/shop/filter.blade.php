@@ -38,10 +38,10 @@
             </select>
         </div>
     </div>
-    <div class="product__view--mode__list product__short--by align-items-center d-none d-lg-flex" onchange="filterProducts()">
+    <div class="product__view--mode__list product__short--by align-items-center d-none d-lg-flex">
         <label class="product__view--label">Sort By :</label>
         <div class="select shop__header--select">
-            <select class="product__view--select" id="filter_sort_by">
+            <select class="product__view--select" id="filter_sort_by" onchange="filterProducts()">
                 <option value="">Select One</option>
                 <option value="1" @if(isset($sort_by) && $sort_by == 1) selected @endif>Price Low to High</option>
                 <option value="2" @if(isset($sort_by) && $sort_by == 2) selected @endif>Price High to Low</option>

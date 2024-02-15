@@ -13,6 +13,7 @@ Route::get('/', [FrontendController::class, 'index'])->name('Index');
 Route::get('/otc', [FrontendController::class, 'otc'])->name('Otc');
 Route::get('/shop', [FrontendController::class, 'shop'])->name('Shop');
 Route::post('filter/products', [FilterController::class, 'filterProducts'])->name('FilterProducts');
+Route::get('search/for/products', [FrontendController::class, 'searchForProducts'])->name('SearchForProducts');
 Route::get('/product/details/{slug}', [FrontendController::class, 'productDetails'])->name('ProductDetails');
 
 

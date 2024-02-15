@@ -123,6 +123,12 @@ class FrontendController extends Controller
         return view('shop.shop', compact('products', 'pageTitle', 'category_slug', 'disease_slug', 'flag_slug', 'otc_status', 'per_page', 'sort_by', 'min_price', 'max_price'));
     }
 
+    public function searchForProducts(Request $request){
+        // $category = isset($request->category) ? $request->category : '';
+        // $searchKeyword = $request->filter_search_keyword;
+        // return redirect('shop?category='.$category.'&search_keyword='.$searchKeyword);
+    }
+
     public function productDetails($slug){
 
         $product = DB::table('products')

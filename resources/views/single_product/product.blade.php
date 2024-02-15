@@ -7,9 +7,9 @@
                     <img class="product__items--img product__primary--img lazy" src="{{url('assets')}}/img/product-load.gif" data-src="{{env('ADMIN_URL').'/'.$product->image}}" alt="" />
                 </a>
                 @if($product->flag_name)
-                <div class="product__badge">
-                    <span class="product__badge--items sale">{{$product->flag_name}}</span>
-                </div>
+                    <div class="product__badge">
+                        <span class="product__badge--items sale">{{$product->flag_name}}</span>
+                    </div>
                 @endif
             </div>
             <div class="product__items--content">

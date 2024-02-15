@@ -1,4 +1,5 @@
-1. Shop Filter and Mobile Canvas Filter (Ongoing)
+1. Shop Filter and Mobile Canvas Filter (Done)
+2. Search Products (Ongoing)
 3. Checkout & Order
 4. Authentication
 5. User Dashboard
