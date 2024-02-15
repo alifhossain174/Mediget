@@ -6,8 +6,8 @@
                 <div class="section__heading text-center mb-35">
                     <h2 class="section__heading--maintitle">{{$flag->name}}</h2>
                 </div>
-                <div class="product__section--inner">
 
+                <div class="product__section--inner">
                     @php
                         $products = DB::table('products')
                             ->leftJoin('medicine_types', 'products.medicine_type_id', 'medicine_types.id')
@@ -20,11 +20,9 @@
                             ->get();
                     @endphp
 
-                    @foreach ($products as $product)
-                    @include('single_product.product')
-                    @endforeach
-
+                    @include('single_product.product', ['products' => $products])
                 </div>
+
                 <div class="section__bottom-btn">
                     <a href="{{url('shop')}}?flag={{$flag->slug}}" class="primary__btn">Show more</a>
                 </div>

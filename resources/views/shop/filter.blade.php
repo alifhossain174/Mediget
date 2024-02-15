@@ -19,15 +19,22 @@
     }
 </style>
 
+
+<input type="hidden" id="filter_category_slug" value="{{$category_slug}}">
+<input type="hidden" id="filter_disease_slug" value="{{$disease_slug}}">
+<input type="hidden" id="filter_flag_slug" value="{{$flag_slug}}">
+<input type="hidden" id="filter_otc_status" value="{{$otc_status}}">
+
+
 <div class="product__view--mode d-flex align-items-center">
     <div class="product__view--mode__list product__short--by align-items-center d-none d-lg-flex">
         <label class="product__view--label">Show Items :</label>
         <div class="select shop__header--select">
             <select class="product__view--select" id="filter_data_per_page" onchange="filterProducts()">
-                <option value="20" selected>20</option>
-                <option value="40">40</option>
-                <option value="80">80</option>
-                <option value="100">100</option>
+                <option value="20" @if(isset($per_page) && $per_page == 20) selected @endif>20</option>
+                <option value="40" @if(isset($per_page) && $per_page == 40) selected @endif>40</option>
+                <option value="80" @if(isset($per_page) && $per_page == 80) selected @endif>80</option>
+                <option value="100" @if(isset($per_page) && $per_page == 100) selected @endif>100</option>
             </select>
         </div>
     </div>
@@ -36,8 +43,8 @@
         <div class="select shop__header--select">
             <select class="product__view--select" id="filter_sort_by">
                 <option value="">Select One</option>
-                <option value="1">Price Low to High</option>
-                <option value="2">Price High to Low</option>
+                <option value="1" @if(isset($sort_by) && $sort_by == 1) selected @endif>Price Low to High</option>
+                <option value="2" @if(isset($sort_by) && $sort_by == 2) selected @endif>Price High to Low</option>
             </select>
         </div>
     </div>
@@ -49,7 +56,7 @@
                     <div class="price__filter--input border-radius-5 d-flex align-items-center">
                         <span class="price__filter--currency">৳</span>
                         <label>
-                            <input class="price__filter--input__field border-0" style="padding: 12px 0px;" id="filter_min_price" type="number" placeholder="10" min="0"/>
+                            <input class="price__filter--input__field border-0" @if(isset($min_price) && $min_price > 0) value="{{$min_price}}" @endif style="padding: 12px 0px;" id="filter_min_price" type="number" placeholder="10" min="0"/>
                         </label>
                     </div>
                 </div>
@@ -60,12 +67,12 @@
                     <div class="price__filter--input border-radius-5 d-flex align-items-center">
                         <span class="price__filter--currency">৳</span>
                         <label>
-                            <input class="price__filter--input__field border-0" style="padding: 12px 0px;" id="filter_max_price" type="number" placeholder="250" min="0"/>
+                            <input class="price__filter--input__field border-0" @if(isset($max_price) && $max_price > 0) value="{{$max_price}}" @endif style="padding: 12px 0px;" id="filter_max_price" type="number" placeholder="250" min="0"/>
                         </label>
                     </div>
                 </div>
             </div>
-            <button class="price__filter--btn primary__btn" type="button" onchange="filterProducts()">
+            <button class="price__filter--btn primary__btn" type="button" onclick="filterProducts()">
                 Filter
             </button>
         </form>

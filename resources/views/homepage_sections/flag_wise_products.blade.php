@@ -43,12 +43,7 @@
                                 @endphp
 
                                 <!-- Single Card -->
-                                @foreach ($products as $product)
-                                <div class="swiper-slide">
-                                    @include('single_product.product')
-                                </div>
-                                @endforeach
-
+                                @include('single_product.product')
 
                             </div>
                             <div class="swiper__nav--btn swiper-button-next"></div>

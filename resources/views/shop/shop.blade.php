@@ -65,14 +65,8 @@
                 <div class="col-12">
                     <div class="product__section--inner style-2">
 
-                        @foreach ($products as $product)
-                            @include('single_product.product')
-                        @endforeach
+                        @include('single_product.product')
 
-                    </div>
-
-                    <div class="pagination-wrapper pt-5 mt-3 text-center">
-                        {{ $products->links() }}
                     </div>
                 </div>
             </div>
@@ -85,6 +79,12 @@
     <script>
         function filterProducts() {
 
+            // default filter values
+            var category_slug = $("#filter_category_slug").val();
+            var disease_slug = $("#filter_disease_slug").val();
+            var flag_slug = $("#filter_flag_slug").val();
+            var otc_status = $("#filter_otc_status").val();
+
             // fetching filter values
             var per_page = Number($("#filter_data_per_page").val());
             var sort_by = Number($("#filter_sort_by").val());
@@ -92,20 +92,35 @@
             var max_price = Number($("#filter_max_price").val());
 
 
+
             // setting up get url with filter parameters
             var baseUrl = window.location.pathname;
 
+            if(category_slug){
+                baseUrl += '?category=' + category_slug;
+            }
+            if(disease_slug){
+                baseUrl += '?disease=' + disease_slug;
+                if(otc_status){
+                    baseUrl += '&otc=1';
+                }
+            }
+            if(flag_slug){
+                baseUrl += '?flag=' + flag_slug;
+            }
+
+
             if (per_page && per_page > 0) {
-                str.includes('?') ? baseUrl += '&per_page=' + per_page : baseUrl += '?per_page=' + per_page;
+                baseUrl.includes('?') ? baseUrl += '&per_page=' + per_page : baseUrl += '?per_page=' + per_page;
             }
             if (sort_by && sort_by > 0) {
-                str.includes('?') ? baseUrl += '&sort_by=' + sort_by : baseUrl += '?sort_by=' + sort_by;
+                baseUrl.includes('?') ? baseUrl += '&sort_by=' + sort_by : baseUrl += '?sort_by=' + sort_by;
             }
             if (min_price && min_price > 0) {
-                str.includes('?') ? baseUrl += '&min_price=' + min_price : baseUrl += '?min_price=' + min_price;
+                baseUrl.includes('?') ? baseUrl += '&min_price=' + min_price : baseUrl += '?min_price=' + min_price;
             }
             if (max_price && max_price > 0) {
-                str.includes('?') ? baseUrl += '&max_price=' + max_price : baseUrl += '?max_price=' + max_price;
+                baseUrl.includes('?') ? baseUrl += '&max_price=' + max_price : baseUrl += '?max_price=' + max_price;
             }
 
             history.pushState(null, null, baseUrl);
@@ -113,11 +128,17 @@
 
             // sending request
             var formData = new FormData();
+
+            formData.append("category_slug", category_slug);
+            formData.append("disease_slug", disease_slug);
+            formData.append("flag_slug", flag_slug);
+            formData.append("otc_status", otc_status);
+
             formData.append("per_page", per_page);
             formData.append("sort_by", sort_by);
             formData.append("min_price", min_price);
             formData.append("max_price", max_price);
-            formData.append("path_name", window.location.pathname);
+            formData.append("path_name", baseUrl);
 
 
             $.ajax({
@@ -128,7 +149,7 @@
                 contentType: false,
                 processData: false,
                 success: function(data) {
-                    $('.shop__product--wrapper').fadeOut(function() {
+                    $('.product__section--inner').fadeOut(function() {
                         $(this).html(data.rendered_view);
                         $(this).fadeIn();
                         renderLazyImage()

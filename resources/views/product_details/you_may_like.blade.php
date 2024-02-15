@@ -7,11 +7,7 @@
         <div class="product__section--inner product__swiper--column4__activation swiper">
             <div class="swiper-wrapper">
 
-                @foreach ($mayLikedProducts as $product)
-                <div class="swiper-slide">
-                    @include('single_product.product')
-                </div>
-                @endforeach
+                @include('single_product.product', ['products' => $mayLikedProducts])
 
             </div>
             <div class="swiper__nav--btn swiper-button-next"></div>

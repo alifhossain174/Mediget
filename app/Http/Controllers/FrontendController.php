@@ -34,7 +34,7 @@ class FrontendController extends Controller
                 ->leftJoin('medicine_types', 'products.medicine_type_id', 'medicine_types.id')
                 ->leftJoin('flags', 'products.flag_id', 'flags.id')
                 ->select('products.id', 'products.slug', 'products.price', 'products.discount_price', 'products.name', 'products.stock', 'products.strength', 'products.image', 'medicine_types.name as medicine_type', 'flags.name as flag_name')
-                ->orderBy('id', 'desc');
+                ->where('products.status', 1);
 
         $parameters = '';
         $pageTitle = env('APP_NAME');
@@ -55,6 +55,7 @@ class FrontendController extends Controller
 
         // diseases filter start
         $disease_slug = isset($request->disease) ? $request->disease : '';
+        $otc_status = isset($request->otc) ? $request->otc : '';
         if($disease_slug){
             $diseaseInfo = DB::table('diseases')->where('slug', $disease_slug)->first();
             if($diseaseInfo){
@@ -63,8 +64,7 @@ class FrontendController extends Controller
             }
             $parameters .= '?disease=' . $disease_slug;
 
-            $otc_slug = isset($request->otc) ? $request->otc : '';
-            if($otc_slug){
+            if($otc_status){
                 $query->where('products.is_otc', 1);
                 $parameters .= '&otc=1';
             }
@@ -85,10 +85,42 @@ class FrontendController extends Controller
         // flag filter end
 
 
-        $products = $query->paginate(20);
+        $sort_by = $request->sort_by;
+        if($sort_by && $sort_by > 0){
+            if($sort_by == 1){
+                $query->orderBy('products.discount_price', 'asc')->orderBy('products.price', 'asc');
+                $parameters .= '&sort_by=1';
+            }
+            if($sort_by == 2){
+                $query->orderBy('products.discount_price', 'desc')->orderBy('products.price', 'desc');
+                $parameters .= '&sort_by=2';
+            }
+        } else {
+            $query->orderBy('products.id', 'desc');
+        }
+
+
+        $min_price = $request->min_price;
+        $max_price = $request->max_price;
+        if($min_price && $min_price > 0){
+            $query->where('products.discount_price', '>', $min_price)->where('products.price', '>', $min_price);
+            $parameters .= '&min_price='.$min_price;
+        }
+        if($max_price && $max_price > 0){
+            $query->where('products.discount_price', '<', $max_price)->where('products.price', '<', $max_price);
+            $parameters .= '&max_price='.$max_price;
+        }
+
+        $per_page = 20;
+        if(isset($request->per_page) && $request->per_page > 0){
+            $per_page = $request->per_page;
+            $parameters .= '&per_page='.$per_page;
+        }
+
+        $products = $query->paginate($per_page);
         $products->withPath('/shop'.$parameters);
 
-        return view('shop.shop', compact('products', 'pageTitle'));
+        return view('shop.shop', compact('products', 'pageTitle', 'category_slug', 'disease_slug', 'flag_slug', 'otc_status', 'per_page', 'sort_by', 'min_price', 'max_price'));
     }
 
     public function productDetails($slug){
