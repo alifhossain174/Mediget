@@ -3,7 +3,7 @@
 
 @php
     $generalInfo = DB::table('general_infos')
-        ->select('logo_dark', 'logo', 'fav_icon', 'company_name', 'email', 'address', 'custom_css', 'header_script', 'footer_script', 'payment_banner', 'play_store_link', 'contact', 'footer_copyright_text', 'app_store_link', 'whatsapp', 'messenger', 'telegram', 'youtube', 'facebook', 'twitter', 'linkedin', 'instagram', 'primary_color', 'secondary_color', 'tertiary_color', 'title_color', 'paragraph_color', 'border_color', 'google_tag_manager_status', 'google_tag_manager_id', 'google_analytic_status', 'google_analytic_tracking_id', 'fb_pixel_status', 'fb_pixel_app_id', 'tawk_chat_status', 'tawk_chat_link', 'messenger_chat_status', 'fb_page_id', 'short_description')
+        ->select('logo_dark', 'logo', 'fav_icon', 'company_name', 'email', 'address', 'tin', 'trade_license', 'custom_css', 'header_script', 'footer_script', 'payment_banner', 'play_store_link', 'contact', 'footer_copyright_text', 'app_store_link', 'whatsapp', 'messenger', 'telegram', 'youtube', 'facebook', 'twitter', 'linkedin', 'instagram', 'primary_color', 'secondary_color', 'tertiary_color', 'title_color', 'paragraph_color', 'border_color', 'google_tag_manager_status', 'google_tag_manager_id', 'google_analytic_status', 'google_analytic_tracking_id', 'fb_pixel_status', 'fb_pixel_app_id', 'tawk_chat_status', 'tawk_chat_link', 'messenger_chat_status', 'fb_page_id', 'short_description')
         ->where('id', 1)
         ->first();
 
@@ -509,27 +509,28 @@
                         </button>
                     </h2>
                     <div class="footer__widget--inner">
-                        <p class="footer__widget--desc text-ofwhite mb-20">
-                            Lorem ipsum dolor sit amet, consectetur adipisici ti elit <br />
-                            seddo eiusmod tempor incididunt utlabore et dolore <br />
-                            magna aliqua enim ad minim veniam quisnostrud <br />
-                            exercitation ullamco
+                        <p class="footer__widget--desc text-ofwhite mb-20" style="max-width: 380px;">
+                            {{$generalInfo->short_description}}
                         </p>
-                        <div class="footer-address">
+                        <div class="footer-address" style="margin-top: 15px">
                             <h3>Office address:</h3>
-                            <p>Flat #B4, House No: 71, Road: 27, Dhaka 1212</p>
+                            <p style="max-width: 380px;">{{$generalInfo->address}}</p>
                         </div>
-                        <div class="footer-address">
+
+                        @if($generalInfo->trade_license || $generalInfo->tin)
+                        <div class="footer-address" style="margin-top: 15px">
                             <h3>Others info:</h3>
-                            <p>TIN:<span>00121314151617</span></p>
-                            <p>Trade licence:<span>000111</span></p>
+                            <p>TIN:<span>{{$generalInfo->tin}}</span></p>
+                            <p>Trade licence:<span>{{$generalInfo->trade_license}}</span></p>
                         </div>
+                        @endif
+
                     </div>
                 </div>
                 <div class="footer__widget--menu__wrapper d-flex footer__widget--width">
                     <div class="footer__widget">
                         <h2 class="footer__widget--title text-ofwhite h3">
-                            Our Company
+                            Important Links
                             <button class="footer__widget--button" aria-label="footer widget button">
                                 <svg class="footer__widget--title__arrowdown--icon"
                                     xmlns="http://www.w3.org/2000/svg" width="12.355" height="8.394"
@@ -541,10 +542,10 @@
                         </h2>
                         <ul class="footer__widget--menu footer__widget--inner">
                             <li class="footer__widget--menu__list">
-                                <a class="footer__widget--menu__text" href="about.html">About us</a>
+                                <a class="footer__widget--menu__text" href="{{url('/about')}}">About us</a>
                             </li>
                             <li class="footer__widget--menu__list">
-                                <a class="footer__widget--menu__text" href="contact.html">Contact us</a>
+                                <a class="footer__widget--menu__text" href="{{url('/contact')}}">Contact us</a>
                             </li>
                             <li class="footer__widget--menu__list">
                                 <a class="footer__widget--menu__text" href="faq.html">FAQ</a>

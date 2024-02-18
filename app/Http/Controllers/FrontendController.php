@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\DB;
 
 class FrontendController extends Controller
@@ -180,6 +182,38 @@ class FrontendController extends Controller
                     ->get();
 
         return view('product_details.details', compact('product', 'variants', 'productMultipleImages', 'mayLikedProducts', 'productReviews', 'totalReviews', 'totalRating', 'averageRating'));
+    }
+
+    public function about(){
+        $data = DB::table('about_us')->where('id', 1)->first();
+        return view('about', compact('data'));
+    }
+
+    public function contact(){
+        $contactInfo = DB::table('general_infos')->select('contact', 'email', 'address', 'facebook', 'twitter', 'instagram', 'linkedin', 'messenger', 'youtube', 'whatsapp', 'telegram', 'tiktok', 'pinterest', 'viber')->first();
+        $mapInfo = DB::table('general_infos')->select('google_map_link')->where('id', 1)->first();
+        return view('contact', compact('contactInfo', 'mapInfo'));
+    }
+
+    public function submitContactRequest(Request $request){
+
+        $request->validate([
+            'firstname' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'max:255'],
+            'number' => ['required', 'string', 'max:255'],
+        ]);
+
+        DB::table('contact_requests')->insert([
+            'name' => $request->firstname." ".$request->lastname,
+            'email' => $request->email,
+            'phone' => $request->number,
+            'message' => $request->message,
+            'status' => 0,
+            'created_at' => Carbon::now()
+        ]);
+
+        Toastr::success('Request is Submitted', 'Success');
+        return back();
     }
 
     public function nursingService(){

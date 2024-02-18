@@ -61,12 +61,12 @@
                             <div class="form-group">
                                 <label>Enter code</label>
                                 <div class="otp-input" id="otp-input">
-                                    <input type="text" name="code[]" maxlength="1" class="otp-input-field is-invalid" value="" required />
-                                    <input type="text" name="code[]" maxlength="1" class="otp-input-field is-invalid" value="" required />
-                                    <input type="text" name="code[]" maxlength="1" class="otp-input-field is-invalid" value="" required />
-                                    <input type="text" name="code[]" maxlength="1" class="otp-input-field is-invalid" value="" required />
-                                    <input type="text" name="code[]" maxlength="1" class="otp-input-field is-invalid" value="" required />
-                                    <input type="text" name="code[]" maxlength="1" class="otp-input-field is-invalid" value="" required />
+                                    <input type="number" name="code[]" maxlength="1" class="otp-input-field is-invalid" value="" required />
+                                    <input type="number" name="code[]" maxlength="1" class="otp-input-field is-invalid" value="" required />
+                                    <input type="number" name="code[]" maxlength="1" class="otp-input-field is-invalid" value="" required />
+                                    <input type="number" name="code[]" maxlength="1" class="otp-input-field is-invalid" value="" required />
+                                    <input type="number" name="code[]" maxlength="1" class="otp-input-field is-invalid" value="" required />
+                                    <input type="number" name="code[]" maxlength="1" class="otp-input-field is-invalid" value="" required />
                                 </div>
                             </div>
                             <div class="auth-form-btn mt-20">

@@ -10,6 +10,7 @@ use App\Http\Controllers\ForgetPasswordController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\SupportTicketController;
+use Spatie\Honeypot\ProtectAgainstSpam;
 
 Auth::routes();
 
@@ -19,6 +20,11 @@ Route::get('/shop', [FrontendController::class, 'shop'])->name('Shop');
 Route::post('filter/products', [FilterController::class, 'filterProducts'])->name('FilterProducts');
 Route::get('search/for/products', [FrontendController::class, 'searchForProducts'])->name('SearchForProducts');
 Route::get('/product/details/{slug}', [FrontendController::class, 'productDetails'])->name('ProductDetails');
+
+
+Route::get('/about', [FrontendController::class, 'about'])->name('About');
+Route::get('/contact', [FrontendController::class, 'contact'])->name('Contact');
+Route::post('/submit/contact/request', [FrontendController::class, 'submitContactRequest'])->name('SubmitContactRequest')->middleware(ProtectAgainstSpam::class)->middleware(['throttle:3,1']);
 
 
 // cart related routes
