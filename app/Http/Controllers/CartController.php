@@ -45,11 +45,10 @@ class CartController extends Controller
         $product = DB::table('products')->where('id', $id)->first();
         $detailsButtonHTML = view('product_details.cart_buy_now', compact('product'))->render();
 
-        // $checkoutCartItems = view('checkout.cart_items')->render();
-        // $checkoutTotalAmount = view('checkout.order_total')->render();
-        // return response()->json(['rendered_cart' => $returnHTML, 'checkoutCartItems' => $checkoutCartItems, 'checkoutTotalAmount' => $checkoutTotalAmount, 'cartTotalQty' => count(session('cart'))]);
+        $checkoutCartItems = view('checkout.cart_items')->render();
+        $checkoutTotalAmount = view('checkout.order_total')->render();
 
-        return response()->json(['rendered_cart' => $returnHTML, 'details_button' => $detailsButtonHTML, 'cartTotalQty' => count(session('cart'))]);
+        return response()->json(['rendered_cart' => $returnHTML, 'details_button' => $detailsButtonHTML, 'checkoutCartItems' => $checkoutCartItems, 'checkoutTotalAmount' => $checkoutTotalAmount, 'cartTotalQty' => count(session('cart'))]);
     }
 
     public function updateCartQty(Request $request){
@@ -60,10 +59,10 @@ class CartController extends Controller
         }
 
         $returnHTML = view('sidebar_cart')->render();
-        // $checkoutCartItems = view('checkout.cart_items')->render();
-        // $checkoutTotalAmount = view('checkout.order_total')->render();
-        // return response()->json(['rendered_cart' => $returnHTML, 'checkoutCartItems' => $checkoutCartItems, 'checkoutTotalAmount' => $checkoutTotalAmount, 'success' => 'Cart Qty Updated']);
-        return response()->json(['rendered_cart' => $returnHTML, 'success' => 'Cart Qty Updated']);
+        $checkoutCartItems = view('checkout.cart_items')->render();
+        $checkoutTotalAmount = view('checkout.order_total')->render();
+
+        return response()->json(['rendered_cart' => $returnHTML, 'checkoutCartItems' => $checkoutCartItems, 'checkoutTotalAmount' => $checkoutTotalAmount, 'success' => 'Cart Qty Updated']);
     }
 
     public function addToCartWithQty(Request $request){

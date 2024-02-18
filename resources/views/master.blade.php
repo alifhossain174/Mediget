@@ -24,6 +24,7 @@
     <link rel="shortcut icon" type="image/x-icon" href="{{url('assets')}}/img/favicon.svg" />
 
     <!-- ======= All CSS Plugins here ======== -->
+    <link rel="stylesheet" href="{{url('assets')}}/css/vendor/bootstrap.min.css" />
     <link rel="stylesheet" href="{{url('assets')}}/css/plugins/animate.min.css" />
     <link rel="stylesheet" href="{{url('assets')}}/css/plugins/swiper-bundle.min.css" />
     <link rel="stylesheet" href="{{url('assets')}}/css/plugins/owl.carousel.min.css" />
@@ -36,7 +37,7 @@
     <link rel="stylesheet" href="{{url('assets')}}/css/plugins/datepicker.css" />
 
     <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="{{url('assets')}}/css/vendor/bootstrap.min.css" />
+
     <link rel="stylesheet" href="{{url('assets')}}/css/style.css" />
     <link rel="stylesheet" href="{{url('assets')}}/css/toastr.min.css">
 
@@ -78,6 +79,8 @@
 <body>
 
     @stack('offcanvas_filter')
+
+    @stack('user_dashboard_menu')
 
     <!-- Start header area -->
     <header class="header__section">
@@ -701,19 +704,14 @@
                 $("a.minicart__open--btn span.items__count").html(data.cartTotalQty)
                 $(".product-d-info-btn").html(data.details_button);
                 // cartSidebarQtyButtons();
-                // $("table.cart-single-product-table tbody").html(data.checkoutCartItems);
-                // $(".order-review-summary").html(data.checkoutTotalAmount);
+                $("table.cart-single-product-table tbody").html(data.checkoutCartItems);
+                $(".order-review-summary").html(data.checkoutTotalAmount);
             })
 
             $('.cart-' + id).html("<i class='fi fi-rs-shopping-cart'></i> Add to cart</span>");
             $('.cart-' + id).attr('data-id', id).removeClass("removeFromCart");
             $('.cart-' + id).attr('data-id', id).addClass("addToCart");
             $('.cart-' + id).blur();
-
-            // $('.cart-qty-' + id).html("Add to cart");
-            // $('.cart-qty-' + id).attr('data-id', id).removeClass("removeFromCartQty");
-            // $('.cart-qty-' + id).attr('data-id', id).addClass("addToCartWithQty");
-            // $('.cart-qty-' + id).blur();
         });
 
 
@@ -745,8 +743,8 @@
                     // updateCartTotal();
                     // cartSidebarQtyButtons();
                     $(".offCanvas__minicart").html(data.rendered_cart);
-                    // $("table.cart-single-product-table tbody").html(data.checkoutCartItems);
-                    // $(".order-review-summary").html(data.checkoutTotalAmount);
+                    $("table.cart-single-product-table tbody").html(data.checkoutCartItems);
+                    $(".order-review-summary").html(data.checkoutTotalAmount);
                 },
                 error: function(data) {
                     console.log('Error:', data);

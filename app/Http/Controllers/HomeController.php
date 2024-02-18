@@ -31,7 +31,25 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $userId = Auth::user()->id;
+        $totalOrderPlaced = DB::table('orders')->where('user_id', $userId)->count();
+        $totalRunningOrder = DB::table('orders')->where('user_id', $userId)->where('order_status', '<', 3)->count();
+        $itemsInWishList = DB::table('wish_lists')->where('user_id', $userId)->count();
+        $totalAmountSpent = DB::table('orders')->where('user_id', $userId)->sum('total');
+        $totalOpenedTickets = DB::table('support_tickets')->where('support_taken_by', $userId)->where('status', '<', 2)->count();
+
+        $recentOrders = DB::table('orders')->where('user_id', $userId)->orderBy('id', 'desc')->skip(0)->limit(5)->get();
+        $wishlistedItems = DB::table('wish_lists')
+                ->join('products', 'wish_lists.product_id', 'products.id')
+                ->leftJoin('units', 'products.unit_id', 'units.id')
+                ->where('wish_lists.user_id', $userId)
+                ->select('products.name', 'products.image', 'products.price', 'products.discount_price', 'units.name as unit_name', 'products.slug as product_slug')
+                ->orderBy('products.id', 'desc')
+                ->skip(0)
+                ->limit(6)
+                ->get();
+
+        return view('dashboard.home', compact('totalOrderPlaced', 'totalRunningOrder', 'itemsInWishList', 'totalAmountSpent', 'recentOrders', 'wishlistedItems', 'totalOpenedTickets'));
     }
 
 
@@ -253,11 +271,12 @@ class HomeController extends Controller
         $purchaseStatus = DB::table('order_details')
                             ->join('orders', 'order_details.order_id', 'orders.id')
                             ->where('orders.order_status', 3)
+                            ->orWhere('orders.order_status', 0)
                             ->where('orders.user_id', Auth::user()->id)
                             ->where('product_id', $request->review_product_id)
                             ->first();
 
-        if(!$purchaseStatus){
+        if($purchaseStatus){
             Toastr::error('Approved order is required for submitting a review.');
             return back();
         }

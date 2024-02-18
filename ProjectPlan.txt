@@ -1,8 +1,8 @@
 
-3. Authentication (Ongoing)
-4. Checkout & Order
-5. Header, Footer & SEO
-6. User Dashboard
-7. Nursing Service
-8. Doctor Service
-9. Medicine Request
+1. Authentication (Done)
+2. Checkout & Order (Done)
+3. User Dashboard (Done)
+4. Header, Footer & SEO
+5. Nursing Service with Admin & User Dashboard
+6. Doctor Service with Admin & User Dashboard
+7. Medicine Request with Admin & User Dashboard
