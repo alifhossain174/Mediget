@@ -47,7 +47,7 @@
                     <div class="auth-card verifyOTP-card">
                         <div class="auth-card-head">
                             <div class="auth-card-head-icon">
-                                <img src="{{url('frontend_assets')}}/img/icon/edit.svg" alt="OTP" />
+                                <img src="{{url('assets')}}/img/icon/edit.svg" alt="OTP" />
                             </div>
                             <h4 class="auth-card-title">Verify OTP</h4>
                             <p class="auth-card-head-title-text">
@@ -101,7 +101,7 @@
                 // split clipboard text into single characters
                 data = data.split('');
                 // find all other text inputs
-                [].forEach.call(document.querySelectorAll("input[type=text]"), (node, index) => {
+                [].forEach.call(document.querySelectorAll("input.otp-input-field"), (node, index) => {
                     // And set input value to the relative character
                     node.value = data[index];
                     checkFilled();

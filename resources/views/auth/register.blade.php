@@ -334,7 +334,7 @@
     <div id="confirmation-email-modal">
         {{-- <span id="close-icon" onclick="closeWidget()"><i class="fi-rr-cross-small"></i></span> --}}
         <div class="c-email-modal-icon">
-            <img src="{{ url('frontend_assets') }}/img/confirm-notification-icon.svg" alt="" />
+            <img src="{{ url('assets') }}/img/confirm-notification-icon.svg" alt="" />
         </div>
         <div class="c-email-modal-content">
             <h4>Confirm Your Email or Phone <br />Number</h4>
