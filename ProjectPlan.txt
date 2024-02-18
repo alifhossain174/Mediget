@@ -2,7 +2,7 @@
 1. Authentication (Done)
 2. Checkout & Order (Done)
 3. User Dashboard (Done)
-4. Header, Footer & SEO
-5. Nursing Service with Admin & User Dashboard
+4. Header, Footer & SEO (Done)
+5. Nursing Service with Admin & User Dashboard (Ongoing)
 6. Doctor Service with Admin & User Dashboard
 7. Medicine Request with Admin & User Dashboard

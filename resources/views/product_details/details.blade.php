@@ -1,5 +1,29 @@
 @extends('master')
 
+@push('site-seo')
+    @php
+        $generalInfo = DB::table('general_infos')->select('fav_icon', 'company_name')->where('id', 1)->first();
+    @endphp
+
+    <meta name="keywords" content="{{$product ? $product->meta_keywords : ''}}" />
+    <meta name="description" content="{{$product ? $product->meta_description : ''}}" />
+    <meta name="author" content="{{$generalInfo ? $generalInfo->company_name : ''}}">
+    <meta name="copyright" content="{{$generalInfo ? $generalInfo->company_name : ''}}">
+    <meta name="url" content="{{env('APP_URL')."/product/details/".$product->slug}}">
+
+    <title>@if($product->meta_title){{$product->meta_title}}@else{{$product->name}}@endif</title>
+    @if($generalInfo && $generalInfo->fav_icon)<link rel="icon" href="{{env('ADMIN_URL')."/".($generalInfo->fav_icon)}}" type="image/x-icon"/>@endif
+
+    <!-- Open Graph general (Facebook, Pinterest)-->
+    <meta property="og:title" content="@if($product->meta_title){{$product->meta_title}}@else{{$product->name}}@endif"/>
+    <meta property="og:type" content="{{$product->category_name}}"/>
+    <meta property="og:url" content="{{env('APP_URL')."/product/details/".$product->slug}}"/>
+    <meta property="og:image" content="{{env('ADMIN_URL')."/".$product->image}}"/>
+    <meta property="og:site_name" content="{{$generalInfo ? $generalInfo->company_name : ''}}"/>
+    <meta property="og:description" content="{{$product->short_description}}"/>
+    <!-- End Open Graph general (Facebook, Pinterest)-->
+@endpush
+
 @section('header_css')
     <style>
         .removeFromCartQty{

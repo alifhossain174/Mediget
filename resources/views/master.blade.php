@@ -16,14 +16,20 @@
 @endphp
 
 <head>
-    <meta charset="utf-8" />
-    <title>Mediget</title>
-    <meta name="description" content="Morden Bootstrap HTML5 Template" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Start Meta Data -->
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="shortcut icon" type="image/x-icon" href="{{url('assets')}}/img/favicon.svg" />
+    <!-- End Meta Data -->
+
+
+    @stack('site-seo')
+
 
     <!-- ======= All CSS Plugins here ======== -->
+    <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="{{url('assets')}}/css/vendor/bootstrap.min.css" />
     <link rel="stylesheet" href="{{url('assets')}}/css/plugins/animate.min.css" />
     <link rel="stylesheet" href="{{url('assets')}}/css/plugins/swiper-bundle.min.css" />
@@ -35,15 +41,19 @@
     <link rel="stylesheet" href="{{url('assets')}}/css/plugins/uicons.css" />
     <link rel="stylesheet" href="{{url('assets')}}/css/plugins/icofont.css" />
     <link rel="stylesheet" href="{{url('assets')}}/css/plugins/datepicker.css" />
-
-    <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap" rel="stylesheet" />
-
     <link rel="stylesheet" href="{{url('assets')}}/css/style.css" />
     <link rel="stylesheet" href="{{url('assets')}}/css/toastr.min.css">
 
     @yield('header_css')
 
     <style>
+        :root {
+            --primary-color: {{ $generalInfo->primary_color }};
+            --secondary-color: {{ $generalInfo->secondary_color }};
+            --text-gray-color: {{ $generalInfo->paragraph_color }};
+            --border-color: {{ $generalInfo->border_color }};
+        }
+
         .toast {
             font-size: 14px;
         }
@@ -71,12 +81,132 @@
             color: {{ $generalInfo->secondary_color }} !important;
         }
         /* default pagination end */
+
+        {!! $generalInfo->custom_css !!}
     </style>
+
+
+    @if ($generalInfo->google_tag_manager_status)
+        <!-- Google Tag Manager -->
+        <script>
+            (function(w, d, s, l, i) {
+                w[l] = w[l] || [];
+                w[l].push({
+                    'gtm.start': new Date().getTime(),
+                    event: 'gtm.js'
+                });
+                var f = d.getElementsByTagName(s)[0],
+                    j = d.createElement(s),
+                    dl = l != 'dataLayer' ? '&l=' + l : '';
+                j.async = true;
+                j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+                f.parentNode.insertBefore(j, f);
+            })(window, document, 'script', 'dataLayer', '{{ $generalInfo->google_tag_manager_id }}');
+        </script>
+        <!-- End Google Tag Manager-->
+    @endif
+
+    @if ($generalInfo->google_analytic_status)
+        <!-- Google tag (gtag.js) google analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id={{ $generalInfo->google_analytic_tracking_id }}" type="53191a76ba85f8f784cbe351-text/javascript"></script>
+        <script type="53191a76ba85f8f784cbe351-text/javascript">
+            window.dataLayer = window.dataLayer || [];
+
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
+            gtag('config', '{{$generalInfo->google_analytic_tracking_id}}');
+        </script>
+    @endif
+
+    @if ($generalInfo->fb_pixel_status)
+        <!-- Facebook Pixel Code -->
+        <script>
+            ! function(f, b, e, v, n, t, s) {
+                if (f.fbq) return;
+                n = f.fbq = function() {
+                    n.callMethod ?
+                        n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+                };
+                if (!f._fbq) f._fbq = n;
+                n.push = n;
+                n.loaded = !0;
+                n.version = '2.0';
+                n.queue = [];
+                t = b.createElement(e);
+                t.async = !0;
+                t.src = v;
+                s = b.getElementsByTagName(e)[0];
+                s.parentNode.insertBefore(t, s)
+            }(window, document, 'script',
+                'https://connect.facebook.net/en_US/fbevents.js');
+            fbq('init', '{{ $generalInfo->fb_pixel_app_id }}');
+            fbq('track', 'PageView');
+        </script>
+        <noscript>
+            <img height="1" width="1" style="display:none"
+                src="https://www.facebook.com/tr?id={{ $generalInfo->fb_pixel_app_id }}&ev=PageView&noscript=1" />
+        </noscript>
+        <!-- End Facebook Pixel Code -->
+    @endif
+
+    @if ($generalInfo->tawk_chat_status)
+        <!--Start of Tawk.to Script-->
+        <script type="text/javascript">
+            var Tawk_API = Tawk_API || {},
+                Tawk_LoadStart = new Date();
+            (function() {
+                var s1 = document.createElement("script"),
+                    s0 = document.getElementsByTagName("script")[0];
+                s1.async = true;
+                s1.src = '{{ $generalInfo->tawk_chat_link }}';
+                s1.charset = 'UTF-8';
+                s1.setAttribute('crossorigin', '*');
+                s0.parentNode.insertBefore(s1, s0);
+            })();
+        </script>
+        <!--End of Tawk.to Script-->
+    @endif
+
+    {!! $generalInfo->header_script !!}
 
 
 </head>
 
 <body>
+
+    @if ($generalInfo->messenger_chat_status)
+        <!-- Messenger Chat plugin Code -->
+        <div id="fb-root"></div>
+
+        <!-- Your Chat plugin code -->
+        <div id="fb-customer-chat" class="fb-customerchat"></div>
+
+        <script>
+            var chatbox = document.getElementById('fb-customer-chat');
+            chatbox.setAttribute("page_id", "{{ $generalInfo->fb_page_id }}");
+            chatbox.setAttribute("attribution", "biz_inbox");
+        </script>
+
+        <script>
+            window.fbAsyncInit = function() {
+                FB.init({
+                    xfbml            : true,
+                    version          : 'v18.0'
+                });
+            };
+
+            (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js';
+            fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+        </script>
+    @endif
 
     @stack('offcanvas_filter')
 
