@@ -548,18 +548,19 @@
                                 <a class="footer__widget--menu__text" href="{{url('/contact')}}">Contact us</a>
                             </li>
                             <li class="footer__widget--menu__list">
-                                <a class="footer__widget--menu__text" href="faq.html">FAQ</a>
+                                <a class="footer__widget--menu__text" href="{{url('/faq')}}">FAQ</a>
                             </li>
                             <li class="footer__widget--menu__list">
-                                <a class="footer__widget--menu__text" href="terms-condition.html">Terms and
-                                    condition</a>
+                                <a class="footer__widget--menu__text" href="{{url('/terms/of/services')}}">Terms of Services</a>
                             </li>
                             <li class="footer__widget--menu__list">
-                                <a class="footer__widget--menu__text" href="refund-policy.html">Return and refund
-                                    policy</a>
+                                <a class="footer__widget--menu__text" href="{{url('/refund/policy')}}">Return & Refund Policy</a>
                             </li>
                             <li class="footer__widget--menu__list">
-                                <a class="footer__widget--menu__text" href="privacy-policy.html">Privacy policy</a>
+                                <a class="footer__widget--menu__text" href="{{url('/privacy/policy')}}">Privacy Policy</a>
+                            </li>
+                            <li class="footer__widget--menu__list">
+                                <a class="footer__widget--menu__text" href="{{url('/shipping/policy')}}">Shipping Policy</a>
                             </li>
                         </ul>
                     </div>
@@ -604,40 +605,54 @@
                         <div class="footer__contact--list">
                             <p>Offline contact:</p>
                             <ul>
-                                <li><a href="tel:+8801234567890">+8801234567890</a></li>
-                                <li><a href="tel:+8801234567880">+8801234567880</a></li>
+                                @php
+                                    $contactNumbers = '';
+                                    foreach (explode(',', $generalInfo->contact) as $contact) {
+                                        $contactNumbers .= "<li><a href='tel:+".$contact."'>" . $contact . '</a></li>';
+                                    }
+                                @endphp
+                                {!! $contactNumbers !!}
                             </ul>
                         </div>
-                        <div class="footer__contact--list">
+
+                        <div class="footer__contact--list" style="margin-top: 18px;">
                             <p>Email:</p>
                             <ul>
-                                <li>
-                                    <a href="mailto:info@mediget.com.bd">info@mediget.com.bd</a>
-                                </li>
-                                <li>
-                                    <a href="mailto:inquery@mediget.com.bd">inquery@mediget.com.bd</a>
-                                </li>
+                                @php
+                                    $contactEmails = '';
+                                    foreach (explode(',', $generalInfo->email) as $email) {
+                                        $contactEmails .= "<li><a href='mailto:+".$email."'>" . $email . '</a></li>';
+                                    }
+                                @endphp
+                                {!! $contactEmails !!}
                             </ul>
                         </div>
-                        <div class="footer__social">
+
+                        @if($generalInfo->whatsapp || $generalInfo->messenger)
+                        <div class="footer__social" style="margin-top: 18px;">
                             <h3 class="social__title text-ofwhite h4 mb-15">Live chat:</h3>
                             <ul class="social__shear">
+                                @if($generalInfo->whatsapp)
                                 <li class="social__shear--list">
-                                    <a class="social__shear--list__icon" target="_blank"
-                                        href="https://www.whatsapp.com/">
+                                    <a class="social__shear--list__icon" target="_blank" href="{{$generalInfo->whatsapp}}">
                                         <i class="icofont-whatsapp"></i>
                                         Chat with WhatsApp
                                     </a>
                                 </li>
+                                @endif
+
+                                @if($generalInfo->messenger)
                                 <li class="social__shear--list">
-                                    <a class="social__shear--list__icon" target="_blank"
-                                        href="https://twitter.com/">
+                                    <a class="social__shear--list__icon" target="_blank" href="{{$generalInfo->messenger}}">
                                         <i class="icofont-facebook-messenger"></i>
                                         Chat with Messenger
                                     </a>
                                 </li>
+                                @endif
                             </ul>
                         </div>
+                        @endif
+
                     </div>
                 </div>
                 <div class="footer__widget footer__widget--width">
@@ -646,21 +661,21 @@
                         <button class="footer__widget--button" aria-label="footer widget button">
                             <svg class="footer__widget--title__arrowdown--icon" xmlns="http://www.w3.org/2000/svg"
                                 width="12.355" height="8.394" viewBox="0 0 10.355 6.394">
-                                <path d="M15.138,8.59l-3.961,3.952L7.217,8.59,6,9.807l5.178,5.178,5.178-5.178Z"
-                                    transform="translate(-6 -8.59)" fill="currentColor"></path>
+                                <path d="M15.138,8.59l-3.961,3.952L7.217,8.59,6,9.807l5.178,5.178,5.178-5.178Z" transform="translate(-6 -8.59)" fill="currentColor"></path>
                             </svg>
                         </button>
                     </h2>
                     <div class="footer__widget--inner">
                         <p class="footer__widget--desc text-ofwhite m-0">
-                            Fill their seed open meat. Sea you <br />
-                            great Saw image stl
+                            Take advantage of our special offer. <br>
+                            Don't worry, we will not spam you.
                         </p>
                         <div class="newsletter__subscribe">
-                            <form class="newsletter__subscribe--form" action="#">
+                            <form class="newsletter__subscribe--form" action="{{ url('subscribe/for/newsletter') }}" method="POST">
+                                @csrf
+                                @honeypot
                                 <label>
-                                    <input class="newsletter__subscribe--input" placeholder="Email Address"
-                                        type="email" />
+                                    <input class="newsletter__subscribe--input" name="email" placeholder="Email Address" type="email" />
                                 </label>
                                 <button class="newsletter__subscribe--button" type="submit">
                                     Subscribe
@@ -674,15 +689,14 @@
                 <div class="row align-items-center">
                     <div class="col-lg-6 col-12">
                         <p class="copyright__content text-ofwhite m-0">
-                            Copyright © 2023
-                            <a class="copyright__content--link" href="{{url('/')}}">Mediget</a>
-                            . All Rights Reserved.Design By Mediget
+                            {{ $generalInfo->footer_copyright_text }}
                         </p>
                     </div>
                     <div class="col-lg-6 col-12">
                         <div class="footer__payment text-right">
-                            <img class="display-block" src="{{url('assets')}}/img/other/payment-visa-card.png"
-                                alt="visa-card" />
+                            @if ($generalInfo && $generalInfo->payment_banner)
+                            <img class="display-block lazy" src="" data-src="{{ url(env('ADMIN_URL') . '/' . $generalInfo->payment_banner) }}" alt="payment-banner" />
+                            @endif
                         </div>
                     </div>
                 </div>

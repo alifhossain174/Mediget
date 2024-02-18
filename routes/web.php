@@ -23,8 +23,17 @@ Route::get('/product/details/{slug}', [FrontendController::class, 'productDetail
 
 
 Route::get('/about', [FrontendController::class, 'about'])->name('About');
+Route::get('/faq', [FrontendController::class, 'faq'])->name('Faq');
 Route::get('/contact', [FrontendController::class, 'contact'])->name('Contact');
 Route::post('/submit/contact/request', [FrontendController::class, 'submitContactRequest'])->name('SubmitContactRequest')->middleware(ProtectAgainstSpam::class)->middleware(['throttle:3,1']);
+Route::post('subscribe/for/newsletter', [FrontendController::class, 'subscribeForNewsletter'])->name('SubscribeForNewsletter')->middleware(ProtectAgainstSpam::class)->middleware(['throttle:3,1']);
+
+
+// policy pages
+Route::get('privacy/policy', [FrontendController::class, 'privacyPolicy'])->name('PrivacyPolicy');
+Route::get('terms/of/services', [FrontendController::class, 'termsOfServices'])->name('TermsOfServices');
+Route::get('refund/policy', [FrontendController::class, 'refundPolicy'])->name('RefundPolicy');
+Route::get('shipping/policy', [FrontendController::class, 'shippingPolicy'])->name('ShippingPolicy');
 
 
 // cart related routes

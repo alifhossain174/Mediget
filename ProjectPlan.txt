@@ -1,12 +1,14 @@
 
-1. Authentication (Done)
+1. User Authentication with Forget Password (Done)
 2. Checkout & Order (Done)
 3. User Dashboard (Done)
-5. About Us Page (Done)
-6. Contact Us Page
-7. Policy Pages
-4. Header, Footer & SEO (Ongoing)
-5. Mobile App Section (Ongoing)
-5. Nursing Service with Admin & User Dashboard
-6. Doctor Service with Admin & User Dashboard
-7. Medicine Request with Admin & User Dashboard
+4. About Us Page (Done)
+5. Contact Us Page (Done)
+6. FAQ Page (Done)
+7. Policy Pages (Done)
+8. Dyanmic Header, Footer & SEO (Done)
+
+09. Mobile App Section (Ongoing)
+10. Nursing Service with Admin & User Dashboard
+11. Doctor Service with Admin & User Dashboard
+12. Medicine Request with Admin & User Dashboard

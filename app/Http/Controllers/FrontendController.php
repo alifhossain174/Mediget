@@ -189,6 +189,11 @@ class FrontendController extends Controller
         return view('about', compact('data'));
     }
 
+    public function faq(){
+        $data = DB::table('faqs')->orderBy('id', 'desc')->get();
+        return view('faq', compact('data'));
+    }
+
     public function contact(){
         $contactInfo = DB::table('general_infos')->select('contact', 'email', 'address', 'facebook', 'twitter', 'instagram', 'linkedin', 'messenger', 'youtube', 'whatsapp', 'telegram', 'tiktok', 'pinterest', 'viber')->first();
         $mapInfo = DB::table('general_infos')->select('google_map_link')->where('id', 1)->first();
@@ -234,5 +239,49 @@ class FrontendController extends Controller
 
     public function requestMedicine(){
         return view('request_medicine');
+    }
+
+    public function subscribeForNewsletter(Request $request){
+
+        $data = DB::table('subscribed_users')->where('email', trim($request->email))->first();
+        if($data){
+            Toastr::warning('Already Subscribed', 'Success');
+            return back();
+        } else {
+            DB::table('subscribed_users')->insert([
+                'email' => $request->email,
+                'created_at' => Carbon::now()
+            ]);
+            Toastr::success('Successfully Subscribed', 'Success');
+            return back();
+        }
+    }
+
+    public function privacyPolicy(){
+        $pageTitle = "Privacy Policy";
+        $pageUrl = url('/privacy/policy');
+        $policy = DB::table('terms_and_policies')->select('privacy_policy as policy')->first();
+        return view('policy', compact('pageTitle', 'pageUrl', 'policy'));
+    }
+
+    public function termsOfServices(){
+        $pageTitle = "Terms of Services";
+        $pageUrl = url('/terms/of/services');
+        $policy = DB::table('terms_and_policies')->select('terms as policy')->first();
+        return view('policy', compact('pageTitle', 'pageUrl', 'policy'));
+    }
+
+    public function refundPolicy(){
+        $pageTitle = "Refund Policy";
+        $pageUrl = url('/refund/policy');
+        $policy = DB::table('terms_and_policies')->select('return_policy as policy')->first();
+        return view('policy', compact('pageTitle', 'pageUrl', 'policy'));
+    }
+
+    public function shippingPolicy(){
+        $pageTitle = "Shipping Policy";
+        $pageUrl = url('/shipping/policy');
+        $policy = DB::table('terms_and_policies')->select('shipping_policy as policy')->first();
+        return view('policy', compact('pageTitle', 'pageUrl', 'policy'));
     }
 }
