@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 
 class FrontendController extends Controller
 {
@@ -14,7 +15,8 @@ class FrontendController extends Controller
         $flags = DB::table('flags')->where('status', 1)->orderBy('serial', 'asc')->get();
         $diseases = DB::table('diseases')->where('status', 1)->orderBy('serial', 'asc')->get();
         $sliders = DB::table('banners')->where('type', 1)->orderBy('serial', 'asc')->get();
-        return view('index', compact('featuedCategories', 'flags', 'diseases', 'sliders'));
+        $services = DB::table('services')->where('status', 1)->whereIn('id', [1,2,3,4,5])->get();
+        return view('index', compact('featuedCategories', 'flags', 'diseases', 'sliders', 'services'));
     }
 
     public function otc(){
@@ -255,6 +257,75 @@ class FrontendController extends Controller
             Toastr::success('Successfully Subscribed', 'Success');
             return back();
         }
+    }
+
+    public function sendAppLink(Request $request){
+
+        if($request->phone == ''){
+            Toastr::error('Phone No is Required', 'Success');
+            return back();
+        }
+
+        // Remove any non-numeric characters from the phone number
+        $phoneNumber = preg_replace('/[^0-9]/', '', $request->phone);
+
+        // Check if the phone number starts with 88 (country code for Bangladesh) and has a total length of 11 digits
+        if (preg_match('/^[0-9]{11}$/', $phoneNumber)) {
+
+            // $smsGateway = DB::table('sms_gateways')->where('status', 1)->first();
+            // $appSection = DB::table('mobile_apps')->where('id', 1)->first();
+
+            // $msg = '';
+            // if($appSection->play_store_link){
+            //     $msg .= "Play Store: ". $appSection->play_store_link." ";
+            // }
+            // if($appSection->app_store_link){
+            //     $msg .= "Apple Store: ". $appSection->app_store_link;
+            // }
+
+            // if($smsGateway && $smsGateway->provider_name == 'Reve'){
+
+            //     $response = Http::get($smsGateway->api_endpoint, [
+            //         'apikey' => $smsGateway->api_key,
+            //         'secretkey' => $smsGateway->secret_key,
+            //         "callerID" => $smsGateway->sender_id,
+            //         "toUser" => $request->phone,
+            //         "messageContent" => $msg,
+            //     ]);
+
+            //     if($response->status() != 200){
+            //         Toastr::error('Something Went Wrong', 'Failed to send SMS');
+            //         return back();
+            //     }
+
+            // } elseif($smsGateway && $smsGateway->provider_name == 'ElitBuzz'){
+
+            //     $response = Http::get($smsGateway->api_endpoint, [
+            //         'api_key' => $smsGateway->api_key,
+            //         "type" => "text",
+            //         "contacts" => $request->phone, //“88017xxxxxxxx,88018xxxxxxxx”
+            //         "senderid" => $smsGateway->sender_id,
+            //         "msg" => $msg
+            //     ]);
+
+            //     if($response->status() != 200){
+            //         Toastr::error('Something Went Wrong', 'Failed to send SMS');
+            //         return back();
+            //     }
+
+            // } else {
+            //     Toastr::error('No SMS Gateway is Active Now', 'Failed to send SMS');
+            //     return back();
+            // }
+
+            Toastr::error('No SMS Gateway is Active Now', 'Failed to send SMS');
+            return back();
+
+        } else {
+            Toastr::error('Phone No is not valid', 'Invalid Phone No');
+            return back();
+        }
+
     }
 
     public function privacyPolicy(){

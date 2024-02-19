@@ -8,7 +8,9 @@
 7. Policy Pages (Done)
 8. Dyanmic Header, Footer & SEO (Done)
 
-09. Mobile App Section (Ongoing)
+09. Mobile App Section (Done)
+10. Service Config (Done)
+10. Social Login
 10. Nursing Service with Admin & User Dashboard
 11. Doctor Service with Admin & User Dashboard
 12. Medicine Request with Admin & User Dashboard

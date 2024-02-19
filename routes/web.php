@@ -27,6 +27,7 @@ Route::get('/faq', [FrontendController::class, 'faq'])->name('Faq');
 Route::get('/contact', [FrontendController::class, 'contact'])->name('Contact');
 Route::post('/submit/contact/request', [FrontendController::class, 'submitContactRequest'])->name('SubmitContactRequest')->middleware(ProtectAgainstSpam::class)->middleware(['throttle:3,1']);
 Route::post('subscribe/for/newsletter', [FrontendController::class, 'subscribeForNewsletter'])->name('SubscribeForNewsletter')->middleware(ProtectAgainstSpam::class)->middleware(['throttle:3,1']);
+Route::post('send/app/link', [FrontendController::class, 'sendAppLink'])->name('SendAppLink')->middleware(ProtectAgainstSpam::class)->middleware(['throttle:3,1']);
 
 
 // policy pages
@@ -57,8 +58,6 @@ Route::group(['middleware' => ['web']], function () { //wihout web middleware se
     Route::get('/new/password', [ForgetPasswordController::class, 'newPasswordPage'])->name('NewPasswordPage');
     Route::post('/change/forgotten/password', [ForgetPasswordController::class, 'changeForgetPassword'])->name('ChangeForgetPassword');
 });
-
-
 
 
 
