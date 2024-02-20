@@ -10,6 +10,7 @@ use App\Http\Controllers\ForgetPasswordController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\SupportTicketController;
+use App\Http\Controllers\GoogleController;
 use Spatie\Honeypot\ProtectAgainstSpam;
 
 Auth::routes();
@@ -43,11 +44,11 @@ Route::post('add/to/cart/with/qty', [CartController::class, 'addToCartWithQty'])
 Route::get('remove/cart/item/{id}', [CartController::class, 'removeCartTtem'])->name('RemoveCartTtem');
 Route::post('update/cart/qty', [CartController::class, 'updateCartQty'])->name('UpdateCartQty');
 
-
-Route::get('/nursing/service/request', [FrontendController::class, 'nursingService'])->name('NursingService');
+// services
 Route::get('/doctors', [FrontendController::class, 'doctors'])->name('Doctors');
 Route::get('/doctor/details/{slug}', [FrontendController::class, 'doctorDetails'])->name('DoctorDetails');
 Route::get('/upload/prescription', [FrontendController::class, 'uploadPrescription'])->name('UploadPrescription');
+Route::post('/submit/my/prescription', [FrontendController::class, 'submitMyPrescription'])->name('SubmitMyPrescription');
 Route::get('/request/medicine', [FrontendController::class, 'requestMedicine'])->name('RequestMedicine');
 
 
@@ -60,6 +61,11 @@ Route::group(['middleware' => ['web']], function () { //wihout web middleware se
 });
 
 
+// social login
+Route::get('auth/google', [GoogleController::class, 'redirectToGoogle'])->name('RedirectToGoogle');
+Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback'])->name('HandleGoogleCallback');
+
+
 
 Route::group(['middleware' => ['auth']], function () {
 
@@ -70,6 +76,11 @@ Route::group(['middleware' => ['auth']], function () {
 
 
     Route::group(['middleware' => ['CheckUserVerification']], function () {
+
+        // services
+        Route::get('/nursing/service/request', [FrontendController::class, 'nursingService'])->name('NursingService');
+        Route::post('/submit/nursing/request', [FrontendController::class, 'submitNursingRequest'])->name('SubmitNursingRequest')->middleware(ProtectAgainstSpam::class)->middleware(['throttle:3,1']);
+        Route::get('/my/nursing/services', [FrontendController::class, 'myNursingServices'])->name('MyNursingServices');
 
         Route::post('submit/product/review', [HomeController::class, 'submitProductReview'])->name('SubmitProductReview');
         Route::get('add/to/wishlist/{slug}', [HomeController::class, 'addToWishlist'])->name('AddToWishlist');

@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use CURLFile;
 use Illuminate\Http\Request;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Http;
 
 class FrontendController extends Controller
@@ -16,7 +18,8 @@ class FrontendController extends Controller
         $diseases = DB::table('diseases')->where('status', 1)->orderBy('serial', 'asc')->get();
         $sliders = DB::table('banners')->where('type', 1)->orderBy('serial', 'asc')->get();
         $services = DB::table('services')->where('status', 1)->whereIn('id', [1,2,3,4,5])->get();
-        return view('index', compact('featuedCategories', 'flags', 'diseases', 'sliders', 'services'));
+        $prescriptionService = DB::table('services')->where('status', 1)->where('id', 6)->first();
+        return view('index', compact('featuedCategories', 'flags', 'diseases', 'sliders', 'services', 'prescriptionService'));
     }
 
     public function otc(){
@@ -224,7 +227,8 @@ class FrontendController extends Controller
     }
 
     public function nursingService(){
-        return view('nursing_service');
+        $services = DB::table('nursing_services')->orderBy('name', 'asc')->get();
+        return view('nursing_service', compact('services'));
     }
 
     public function doctors(){
@@ -237,6 +241,48 @@ class FrontendController extends Controller
 
     public function uploadPrescription(){
         return view('upload_prescription');
+    }
+
+    public function submitMyPrescription(Request $request){
+
+        $attachment = NULL;
+
+        if ($request->hasFile('attachment')){
+            $get_attachment = $request->file('attachment');
+            $attachment_name = str::random(5) . time() . '.' . $get_attachment->getClientOriginalExtension();
+            $location = public_path('prescriptions/');
+            $get_attachment->move($location, $attachment_name);
+            $attachment = "prescriptions/" . $attachment_name;
+
+            $curl = curl_init();
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => env('ADMIN_URL').'/api/upload/prescription',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_POSTFIELDS => array(
+                    'attachment'=> new CURLFile(public_path($attachment))
+                ),
+            ));
+            $response = curl_exec($curl);
+            curl_close($curl);
+        }
+
+        DB::table('prescriptions')->insert([
+            'patient_name' => $request->patient_name,
+            'patient_phone' => $request->patient_phone,
+            'address' => $request->address,
+            'attachment' => $attachment,
+            'slug' => str::random(5) . time(),
+            'status' => 0,
+            'created_at' => Carbon::now()
+        ]);
+        Toastr::success('Prescription Uploaded Successfully', 'Success');
+        return back();
     }
 
     public function requestMedicine(){
@@ -326,6 +372,27 @@ class FrontendController extends Controller
             return back();
         }
 
+    }
+
+    public function submitNursingRequest(Request $request){
+
+        DB::table('nursing_service_requests')->insert([
+            'service_id' => $request->service_id,
+            'service_date_time' => $request->service_date_time,
+            'patient_name' => $request->patient_name,
+            'patient_phone' => $request->patient_phone,
+            'remarks' => $request->remarks,
+            'slug' => str::random(5) . time(),
+            'status' => 0,
+            'created_at' => Carbon::now()
+        ]);
+
+        Toastr::success('Request Submitted Successfully', 'Success');
+        return back();
+    }
+
+    public function myNursingServices(){
+        //
     }
 
     public function privacyPolicy(){

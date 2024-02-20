@@ -35,22 +35,23 @@
     <section class="banner__section section--padding pt-0">
         <div class="container">
             <div class="row">
-                <div class="col-lg-6 col-md-6 col-12">
-                    <div class="single-banner" style="background-image: url('{{url('assets')}}/img/banner/banner-1.png');">
+                @if(isset($prescriptionService) && $prescriptionService->status == 1)
+                <div class="col">
+                    <div class="single-banner" style="@if($prescriptionService->banner) background-image: url('{{env('Admin_URL').'/'.$prescriptionService->banner}}'); @else background-image: url('{{url('assets')}}/img/banner/banner-1.png'); @endif">
                         <div class="banner-content">
-                            <h3>Upload your prescription</h3>
-                            <a href="{{url('upload/prescription')}}" class="primary__btn">Upload prescription<svg
-                                    class="primary__btn--arrow__icon" xmlns="http://www.w3.org/2000/svg" width="20.2"
-                                    height="12.2" viewBox="0 0 6.2 6.2">
-                                    <path
-                                        d="M7.1,4l-.546.546L8.716,6.713H4v.775H8.716L6.554,9.654,7.1,10.2,9.233,8.067,10.2,7.1Z"
+                            <h3>{{$prescriptionService->title}}</h3>
+                            <a href="{{url('upload/prescription')}}" class="primary__btn">{{$prescriptionService->button_text}}
+                                <svg class="primary__btn--arrow__icon" xmlns="http://www.w3.org/2000/svg" width="20.2" height="12.2" viewBox="0 0 6.2 6.2">
+                                    <path d="M7.1,4l-.546.546L8.716,6.713H4v.775H8.716L6.554,9.654,7.1,10.2,9.233,8.067,10.2,7.1Z"
                                         transform="translate(-4 -4)" fill="currentColor"></path>
                                 </svg>
                             </a>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6 col-md-6 col-12">
+                @endif
+
+                <div class="col">
                     <div class="single-banner" style="background-image: url('./assets/img/banner/banner-2.png');">
                         <div class="banner-content">
                             <h3>Get Doctor Appoinment</h3>
@@ -65,6 +66,7 @@
                         </div>
                     </div>
                 </div>
+                
             </div>
         </div>
     </section>

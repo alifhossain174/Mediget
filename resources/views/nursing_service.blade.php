@@ -26,6 +26,60 @@
 @endpush
 
 
+@section('header_css')
+    <link href="{{url('assets')}}/css/plugins/select2.min.css" rel="stylesheet" type="text/css" />
+    <style>
+        .select2-selection{
+            height: 34px !important;
+            border: 1px solid #ced4da !important;
+        }
+        .select2 {
+            width: 100% !important;
+        }
+
+        .select2 .selection{
+            width: 100%;
+        }
+
+        .select2-selection{
+            height: 40px !important;
+        }
+        .select2-container--default .select2-selection--single .select2-selection__rendered{
+            line-height: 37px;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__arrow{
+            top: 6px !important;
+        }
+
+        .select-style-2 .nice-select .list{
+            max-height: 240px;
+            overflow: scroll;
+        }
+
+        .select2-search__field:focus {
+            border: 1px solid #aaa !important;
+        }
+
+        .select2-container--open .select2-dropdown{
+            top: -7px;
+        }
+
+        .select2-container--default .select2-selection--multiple .select2-selection__choice {
+            border: 1px solid var(--primary-color);
+            border-radius: 4px;
+            padding: 5px 8px;
+            background: var(--primary-color);
+            cursor: pointer;
+        }
+
+        .select2-container--default .select2-selection--multiple .select2-selection__choice__remove{
+            padding-left: 4px;
+        }
+    </style>
+@endsection
+
+
 @section('content')
     <!-- Start breadcrumb section -->
     <section class="breadcrumb__section breadcrumb__bg">
@@ -56,36 +110,30 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-8 col-xl-5 col-md-8 col-12">
-                    <form action="#" method="post" class="request-medicine-form">
+                    <form action="{{url('submit/nursing/request')}}" method="post" class="request-medicine-form" enctype="multipart/form-data">
+                        @csrf
+                        @honeypot
                         <div class="form-group">
-                            <label>Services</label>
-                            <select class="js-example-basic-multiple" name="states[]" multiple="multiple">
-                                <option value="1">
-                                    Dressing and Injection <span>200 BDT</span>
-                                </option>
-                                <option value="2">Injection <span>400 BDT</span></option>
-                                <option value="3">Dressing <span>600 BDT</span></option>
+                            <label>Choose Your Desired Service</label>
+                            <select class="form-select" name="service_id" data-toggle="select2" required>
+                                <option value="">Select One</option>
+                                @foreach ($services as $service)
+                                <option value="{{$service->id}}">{{$service->name}} <span> - {{$service->price}}</span></option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="form-group" style="position: relative">
                             <label>Date & time</label>
-                            <input name="date" type="text" placeholder="Date &amp; Time" required="required"
-                                class="datetimepicker" autocomplete="off" />
-                            <i class="icofont-calendar"
-                                style="
-                      position: absolute;
-                      right: 18px;
-                      top: 41px;
-                      font-size: 18px;
-                    "></i>
+                            <input type="text" id="service_date_time" name="service_date_time" placeholder="Date & Time" required="required" class="datetimepicker" autocomplete="off" required/>
+                            <i class="icofont-calendar" style="position: absolute; right: 18px; top: 41px; font-size: 18px;"></i>
                         </div>
                         <div class="form-group">
                             <label>Patient name</label>
-                            <input type="text" name="patient-name" required />
+                            <input type="text" name="patient_name" value="{{Auth::user()->name}}" required />
                         </div>
                         <div class="form-group">
                             <label>Phone</label>
-                            <input type="tel" name="phone" required />
+                            <input type="tel" name="patient_phone" value="{{Auth::user()->phone}}" required />
                         </div>
                         <div class="form-group">
                             <label>Remarks</label>
@@ -104,3 +152,12 @@
 
     @include('mobile_app')
 @endsection
+
+
+@section('footer_js')
+    <script src="{{url('assets')}}/js/plugins/select2.min.js"></script>
+    <script>
+        $('[data-toggle="select2"]').select2();
+    </script>
+@endsection
+

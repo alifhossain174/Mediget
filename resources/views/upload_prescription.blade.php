@@ -55,29 +55,29 @@
             <div class="row justify-content-center">
                 <div class="col-lg-8 col-xl-5 col-md-8 col-12">
                     <div class="upload-prescription-content">
-                        <form class="upload-prescription-form" action="#" method="post">
+                        <form class="upload-prescription-form" action="{{url('submit/my/prescription')}}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            @honeypot
                             <div class="row">
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label>Patient name</label><input type="text" name="full-name" required />
+                                        <label>Patient name</label><input type="text" name="patient_name" required />
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label>Phone number</label><input type="tel" name="number" required />
+                                        <label>Phone number</label><input type="text" name="patient_phone" required />
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label>Delivery address</label><input type="text" name="delivery-address"
-                                            required />
+                                        <label>Delivery address</label><input type="text" name="address" required />
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="upload-img-input">
                                         <div class="library-photo-input">
-                                            <input type="file" accept="image*,.pdf*" id="library-photo-input"
-                                                class="hidden" onchange="uploadLibraryPhoto()" />
+                                            <input type="file" name="attachment" accept="image*,.pdf*" id="library-photo-input" class="hidden" onchange="uploadLibraryPhoto()" />
                                             <label for="library-photo-input">
                                                 <i class="fi-rr-plus"></i>
                                                 <span>Choose file</span>
@@ -85,8 +85,7 @@
                                             </label>
                                         </div>
                                         <div class="remove-icon-main" style="position: relative">
-                                            <div class="remove-icon" id="remove-icon" style="display: none"
-                                                onclick="removeImage()">
+                                            <div class="remove-icon" id="remove-icon" style="display: none" onclick="removeImage()">
                                                 <i class="fi fi-rr-cross"></i>
                                             </div>
                                             <img id="uploaded-image" style="display: none" src="" />
@@ -110,4 +109,58 @@
     <!-- End Upload Prescription section -->
 
     @include('mobile_app')
+@endsection
+
+@section('footer_js')
+    <!-- Image Upload JS -->
+    <script type="text/javascript">
+        function uploadLibraryPhoto() {
+          // Get the file that the user selected.
+          const fileInput = document.getElementById("library-photo-input");
+          const file = fileInput.files[0];
+
+          // Check if a file was selected
+          if (file) {
+            // Create a new FileReader
+            const reader = new FileReader();
+
+            // Set up the onload event handler for the reader
+            reader.onload = function () {
+              // Get the element where you want to display the uploaded image.
+              const imageElement = document.getElementById("uploaded-image");
+
+              // Get the remove icon element
+              const removeIcon = document.getElementById("remove-icon");
+
+              // Set the source of the image element to the data URL from the FileReader.
+              imageElement.src = reader.result;
+
+              // Show the image element.
+              imageElement.style.display = "block";
+
+              // Show the remove icon.
+              removeIcon.style.display = "block";
+            };
+
+            // Read the file as a data URL
+            reader.readAsDataURL(file);
+          }
+        }
+
+        function removeImage() {
+            // Get the image element
+            const imageElement = document.getElementById("uploaded-image");
+            // Get the remove icon element
+            const removeIcon = document.getElementById("remove-icon");
+            // Hide the image element
+            imageElement.style.display = "none";
+            // Clear the source (removes the image)
+            imageElement.src = "";
+            // Hide the remove icon again
+            removeIcon.style.display = "none";
+            // Reset the file input
+            const fileInput = document.getElementById("library-photo-input");
+            fileInput.value = "";
+        }
+      </script>
 @endsection
