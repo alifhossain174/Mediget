@@ -1425,7 +1425,7 @@
   text-align: center;
 }
 .d-appoinment-action-menu .dropdown-menu.show {
-  transform: translate(-88px, 36.4px) !important;
+  transform: translate(-60px, 35px) !important;
 }
 
 .payment-history-table-data thead th:last-child,

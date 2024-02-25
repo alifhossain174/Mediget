@@ -11,6 +11,7 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\SupportTicketController;
 use App\Http\Controllers\GoogleController;
+use App\Http\Controllers\ServiceController;
 use Spatie\Honeypot\ProtectAgainstSpam;
 
 Auth::routes();
@@ -47,9 +48,6 @@ Route::post('update/cart/qty', [CartController::class, 'updateCartQty'])->name('
 // services
 Route::get('/doctors', [FrontendController::class, 'doctors'])->name('Doctors');
 Route::get('/doctor/details/{slug}', [FrontendController::class, 'doctorDetails'])->name('DoctorDetails');
-Route::get('/upload/prescription', [FrontendController::class, 'uploadPrescription'])->name('UploadPrescription');
-Route::post('/submit/my/prescription', [FrontendController::class, 'submitMyPrescription'])->name('SubmitMyPrescription');
-Route::get('/request/medicine', [FrontendController::class, 'requestMedicine'])->name('RequestMedicine');
 
 
 // forget password
@@ -77,10 +75,24 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::group(['middleware' => ['CheckUserVerification']], function () {
 
-        // services
-        Route::get('/nursing/service/request', [FrontendController::class, 'nursingService'])->name('NursingService');
-        Route::post('/submit/nursing/request', [FrontendController::class, 'submitNursingRequest'])->name('SubmitNursingRequest')->middleware(ProtectAgainstSpam::class)->middleware(['throttle:3,1']);
-        Route::get('/my/nursing/services', [FrontendController::class, 'myNursingServices'])->name('MyNursingServices');
+        // nursing services
+        Route::get('/nursing/service/request', [ServiceController::class, 'nursingService'])->name('NursingService');
+        Route::post('/submit/nursing/request', [ServiceController::class, 'submitNursingRequest'])->name('SubmitNursingRequest')->middleware(ProtectAgainstSpam::class)->middleware(['throttle:4,1']);
+        Route::get('/my/nursing/services', [ServiceController::class, 'myNursingServices'])->name('MyNursingServices');
+        Route::get('/remove/nursing/request/{slug}', [ServiceController::class, 'removeNursingRequest'])->name('RemoveNursingRequest');
+        Route::get('/edit/nursing/request/{slug}', [ServiceController::class, 'editNursingRequest'])->name('EditNursingRequest');
+        Route::post('/update/nursing/request', [ServiceController::class, 'updateNursingRequest'])->name('UpdateNursingRequest');
+
+        // prescription services
+        Route::get('/upload/prescription', [FrontendController::class, 'uploadPrescription'])->name('UploadPrescription');
+        Route::post('/submit/my/prescription', [FrontendController::class, 'submitMyPrescription'])->name('SubmitMyPrescription')->middleware(ProtectAgainstSpam::class)->middleware(['throttle:4,1']);
+        Route::get('/my/prescriptions', [FrontendController::class, 'myPrescriptions'])->name('MyPrescriptions');
+        Route::get('/remove/prescription/{slug}', [FrontendController::class, 'removePrescription'])->name('RemovePrescription');
+        Route::get('/edit/prescription/{slug}', [FrontendController::class, 'editPrescription'])->name('EditPrescription');
+        Route::post('/update/my/prescription', [FrontendController::class, 'updatePrescription'])->name('UpdatePrescription');
+
+        // medicine from abroad service
+        Route::get('/request/medicine', [FrontendController::class, 'requestMedicine'])->name('RequestMedicine');
 
         Route::post('submit/product/review', [HomeController::class, 'submitProductReview'])->name('SubmitProductReview');
         Route::get('add/to/wishlist/{slug}', [HomeController::class, 'addToWishlist'])->name('AddToWishlist');

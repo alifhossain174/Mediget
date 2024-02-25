@@ -27,9 +27,12 @@
             <li>
                 <a class="{{ (Request::path() == 'home') ? 'active' : ''}}" href="{{url('/home')}}"><i class="fi-ss-apps"></i>Dashboard</a>
             </li>
-            {{-- <li>
+            <li>
+                <a class="{{ (Request::path() == 'my/prescriptions') ? 'active' : ''}}" href="{{url('my/prescriptions')}}"><i class="fi-ss-file"></i>My Prescriptions</a>
+            </li>
+            <li>
                 <a class="{{ (Request::path() == 'my/nursing/services') ? 'active' : ''}}" href="{{url('/my/nursing/services')}}"><i class="icofont-medical-sign" style="top: 0"></i>Nursing Services</a>
-            </li> --}}
+            </li>
             <li>
                 <a class="{{ (Request::path() == 'my/orders') || (str_contains(Request::path(), 'order/details')) || (str_contains(Request::path(), 'track/my/order')) ? 'active' : ''}}" href="{{url('/my/orders')}}"><i class="fi-ss-shopping-cart"></i>My orders</a>
             </li>

@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use CURLFile;
 use Illuminate\Http\Request;
 use Brian2694\Toastr\Facades\Toastr;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Http;
@@ -19,6 +20,7 @@ class FrontendController extends Controller
         $sliders = DB::table('banners')->where('type', 1)->orderBy('serial', 'asc')->get();
         $services = DB::table('services')->where('status', 1)->whereIn('id', [1,2,3,4,5])->get();
         $prescriptionService = DB::table('services')->where('status', 1)->where('id', 6)->first();
+        // $abroadMedicineService =
         return view('index', compact('featuedCategories', 'flags', 'diseases', 'sliders', 'services', 'prescriptionService'));
     }
 
@@ -226,11 +228,6 @@ class FrontendController extends Controller
         return back();
     }
 
-    public function nursingService(){
-        $services = DB::table('nursing_services')->orderBy('name', 'asc')->get();
-        return view('nursing_service', compact('services'));
-    }
-
     public function doctors(){
         return view('doctors');
     }
@@ -244,6 +241,9 @@ class FrontendController extends Controller
     }
 
     public function submitMyPrescription(Request $request){
+
+        ini_set('memory_limit', '2048M');
+        ini_set('max_execution_time', 600);
 
         $attachment = NULL;
 
@@ -272,7 +272,8 @@ class FrontendController extends Controller
             curl_close($curl);
         }
 
-        DB::table('prescriptions')->insert([
+        $id = DB::table('prescriptions')->insertGetId([
+            'user_id' => Auth::user()->id,
             'patient_name' => $request->patient_name,
             'patient_phone' => $request->patient_phone,
             'address' => $request->address,
@@ -281,8 +282,78 @@ class FrontendController extends Controller
             'status' => 0,
             'created_at' => Carbon::now()
         ]);
+
+        $serialNo = $id.env("APP_NAME"). str_pad(DB::table('prescriptions')->count()+1, 5, "0", STR_PAD_LEFT);
+        DB::table('prescriptions')->where('id', $id)->update([
+            'serial_no' => $serialNo
+        ]);
+
         Toastr::success('Prescription Uploaded Successfully', 'Success');
         return back();
+    }
+
+    public function myPrescriptions(){
+        $data = DB::table('prescriptions')
+                ->where('user_id', Auth::user()->id)
+                ->orderBy('id', 'desc')
+                ->paginate(10);
+
+        return view('dashboard.my_prescriptions', compact('data'));
+    }
+
+    public function removePrescription($slug){
+        DB::table('prescriptions')->where('slug', $slug)->where('user_id', Auth::user()->id)->delete();
+        Toastr::error('Prescription Deleted Successfully', 'Removed');
+        return back();
+    }
+
+    public function editPrescription($slug){
+        $data = DB::table('prescriptions')->where('slug', $slug)->where('user_id', Auth::user()->id)->first();
+        return view('edit_prescription', compact('data'));
+    }
+
+    public function updatePrescription(Request $request){
+        ini_set('memory_limit', '2048M');
+        ini_set('max_execution_time', 600);
+
+        $prescriptionInfo = DB::table('prescriptions')->where('slug', $request->prescription_slug)->where('user_id', Auth::user()->id)->first();
+        $attachment = $prescriptionInfo->attachment;
+
+        if ($request->hasFile('attachment')){
+            $get_attachment = $request->file('attachment');
+            $attachment_name = str::random(5) . time() . '.' . $get_attachment->getClientOriginalExtension();
+            $location = public_path('prescriptions/');
+            $get_attachment->move($location, $attachment_name);
+            $attachment = "prescriptions/" . $attachment_name;
+
+            $curl = curl_init();
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => env('ADMIN_URL').'/api/upload/prescription',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_POSTFIELDS => array(
+                    'attachment'=> new CURLFile(public_path($attachment))
+                ),
+            ));
+            $response = curl_exec($curl);
+            curl_close($curl);
+        }
+
+        DB::table('prescriptions')->where('slug', $request->prescription_slug)->update([
+            'patient_name' => $request->patient_name,
+            'patient_phone' => $request->patient_phone,
+            'address' => $request->address,
+            'attachment' => $attachment,
+            'updated_at' => Carbon::now()
+        ]);
+
+        Toastr::success('Prescription Updated Successfully', 'Success');
+        return redirect('my/prescriptions');
     }
 
     public function requestMedicine(){
@@ -374,26 +445,7 @@ class FrontendController extends Controller
 
     }
 
-    public function submitNursingRequest(Request $request){
 
-        DB::table('nursing_service_requests')->insert([
-            'service_id' => $request->service_id,
-            'service_date_time' => $request->service_date_time,
-            'patient_name' => $request->patient_name,
-            'patient_phone' => $request->patient_phone,
-            'remarks' => $request->remarks,
-            'slug' => str::random(5) . time(),
-            'status' => 0,
-            'created_at' => Carbon::now()
-        ]);
-
-        Toastr::success('Request Submitted Successfully', 'Success');
-        return back();
-    }
-
-    public function myNursingServices(){
-        //
-    }
 
     public function privacyPolicy(){
         $pageTitle = "Privacy Policy";

@@ -1,4 +1,6 @@
-2. Nursing Service with Admin & User Dashboard (User Dashboard Remain)
-3. Doctor Service with Admin & User Dashboard
-4. Medicine Request with Admin & User Dashboard
-5. Prescription Upload
+1. Nursing Service with Admin & User Dashboard (Done)
+2. Prescription Service Admin & User Dashboard (Done)
+3. Medicine Request with Admin & User Dashboard
+4. Doctor Service with Admin & User Dashboard
+
+
