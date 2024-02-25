@@ -3,13 +3,9 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
-use CURLFile;
 use Illuminate\Http\Request;
 use Brian2694\Toastr\Facades\Toastr;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Http;
 
 class FrontendController extends Controller
 {
@@ -20,8 +16,8 @@ class FrontendController extends Controller
         $sliders = DB::table('banners')->where('type', 1)->orderBy('serial', 'asc')->get();
         $services = DB::table('services')->where('status', 1)->whereIn('id', [1,2,3,4,5])->get();
         $prescriptionService = DB::table('services')->where('status', 1)->where('id', 6)->first();
-        // $abroadMedicineService =
-        return view('index', compact('featuedCategories', 'flags', 'diseases', 'sliders', 'services', 'prescriptionService'));
+        $abroadMedicineService = DB::table('services')->where('id', 8)->first();
+        return view('index', compact('featuedCategories', 'flags', 'diseases', 'sliders', 'services', 'prescriptionService', 'abroadMedicineService'));
     }
 
     public function otc(){
@@ -236,130 +232,6 @@ class FrontendController extends Controller
         return view('doctor_details');
     }
 
-    public function uploadPrescription(){
-        return view('upload_prescription');
-    }
-
-    public function submitMyPrescription(Request $request){
-
-        ini_set('memory_limit', '2048M');
-        ini_set('max_execution_time', 600);
-
-        $attachment = NULL;
-
-        if ($request->hasFile('attachment')){
-            $get_attachment = $request->file('attachment');
-            $attachment_name = str::random(5) . time() . '.' . $get_attachment->getClientOriginalExtension();
-            $location = public_path('prescriptions/');
-            $get_attachment->move($location, $attachment_name);
-            $attachment = "prescriptions/" . $attachment_name;
-
-            $curl = curl_init();
-            curl_setopt_array($curl, array(
-                CURLOPT_URL => env('ADMIN_URL').'/api/upload/prescription',
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => '',
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 0,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => 'POST',
-                CURLOPT_POSTFIELDS => array(
-                    'attachment'=> new CURLFile(public_path($attachment))
-                ),
-            ));
-            $response = curl_exec($curl);
-            curl_close($curl);
-        }
-
-        $id = DB::table('prescriptions')->insertGetId([
-            'user_id' => Auth::user()->id,
-            'patient_name' => $request->patient_name,
-            'patient_phone' => $request->patient_phone,
-            'address' => $request->address,
-            'attachment' => $attachment,
-            'slug' => str::random(5) . time(),
-            'status' => 0,
-            'created_at' => Carbon::now()
-        ]);
-
-        $serialNo = $id.env("APP_NAME"). str_pad(DB::table('prescriptions')->count()+1, 5, "0", STR_PAD_LEFT);
-        DB::table('prescriptions')->where('id', $id)->update([
-            'serial_no' => $serialNo
-        ]);
-
-        Toastr::success('Prescription Uploaded Successfully', 'Success');
-        return back();
-    }
-
-    public function myPrescriptions(){
-        $data = DB::table('prescriptions')
-                ->where('user_id', Auth::user()->id)
-                ->orderBy('id', 'desc')
-                ->paginate(10);
-
-        return view('dashboard.my_prescriptions', compact('data'));
-    }
-
-    public function removePrescription($slug){
-        DB::table('prescriptions')->where('slug', $slug)->where('user_id', Auth::user()->id)->delete();
-        Toastr::error('Prescription Deleted Successfully', 'Removed');
-        return back();
-    }
-
-    public function editPrescription($slug){
-        $data = DB::table('prescriptions')->where('slug', $slug)->where('user_id', Auth::user()->id)->first();
-        return view('edit_prescription', compact('data'));
-    }
-
-    public function updatePrescription(Request $request){
-        ini_set('memory_limit', '2048M');
-        ini_set('max_execution_time', 600);
-
-        $prescriptionInfo = DB::table('prescriptions')->where('slug', $request->prescription_slug)->where('user_id', Auth::user()->id)->first();
-        $attachment = $prescriptionInfo->attachment;
-
-        if ($request->hasFile('attachment')){
-            $get_attachment = $request->file('attachment');
-            $attachment_name = str::random(5) . time() . '.' . $get_attachment->getClientOriginalExtension();
-            $location = public_path('prescriptions/');
-            $get_attachment->move($location, $attachment_name);
-            $attachment = "prescriptions/" . $attachment_name;
-
-            $curl = curl_init();
-            curl_setopt_array($curl, array(
-                CURLOPT_URL => env('ADMIN_URL').'/api/upload/prescription',
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => '',
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 0,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => 'POST',
-                CURLOPT_POSTFIELDS => array(
-                    'attachment'=> new CURLFile(public_path($attachment))
-                ),
-            ));
-            $response = curl_exec($curl);
-            curl_close($curl);
-        }
-
-        DB::table('prescriptions')->where('slug', $request->prescription_slug)->update([
-            'patient_name' => $request->patient_name,
-            'patient_phone' => $request->patient_phone,
-            'address' => $request->address,
-            'attachment' => $attachment,
-            'updated_at' => Carbon::now()
-        ]);
-
-        Toastr::success('Prescription Updated Successfully', 'Success');
-        return redirect('my/prescriptions');
-    }
-
-    public function requestMedicine(){
-        return view('request_medicine');
-    }
-
     public function subscribeForNewsletter(Request $request){
 
         $data = DB::table('subscribed_users')->where('email', trim($request->email))->first();
@@ -445,29 +317,25 @@ class FrontendController extends Controller
 
     }
 
-
-
+    // policy related functions
     public function privacyPolicy(){
         $pageTitle = "Privacy Policy";
         $pageUrl = url('/privacy/policy');
         $policy = DB::table('terms_and_policies')->select('privacy_policy as policy')->first();
         return view('policy', compact('pageTitle', 'pageUrl', 'policy'));
     }
-
     public function termsOfServices(){
         $pageTitle = "Terms of Services";
         $pageUrl = url('/terms/of/services');
         $policy = DB::table('terms_and_policies')->select('terms as policy')->first();
         return view('policy', compact('pageTitle', 'pageUrl', 'policy'));
     }
-
     public function refundPolicy(){
         $pageTitle = "Refund Policy";
         $pageUrl = url('/refund/policy');
         $policy = DB::table('terms_and_policies')->select('return_policy as policy')->first();
         return view('policy', compact('pageTitle', 'pageUrl', 'policy'));
     }
-
     public function shippingPolicy(){
         $pageTitle = "Shipping Policy";
         $pageUrl = url('/shipping/policy');

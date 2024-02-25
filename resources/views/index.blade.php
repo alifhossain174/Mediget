@@ -76,15 +76,16 @@
     @include('homepage_sections.featured_category')
 
     <!-- CTA section -->
+    @if($abroadMedicineService->status == 1)
     <section class="category-cta-section">
         <div class="container">
-            <div class="category-cta-inner" style="background-image: url('https://placehold.co/1320x360/EEE/31343C');">
+            <div class="category-cta-inner" style="background-image: url('{{env('ADMIN_URL').'/'.$abroadMedicineService->banner}}');">
                 <div class="row">
                     <div class="col-lg-6 col-md-6 col-12">
                         <div class="category-cta-content">
-                            <h3>Looking for medicine from abroad?</h3>
+                            <h3>{{$abroadMedicineService->title}}</h3>
                             <a href="{{url('request/medicine')}}" class="primary__btn request__medicine--btn"
-                                data-offcanvas="">Request for medicine<svg class="primary__btn--arrow__icon"
+                                data-offcanvas="">{{$abroadMedicineService->button_text}}<svg class="primary__btn--arrow__icon"
                                     xmlns="http://www.w3.org/2000/svg" width="20.2" height="12.2"
                                     viewBox="0 0 6.2 6.2">
                                     <path
@@ -98,6 +99,7 @@
             </div>
         </div>
     </section>
+    @endif
     <!-- CTA section -->
 
     @include('homepage_sections.featured_flag')

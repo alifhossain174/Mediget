@@ -39,6 +39,9 @@ aria-labelledby="offcanvasWithBothOptionsLabel" data-bs-scroll="false" style="z-
                         <a class="{{ (Request::path() == 'my/prescriptions') ? 'active' : ''}}" href="{{url('my/prescriptions')}}"><i class="fi-ss-file"></i>My Prescriptions</a>
                     </li>
                     <li>
+                        <a class="{{ (Request::path() == 'my/medicine/requests') ? 'active' : ''}}" href="{{url('my/medicine/requests')}}"><i class="fi-ss-medicine"></i>Medicine Request</a>
+                    </li>
+                    <li>
                         <a class="{{ (Request::path() == 'my/nursing/services') ? 'active' : ''}}" href="{{url('/my/nursing/services')}}"><i class="icofont-medical-sign" style="top: 0"></i>Nursing Services</a>
                     </li>
                     <li>

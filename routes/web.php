@@ -67,11 +67,9 @@ Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallba
 
 Route::group(['middleware' => ['auth']], function () {
 
-
     Route::get('/user/verification', [HomeController::class, 'userVerification'])->name('UserVerification');
     Route::post('/user/verify/check', [HomeController::class, 'userVerifyCheck'])->name('UserVerifyCheck');
     Route::get('/user/verification/resend', [HomeController::class, 'userVerificationResend'])->name('UserVerificationResend');
-
 
     Route::group(['middleware' => ['CheckUserVerification']], function () {
 
@@ -83,16 +81,21 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/edit/nursing/request/{slug}', [ServiceController::class, 'editNursingRequest'])->name('EditNursingRequest');
         Route::post('/update/nursing/request', [ServiceController::class, 'updateNursingRequest'])->name('UpdateNursingRequest');
 
+
         // prescription services
-        Route::get('/upload/prescription', [FrontendController::class, 'uploadPrescription'])->name('UploadPrescription');
-        Route::post('/submit/my/prescription', [FrontendController::class, 'submitMyPrescription'])->name('SubmitMyPrescription')->middleware(ProtectAgainstSpam::class)->middleware(['throttle:4,1']);
-        Route::get('/my/prescriptions', [FrontendController::class, 'myPrescriptions'])->name('MyPrescriptions');
-        Route::get('/remove/prescription/{slug}', [FrontendController::class, 'removePrescription'])->name('RemovePrescription');
-        Route::get('/edit/prescription/{slug}', [FrontendController::class, 'editPrescription'])->name('EditPrescription');
-        Route::post('/update/my/prescription', [FrontendController::class, 'updatePrescription'])->name('UpdatePrescription');
+        Route::get('/upload/prescription', [ServiceController::class, 'uploadPrescription'])->name('UploadPrescription');
+        Route::post('/submit/my/prescription', [ServiceController::class, 'submitMyPrescription'])->name('SubmitMyPrescription')->middleware(ProtectAgainstSpam::class)->middleware(['throttle:4,1']);
+        Route::get('/my/prescriptions', [ServiceController::class, 'myPrescriptions'])->name('MyPrescriptions');
+        Route::get('/remove/prescription/{slug}', [ServiceController::class, 'removePrescription'])->name('RemovePrescription');
+        Route::get('/edit/prescription/{slug}', [ServiceController::class, 'editPrescription'])->name('EditPrescription');
+        Route::post('/update/my/prescription', [ServiceController::class, 'updatePrescription'])->name('UpdatePrescription');
+
 
         // medicine from abroad service
-        Route::get('/request/medicine', [FrontendController::class, 'requestMedicine'])->name('RequestMedicine');
+        Route::get('/request/medicine', [ServiceController::class, 'requestMedicine'])->name('RequestMedicine');
+        Route::post('/submit/medicine/request', [ServiceController::class, 'submitMedicineRequest'])->name('SubmitMedicineRequest');
+        Route::get('/my/medicine/requests', [ServiceController::class, 'myMedicineRequests'])->name('MyMedicineRequests');
+
 
         Route::post('submit/product/review', [HomeController::class, 'submitProductReview'])->name('SubmitProductReview');
         Route::get('add/to/wishlist/{slug}', [HomeController::class, 'addToWishlist'])->name('AddToWishlist');
