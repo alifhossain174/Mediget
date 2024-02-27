@@ -14,7 +14,7 @@
                                 $url = url('nursing/service/request');
                             }
                             if($service->id == 2){
-                                $url = url('doctor/service/request');
+                                $url = url('doctors');
                             }
                         @endphp
 

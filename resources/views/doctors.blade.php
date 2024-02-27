@@ -51,135 +51,34 @@
     <section class="doctor-area section--padding">
         <div class="container">
             <div class="row">
+
                 <!-- Single Doctor Card -->
+                @foreach ($data as $item)
                 <div class="col-lg-3 col-md-4 col-12">
-                    <a href="{{url('doctor/details')}}/2354IYTUI" class="doctor-card">
+                    <a href="{{url('doctor/details')}}/{{$item->slug}}" class="doctor-card">
                         <div class="doctor-card-img">
-                            <img src="https://placehold.co/380x280/EEE/31343C" alt="#" />
+                            <img class="lazy" data-src="{{url(env('ADMIN_URL').'/'.$item->image)}}" src="{{url('assets')}}/img/product-load.gif" alt="" />
                             <div class="doctor-badge">
-                                <span><i class="fi fi-ss-video-camera"></i>৳500</span>
+                                <span><i class="fi fi-ss-video-camera"></i>৳{{$item->visiting_charge}}</span>
                             </div>
                         </div>
-                        <div class="doctor-card-info">
-                            <h4>Dr. Khalid Abbed</h4>
-                            <p>MBBS, BCS(Helth)</p>
-                            <span> Square Hospital (Professor Neuromedicine) </span>
+                        <div class="doctor-card-info" style="min-height: 140px;">
+                            <h4>{{$item->name}}</h4>
+                            <p>{{$item->degree}}</p>
+                            <span> {{$item->institution}} </span>
                         </div>
                     </a>
                 </div>
-                <!-- Single Doctor Card -->
-                <div class="col-lg-3 col-md-4 col-12">
-                    <a href="{{url('doctor/details')}}/2354IYTUI" class="doctor-card">
-                        <div class="doctor-card-img">
-                            <img src="https://placehold.co/380x280/EEE/31343C" alt="#" />
-                            <div class="doctor-badge">
-                                <span><i class="fi fi-ss-video-camera"></i>৳500</span>
-                            </div>
-                        </div>
-                        <div class="doctor-card-info">
-                            <h4>Dr. Khalid Abbed</h4>
-                            <p>MBBS, BCS(Helth)</p>
-                            <span> Square Hospital (Professor Neuromedicine) </span>
-                        </div>
-                    </a>
-                </div>
-                <!-- Single Doctor Card -->
-                <div class="col-lg-3 col-md-4 col-12">
-                    <a href="{{url('doctor/details')}}/2354IYTUI" class="doctor-card">
-                        <div class="doctor-card-img">
-                            <img src="https://placehold.co/380x280/EEE/31343C" alt="#" />
-                            <div class="doctor-badge">
-                                <span><i class="fi fi-ss-video-camera"></i>৳500</span>
-                            </div>
-                        </div>
-                        <div class="doctor-card-info">
-                            <h4>Dr. Khalid Abbed</h4>
-                            <p>MBBS, BCS(Helth)</p>
-                            <span> Square Hospital (Professor Neuromedicine) </span>
-                        </div>
-                    </a>
-                </div>
-                <!-- Single Doctor Card -->
-                <div class="col-lg-3 col-md-4 col-12">
-                    <a href="{{url('doctor/details')}}/2354IYTUI" class="doctor-card">
-                        <div class="doctor-card-img">
-                            <img src="https://placehold.co/380x280/EEE/31343C" alt="#" />
-                            <div class="doctor-badge">
-                                <span><i class="fi fi-ss-video-camera"></i>৳500</span>
-                            </div>
-                        </div>
-                        <div class="doctor-card-info">
-                            <h4>Dr. Khalid Abbed</h4>
-                            <p>MBBS, BCS(Helth)</p>
-                            <span> Square Hospital (Professor Neuromedicine) </span>
-                        </div>
-                    </a>
-                </div>
-                <!-- Single Doctor Card -->
-                <div class="col-lg-3 col-md-4 col-12">
-                    <a href="{{url('doctor/details')}}/2354IYTUI" class="doctor-card">
-                        <div class="doctor-card-img">
-                            <img src="https://placehold.co/380x280/EEE/31343C" alt="#" />
-                            <div class="doctor-badge">
-                                <span><i class="fi fi-ss-video-camera"></i>৳500</span>
-                            </div>
-                        </div>
-                        <div class="doctor-card-info">
-                            <h4>Dr. Khalid Abbed</h4>
-                            <p>MBBS, BCS(Helth)</p>
-                            <span> Square Hospital (Professor Neuromedicine) </span>
-                        </div>
-                    </a>
-                </div>
-                <!-- Single Doctor Card -->
-                <div class="col-lg-3 col-md-4 col-12">
-                    <a href="{{url('doctor/details')}}/2354IYTUI" class="doctor-card">
-                        <div class="doctor-card-img">
-                            <img src="https://placehold.co/380x280/EEE/31343C" alt="#" />
-                            <div class="doctor-badge">
-                                <span><i class="fi fi-ss-video-camera"></i>৳500</span>
-                            </div>
-                        </div>
-                        <div class="doctor-card-info">
-                            <h4>Dr. Khalid Abbed</h4>
-                            <p>MBBS, BCS(Helth)</p>
-                            <span> Square Hospital (Professor Neuromedicine) </span>
-                        </div>
-                    </a>
-                </div>
-                <!-- Single Doctor Card -->
-                <div class="col-lg-3 col-md-4 col-12">
-                    <a href="{{url('doctor/details')}}/2354IYTUI" class="doctor-card">
-                        <div class="doctor-card-img">
-                            <img src="https://placehold.co/380x280/EEE/31343C" alt="#" />
-                            <div class="doctor-badge">
-                                <span><i class="fi fi-ss-video-camera"></i>৳500</span>
-                            </div>
-                        </div>
-                        <div class="doctor-card-info">
-                            <h4>Dr. Khalid Abbed</h4>
-                            <p>MBBS, BCS(Helth)</p>
-                            <span> Square Hospital (Professor Neuromedicine) </span>
-                        </div>
-                    </a>
-                </div>
-                <!-- Single Doctor Card -->
-                <div class="col-lg-3 col-md-4 col-12">
-                    <a href="{{url('doctor/details')}}/2354IYTUI" class="doctor-card">
-                        <div class="doctor-card-img">
-                            <img src="https://placehold.co/380x280/EEE/31343C" alt="#" />
-                            <div class="doctor-badge">
-                                <span><i class="fi fi-ss-video-camera"></i>৳500</span>
-                            </div>
-                        </div>
-                        <div class="doctor-card-info">
-                            <h4>Dr. Khalid Abbed</h4>
-                            <p>MBBS, BCS(Helth)</p>
-                            <span> Square Hospital (Professor Neuromedicine) </span>
-                        </div>
-                    </a>
+                @endforeach
+
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12 pt-5">
+                    {{ $data->links() }}
                 </div>
             </div>
+
         </div>
     </section>
     <!-- End Doctor Area -->

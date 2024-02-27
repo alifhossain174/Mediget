@@ -55,69 +55,57 @@
                     <div class="doctor-details-widget">
                         <div class="doctor-details-card">
                             <div class="doctor-details-card-img">
-                                <img src="https://placehold.co/280x280/EEE/31343C" alt="" />
+                                <img class="lazy" data-src="{{url(env('ADMIN_URL').'/'.$data->image)}}" src="{{url('assets')}}/img/product-load.gif" alt="" />
                             </div>
                             <div class="doctor-details-card-info">
-                                <h4>Dr. Khalid Abbed</h4>
+                                <h4>{{$data->name}}</h4>
                                 <ul>
-                                    <li><i class="icofont-pencil"></i>MBBS, BCS(Helth)</li>
-                                    <li>
-                                        <i class="icofont-hospital"></i>Square Hospital
-                                        (Professor Neuromedicine)
-                                    </li>
-                                    <li>
-                                        <i class="icofont-clock-time"></i>Available:<span>03:03 PM - 04:04 PM</span>
-                                    </li>
-                                    <li>
-                                        <i class="icofont-phone"></i>Appoinment:
-                                        <span>15454454524</span>
-                                    </li>
-                                    <li>
-                                        <i class="icofont-location-pin"></i>Location:
-                                        <span>Los Angeles - New York</span>
-                                    </li>
+                                    @if($data->degree)
+                                    <li><i class="icofont-pencil"></i> {{$data->degree}}</li>
+                                    @endif
+
+                                    @if($data->institution)
+                                    <li><i class="icofont-hospital"></i> {{$data->institution}}</li>
+                                    @endif
+
+                                    @if($data->available_time)
+                                    <li><i class="icofont-clock-time"></i>Available:<span> {{$data->available_time}}</span></li>
+                                    @endif
+
+                                    @if($data->contact)
+                                    <li><i class="icofont-phone"></i>Appoinment:<span> {{$data->contact}}</span></li>
+                                    @endif
+
+                                    @if($data->location)
+                                    <li><i class="icofont-location-pin"></i>Location:<span> {{$data->location}}</span></li>
+                                    @endif
                                 </ul>
                             </div>
                         </div>
                         <div class="doctor-details-bottom">
+
+                            @if($data->biography)
                             <div class="doctor-d-content-widget">
                                 <h3>Biography</h3>
                                 <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                                    sed do eiusmod tempor incididunt ut labore et dolore magna
-                                    aliqua. Quis ipsum suspendisse ultrices gravida. Risus
-                                    commodo viverra maecenas accumsan lacus vel
-                                    facilisis.Lorem ipsum dolor sit amet, consectetur
-                                    adipiscing elit, sed do eiusmod tempor incididunt.
-                                </p>
-                                <p>
-                                    Risus commodo viverra maecenas accumsan lacus vel
-                                    facilisis.Lorem ipsum dolor sit amet, consectetur
-                                    adipiscing elit, sed do eiusmod tempor incididunt.
+                                    {{$data->biography}}
                                 </p>
                             </div>
+                            @endif
+
+                            @if($data->education)
                             <div class="doctor-d-content-widget">
                                 <h3>Education</h3>
                                 <ul>
+                                    @foreach (explode(",", $data->education) as $edu)
                                     <li>
-                                        <i class="icofont-graduate"></i>PHD degree in Neorology
-                                        at University of Mediserv <span>(2006)</span>
+                                        <i class="icofont-graduate"></i>{{$edu}}
                                     </li>
-                                    <li>
-                                        <i class="icofont-graduate"></i>Master of Neoro Surgery
-                                        at University of Mediserv <span>(2002)</span>
-                                    </li>
-                                    <li>
-                                        <i class="icofont-graduate"></i>MBBS degree in
-                                        Neurosciences at University of Mediserv
-                                        <span>(2002)</span>
-                                    </li>
-                                    <li>
-                                        <i class="icofont-graduate"></i>Higher Secondary
-                                        Certificate at Mediserv collage <span>(1991)</span>
-                                    </li>
+                                    @endforeach
                                 </ul>
                             </div>
+                            @endif
+
                         </div>
                     </div>
                 </div>
@@ -125,18 +113,23 @@
                     <div class="appoinment-widget">
                         <div class="appoinment-widget-head">
                             <h4>Book a Visit</h4>
-                            <p>Monday to Friday 09.00am-06.00pm</p>
+                            <p>{{$data->available_time}}</p>
                         </div>
-                        <!-- Firslty Show this widget -->
-                        <!-- <div class="appoinment-widget-image-wrapper">
-                      <div class="appoinment-widget-image">
-                        <img src="./assets/img/appointment.svg" alt="#" />
-                      </div>
-                      <div class="appoinment-widget-img-wrapper-btn">
-                        <a href="#" class="primary__btn">Please signin to Book</a>
-                      </div>
-                    </div> -->
+
+                        @guest
+                        <div class="appoinment-widget-image-wrapper">
+                            <div class="appoinment-widget-image">
+                                <img src="{{url('assets')}}/img/appointment.svg" alt="" />
+                            </div>
+                            <div class="appoinment-widget-img-wrapper-btn">
+                                <a href="{{url('login')}}" class="primary__btn">Please signing to Book</a>
+                            </div>
+                        </div>
+                        @endguest
+
+
                         <!-- When Click Top SignIn Button Then Go Signin Page. After Signin then redirect this page and show this widget -->
+                        @auth
                         <form action="#" method="post" class="appoinment-widget-inner">
                             <div class="form-group">
                                 <label>Patient name</label>
@@ -170,33 +163,17 @@
                             <div class="appoinment-widget-list">
                                 <label class="appoinment-medicine-item" for="flexCheckChecked1">
                                     <div class="appoinment-medicine-name">
-                                        <input class="form-check-input" type="checkbox" value=""
-                                            id="flexCheckChecked1" checked />
-                                        Back pain visit
+                                        Visiting Charge
                                     </div>
-                                    <span>200</span>
-                                </label>
-                                <label class="appoinment-medicine-item" for="flexCheckChecked2">
-                                    <div class="appoinment-medicine-name">
-                                        <input class="form-check-input" type="checkbox" value=""
-                                            id="flexCheckChecked2" />
-                                        Back pain visit
-                                    </div>
-                                    <span>400</span>
-                                </label>
-                                <label class="appoinment-medicine-item" for="flexCheckChecked3">
-                                    <div class="appoinment-medicine-name">
-                                        <input class="form-check-input" type="checkbox" value=""
-                                            id="flexCheckChecked3" />
-                                        Back pain visit
-                                    </div>
-                                    <span>500</span>
+                                    <span>৳ {{$data->visiting_charge}}</span>
                                 </label>
                             </div>
                             <div class="appoinment-widget-button">
                                 <button type="submit" class="primary__btn">Book Now</button>
                             </div>
                         </form>
+                        @endauth
+
                     </div>
                 </div>
             </div>

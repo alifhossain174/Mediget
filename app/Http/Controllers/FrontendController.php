@@ -234,11 +234,13 @@ class FrontendController extends Controller
     }
 
     public function doctors(){
-        return view('doctors');
+        $data = DB::table('doctors')->where('status', 1)->paginate(16);
+        return view('doctors', compact('data'));
     }
 
-    public function doctorDetails(){
-        return view('doctor_details');
+    public function doctorDetails($slug){
+        $data = DB::table('doctors')->where('slug', $slug)->first();
+        return view('doctor_details', compact('data'));
     }
 
     public function subscribeForNewsletter(Request $request){
