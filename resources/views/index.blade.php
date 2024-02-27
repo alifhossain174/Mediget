@@ -36,7 +36,7 @@
         <div class="container">
             <div class="row">
                 @if(isset($prescriptionService) && $prescriptionService->status == 1)
-                <div class="col">
+                <div class="col-lg-6 col-md-6 col-12">
                     <div class="single-banner" style="@if($prescriptionService->banner) background-image: url('{{env('Admin_URL').'/'.$prescriptionService->banner}}'); @else background-image: url('{{url('assets')}}/img/banner/banner-1.png'); @endif">
                         <div class="banner-content">
                             <h3>{{$prescriptionService->title}}</h3>
@@ -51,7 +51,7 @@
                 </div>
                 @endif
 
-                <div class="col">
+                <div class="col-lg-6 col-md-6 col-12">
                     <div class="single-banner" style="background-image: url('./assets/img/banner/banner-2.png');">
                         <div class="banner-content">
                             <h3>Get Doctor Appoinment</h3>

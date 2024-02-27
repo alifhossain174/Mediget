@@ -80,6 +80,20 @@
         .page-link {
             color: {{ $generalInfo->secondary_color }} !important;
         }
+
+        /* .product__items {
+            border: 1px solid var(--border-color) !important;
+            padding: 12px !important;
+            border-radius: 4px !important;
+        }
+
+        @media only screen and (max-width: 479px) {
+            .product__items {
+                border: 1px solid var(--border-color) !important;
+                padding: 6px !important;
+                border-radius: 4px !important;
+            }
+        } */
         /* default pagination end */
 
         {!! $generalInfo->custom_css !!}
@@ -214,7 +228,7 @@
 
     <!-- Start header area -->
     <header class="header__section">
-        <div class="main__header">
+        <div class="main__header header__sticky">
             <div class="container">
                 <div class="main__header--inner position__relative d-flex justify-content-between align-items-center">
                     <div class="main__logo">
@@ -252,7 +266,7 @@
                     <div class="header__account header__sticky--none">
                         <ul class="d-flex">
                             <li class="header__account--items">
-                                <a class="header__account--btn" href="#">
+                                <a class="header__account--btn" href="{{url('track/order')}}">
                                     <i class="fi fi-rs-truck-side"></i>
                                     <span class="header__account--btn__text">Track your order</span>
                                 </a>
@@ -348,7 +362,7 @@
                     </ul>
                     <div class="offcanvas__account--items">
                         <!-- Single Mobile Sidebar Item -->
-                        <a class="offcanvas__account--items__btn d-flex align-items-center" href="#">
+                        <a class="offcanvas__account--items__btn d-flex align-items-center" href="{{url('track/order')}}">
                             <span class="offcanvas__account--items__icon">
                                 <i class="fi fi-rs-truck-side"></i>
                             </span>
@@ -527,6 +541,7 @@
 
                     </div>
                 </div>
+
                 <div class="footer__widget--menu__wrapper d-flex footer__widget--width">
                     <div class="footer__widget">
                         <h2 class="footer__widget--title text-ofwhite h3">
@@ -652,7 +667,6 @@
                             </ul>
                         </div>
                         @endif
-
                     </div>
                 </div>
                 <div class="footer__widget footer__widget--width">
@@ -685,20 +699,27 @@
                     </div>
                 </div>
             </div>
+
+            <div class="footer__payment text-right">
+                @if ($generalInfo && $generalInfo->payment_banner)
+                <img class="display-block lazy" src="" data-src="{{ url(env('ADMIN_URL') . '/' . $generalInfo->payment_banner) }}" alt="payment-banner" />
+                @endif
+            </div>
+
             <div class="footer__bottom">
                 <div class="row align-items-center">
-                    <div class="col-lg-6 col-12">
+                    <div class="col-lg-12 col-12 text-center">
                         <p class="copyright__content text-ofwhite m-0">
-                            {{ $generalInfo->footer_copyright_text }}
+                            {{ $generalInfo->footer_copyright_text }} Design & Developed by <a href="https://getup.com.bd" target="_blank" style="color: var(--secondary-color);">Getup Ltd</a>.
                         </p>
                     </div>
-                    <div class="col-lg-6 col-12">
+                    {{-- <div class="col-lg-6 col-12">
                         <div class="footer__payment text-right">
                             @if ($generalInfo && $generalInfo->payment_banner)
                             <img class="display-block lazy" src="" data-src="{{ url(env('ADMIN_URL') . '/' . $generalInfo->payment_banner) }}" alt="payment-banner" />
                             @endif
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>

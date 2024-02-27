@@ -92,7 +92,7 @@
                                                 @elseif($item->status == 2)
                                                     <td class="pending-status" style="color: var(--bs-blue)">In Transit</td>
                                                 @elseif($item->status == 3)
-                                                    <td class="pending-status">Delivered</td>
+                                                    <td class="pending-status" style="color: var(--success-color);">Delivered</td>
                                                 @else
                                                     <td class="pending-status" style="color: var(--alert-color)">Cancel</td>
                                                 @endif

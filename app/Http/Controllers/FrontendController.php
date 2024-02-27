@@ -20,6 +20,15 @@ class FrontendController extends Controller
         return view('index', compact('featuedCategories', 'flags', 'diseases', 'sliders', 'services', 'prescriptionService', 'abroadMedicineService'));
     }
 
+    public function trackOrder(){
+        return view('track_order');
+    }
+
+    public function redirectForTracking(Request $request){
+        $order_no = $request->order_no;
+        return redirect('track/my/order/' . $order_no);
+    }
+
     public function otc(){
 
         $data = DB::table('products')

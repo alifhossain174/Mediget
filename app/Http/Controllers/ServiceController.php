@@ -39,7 +39,7 @@ class ServiceController extends Controller
         ]);
 
         Toastr::success('Request Submitted Successfully', 'Success');
-        return back();
+        return redirect('my/nursing/services');
     }
     public function myNursingServices(){
 
@@ -129,7 +129,7 @@ class ServiceController extends Controller
         ]);
 
         Toastr::success('Prescription Uploaded Successfully', 'Success');
-        return back();
+        return redirect('my/prescriptions');
     }
     public function myPrescriptions(){
         $data = DB::table('prescriptions')
@@ -227,7 +227,7 @@ class ServiceController extends Controller
         ]);
 
         Toastr::success('Medicine Request Sent Successfully', 'Success');
-        return back();
+        return redirect('my/medicine/requests');
     }
     public function myMedicineRequests(){
         $data = DB::table('medicine_requests')
@@ -236,5 +236,12 @@ class ServiceController extends Controller
                 ->paginate(10);
 
         return view('dashboard.my_medicine_requsts', compact('data'));
+    }
+    public function removeMedicineRequest($slug){
+        $data = DB::table('medicine_requests')->where('slug', $slug)->first();
+        DB::table('medicine_request_items')->where('medicine_request_id', $data->id)->delete();
+        DB::table('medicine_requests')->where('slug', $slug)->delete();
+        Toastr::error('Medicine Request Deleted Successfully', 'Removed');
+        return back();
     }
 }

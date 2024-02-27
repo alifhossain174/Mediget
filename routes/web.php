@@ -17,6 +17,8 @@ use Spatie\Honeypot\ProtectAgainstSpam;
 Auth::routes();
 
 Route::get('/', [FrontendController::class, 'index'])->name('Index');
+Route::get('/track/order', [FrontendController::class, 'trackOrder'])->name('trackOrder');
+Route::post('/redirect/for/tracking', [FrontendController::class, 'redirectForTracking'])->name('RedirectForTracking');
 Route::get('/otc', [FrontendController::class, 'otc'])->name('Otc');
 Route::get('/shop', [FrontendController::class, 'shop'])->name('Shop');
 Route::post('filter/products', [FilterController::class, 'filterProducts'])->name('FilterProducts');
@@ -95,6 +97,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/request/medicine', [ServiceController::class, 'requestMedicine'])->name('RequestMedicine');
         Route::post('/submit/medicine/request', [ServiceController::class, 'submitMedicineRequest'])->name('SubmitMedicineRequest');
         Route::get('/my/medicine/requests', [ServiceController::class, 'myMedicineRequests'])->name('MyMedicineRequests');
+        Route::get('/remove/medicine/requests/{slug}', [ServiceController::class, 'removeMedicineRequest'])->name('RemoveMedicineRequest');
 
 
         Route::post('submit/product/review', [HomeController::class, 'submitProductReview'])->name('SubmitProductReview');

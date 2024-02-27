@@ -152,13 +152,13 @@
   z-index: -1;
 }
 .single-data-card.card-1::before {
-  background-image: url("../img/dashboard-data-card-images/card-bg-1.svg");
+  background-image: url("../img/dashboard-data-card-images/card-bg-1.jpg");
 }
 .single-data-card.card-2::before {
-  background-image: url("../img/dashboard-data-card-images/card-bg-2.svg");
+  background-image: url("../img/dashboard-data-card-images/card-bg-2.jpg");
 }
 .single-data-card.card-3::before {
-  background-image: url("../img/dashboard-data-card-images/card-bg-3.svg");
+  background-image: url("../img/dashboard-data-card-images/card-bg-3.jpg");
 }
 .single-data-card.card-4::before {
   background-image: url("../img/dashboard-data-card-images/card-bg-4.svg");
@@ -704,13 +704,13 @@
   border-radius: 16px;
 }
 .single-order-tracking-card.card-1::before {
-  background-image: url("../img/order-tracking/card-bg-1.svg");
+  background-image: url("../img/order-tracking/card-bg-1.jpg");
 }
 .single-order-tracking-card.card-2::before {
-  background-image: url("../img/order-tracking/card-bg-2.svg");
+  background-image: url("../img/order-tracking/card-bg-2.jpg");
 }
 .single-order-tracking-card.card-3::before {
-  background-image: url("../img/order-tracking/card-bg-3.svg");
+  background-image: url("../img/order-tracking/card-bg-3.jpg");
 }
 .order-tracking-card-icon img {
   width: 72px;
@@ -1278,13 +1278,13 @@
   z-index: -1;
 }
 .payment-single-card.card-1::before {
-  background-image: url("../img/payment/card-bg-1.svg");
+  background-image: url("../img/payment/card-bg-1.jpg");
 }
 .payment-single-card.card-2::before {
-  background-image: url("../img/payment/card-bg-2.svg");
+  background-image: url("../img/payment/card-bg-2.jpg");
 }
 .payment-single-card.card-3::before {
-  background-image: url("../img/payment/card-bg-3.svg");
+  background-image: url("../img/payment/card-bg-3.jpg");
 }
 .payment-card-icon {
   margin-bottom: 16px;
