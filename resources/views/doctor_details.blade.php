@@ -130,7 +130,9 @@
 
                         <!-- When Click Top SignIn Button Then Go Signin Page. After Signin then redirect this page and show this widget -->
                         @auth
-                        <form action="#" method="post" class="appoinment-widget-inner">
+                        <form action="{{url('submit/doctor/visit/request')}}" method="post" class="appoinment-widget-inner">
+                            @csrf
+                            <input type="hidden" name="doctor_id" value="{{$data->id}}">
                             <div class="form-group">
                                 <label>Patient name</label>
                                 <input type="text" name="name" required />
@@ -155,7 +157,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Visit date & time</label>
-                                <input name="date" type="text" placeholder="Date &amp; Time" required="required"
+                                <input name="date" name="visit_date_time" type="text" placeholder="Date &amp; Time" required="required"
                                     class="datetimepicker" autocomplete="off" />
                                 <i class="icofont-calendar"></i>
                             </div>

@@ -83,7 +83,6 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/edit/nursing/request/{slug}', [ServiceController::class, 'editNursingRequest'])->name('EditNursingRequest');
         Route::post('/update/nursing/request', [ServiceController::class, 'updateNursingRequest'])->name('UpdateNursingRequest');
 
-
         // prescription services
         Route::get('/upload/prescription', [ServiceController::class, 'uploadPrescription'])->name('UploadPrescription');
         Route::post('/submit/my/prescription', [ServiceController::class, 'submitMyPrescription'])->name('SubmitMyPrescription')->middleware(ProtectAgainstSpam::class)->middleware(['throttle:4,1']);
@@ -92,12 +91,14 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/edit/prescription/{slug}', [ServiceController::class, 'editPrescription'])->name('EditPrescription');
         Route::post('/update/my/prescription', [ServiceController::class, 'updatePrescription'])->name('UpdatePrescription');
 
-
         // medicine from abroad service
         Route::get('/request/medicine', [ServiceController::class, 'requestMedicine'])->name('RequestMedicine');
         Route::post('/submit/medicine/request', [ServiceController::class, 'submitMedicineRequest'])->name('SubmitMedicineRequest');
         Route::get('/my/medicine/requests', [ServiceController::class, 'myMedicineRequests'])->name('MyMedicineRequests');
         Route::get('/remove/medicine/requests/{slug}', [ServiceController::class, 'removeMedicineRequest'])->name('RemoveMedicineRequest');
+
+        // Doctor Visit Request
+        Route::post('/submit/doctor/visit/request', [FrontendController::class, 'submitDoctorVisitRequest'])->name('SubmitDoctorVisitRequest');
 
 
         Route::post('submit/product/review', [HomeController::class, 'submitProductReview'])->name('SubmitProductReview');

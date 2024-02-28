@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Brian2694\Toastr\Facades\Toastr;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class FrontendController extends Controller
@@ -241,6 +243,24 @@ class FrontendController extends Controller
     public function doctorDetails($slug){
         $data = DB::table('doctors')->where('slug', $slug)->first();
         return view('doctor_details', compact('data'));
+    }
+
+    public function submitDoctorVisitRequest(Request $request){
+        DB::table('doctor_visit_requests')->insert([
+            'user_id' => Auth::user()->id,
+            'doctor_id' => $request->doctor_id,
+            'name' => $request->name,
+            'phone' => $request->phone,
+            'age' => $request->age,
+            'weight' => $request->weight,
+            'visit_date_time' => $request->visit_date_time,
+            'slug' => str::random(5) . time(),
+            'status' => 0,
+            'created_at' => Carbon::now()
+        ]);
+
+        Toastr::success('Request is Submitted', 'Success');
+        return back();
     }
 
     public function subscribeForNewsletter(Request $request){
