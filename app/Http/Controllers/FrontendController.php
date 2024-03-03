@@ -245,6 +245,11 @@ class FrontendController extends Controller
         return view('doctor_details', compact('data'));
     }
 
+    public function doctorVisitRequest($slug){
+        $data = DB::table('doctors')->where('slug', $slug)->first();
+        return redirect('doctor/details/'.$slug);
+    }
+
     public function submitDoctorVisitRequest(Request $request){
         DB::table('doctor_visit_requests')->insert([
             'user_id' => Auth::user()->id,

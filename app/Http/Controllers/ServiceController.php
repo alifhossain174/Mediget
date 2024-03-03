@@ -244,4 +244,17 @@ class ServiceController extends Controller
         Toastr::error('Medicine Request Deleted Successfully', 'Removed');
         return back();
     }
+
+
+    // doctor appointments related functions here
+    public function doctorAppoinments(){
+        $data = DB::table('doctor_visit_requests')
+                ->where('user_id', Auth::user()->id)
+                ->orderBy('id', 'desc')
+                ->paginate(10);
+
+        return view('dashboard.doctor_appointments', compact('data'));
+    }
+
+
 }

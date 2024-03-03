@@ -122,7 +122,7 @@
                                 <img src="{{url('assets')}}/img/appointment.svg" alt="" />
                             </div>
                             <div class="appoinment-widget-img-wrapper-btn">
-                                <a href="{{url('login')}}" class="primary__btn">Please signing to Book</a>
+                                <a href="{{url('doctor/visit/request')}}/{{$data->slug}}" class="primary__btn">Please signing to Book</a>
                             </div>
                         </div>
                         @endguest

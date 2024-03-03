@@ -98,7 +98,10 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/remove/medicine/requests/{slug}', [ServiceController::class, 'removeMedicineRequest'])->name('RemoveMedicineRequest');
 
         // Doctor Visit Request
+        Route::get('/doctor/visit/request/{slug}', [FrontendController::class, 'doctorVisitRequest'])->name('DoctorVisitRequest');
         Route::post('/submit/doctor/visit/request', [FrontendController::class, 'submitDoctorVisitRequest'])->name('SubmitDoctorVisitRequest');
+        Route::get('/doctor/appoinments', [ServiceController::class, 'doctorAppoinments'])->name('DoctorAppoinments');
+
 
 
         Route::post('submit/product/review', [HomeController::class, 'submitProductReview'])->name('SubmitProductReview');

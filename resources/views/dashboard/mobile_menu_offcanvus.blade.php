@@ -35,6 +35,11 @@ aria-labelledby="offcanvasWithBothOptionsLabel" data-bs-scroll="false" style="z-
                     <li>
                         <a class="{{ (Request::path() == 'home') ? 'active' : ''}}" href="{{url('/home')}}"><i class="fi-ss-apps"></i>Dashboard</a>
                     </li>
+
+                    <li>
+                        <a class="{{ (Request::path() == 'doctor/appoinments') ? 'active' : ''}}" href="{{url('doctor/appoinments')}}"><i class="fi fi-ss-calendar"></i>Doctor Appointment’s</a>
+                    </li>
+
                     <li>
                         <a class="{{ (Request::path() == 'my/prescriptions') ? 'active' : ''}}" href="{{url('my/prescriptions')}}"><i class="fi-ss-file"></i>My Prescriptions</a>
                     </li>
