@@ -108,6 +108,11 @@
                                                             data-bs-toggle="dropdown" aria-expanded="false">
                                                             <i class="fi-rs-menu-dots-vertical"></i>
                                                         </button>
+                                                        <style>
+                                                            .dropdown-menu {
+                                                                inset: -5px -30px auto auto !important;
+                                                            }
+                                                        </style>
                                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                                             <a class="dropdown-item" href="{{url('edit/prescription')}}/{{$item->slug}}">Edit</a>
                                                             <a class="dropdown-item" href="{{url('remove/prescription')}}/{{$item->slug}}">Remove</a>

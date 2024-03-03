@@ -130,34 +130,34 @@
 
                         <!-- When Click Top SignIn Button Then Go Signin Page. After Signin then redirect this page and show this widget -->
                         @auth
-                        <form action="{{url('submit/doctor/visit/request')}}" method="post" class="appoinment-widget-inner">
+                        <form action="{{url('update/doctor/appointment')}}" method="post" class="appoinment-widget-inner">
                             @csrf
-                            <input type="hidden" name="doctor_id" value="{{$data->id}}">
+                            <input type="hidden" name="appointment_id" value="{{$appointmentInfo->id}}">
                             <div class="form-group">
                                 <label>Patient name</label>
-                                <input type="text" name="name" value="{{Auth::user()->name}}" required />
+                                <input type="text" name="name" value="{{$appointmentInfo->name}}" required />
                             </div>
                             <div class="form-group">
                                 <label>Phone number</label>
-                                <input type="tel" name="phone" value="{{Auth::user()->phone}}" required />
+                                <input type="tel" name="phone" value="{{$appointmentInfo->phone}}" required />
                             </div>
                             <div class="row">
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label>Age</label>
-                                        <input type="text" name="age" required />
+                                        <input type="text" name="age" value="{{$appointmentInfo->age}}" required />
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label>Weight</label>
-                                        <input type="text" name="weight" required />
+                                        <input type="text" name="weight" value="{{$appointmentInfo->weight}}" required />
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label>Visit date & time</label>
-                                <input name="visit_date_time" type="text" placeholder="Date &amp; Time" required="required" class="datetimepicker" autocomplete="off" />
+                                <input name="visit_date_time" type="text" value="{{$appointmentInfo->visit_date_time}}" placeholder="Date &amp; Time" required="required" class="datetimepicker" autocomplete="off" />
                                 <i class="icofont-calendar"></i>
                             </div>
                             <!-- Appoinment Medicine List -->
@@ -170,7 +170,7 @@
                                 </label>
                             </div>
                             <div class="appoinment-widget-button">
-                                <button type="submit" class="primary__btn">Book Now</button>
+                                <button type="submit" class="primary__btn">Update Now</button>
                             </div>
                         </form>
                         @endauth

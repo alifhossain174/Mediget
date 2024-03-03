@@ -101,6 +101,9 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/doctor/visit/request/{slug}', [FrontendController::class, 'doctorVisitRequest'])->name('DoctorVisitRequest');
         Route::post('/submit/doctor/visit/request', [FrontendController::class, 'submitDoctorVisitRequest'])->name('SubmitDoctorVisitRequest');
         Route::get('/doctor/appoinments', [ServiceController::class, 'doctorAppoinments'])->name('DoctorAppoinments');
+        Route::get('/remove/doctor/appointment/{slug}', [ServiceController::class, 'removeDoctorAppoinment'])->name('RemoveDoctorAppoinment');
+        Route::get('/edit/doctor/appointment/{slug}', [ServiceController::class, 'editDoctorAppoinment'])->name('EditDoctorAppoinment');
+        Route::post('/update/doctor/appointment', [ServiceController::class, 'updateDoctorAppoinment'])->name('UpdateDoctorAppoinment');
 
 
 

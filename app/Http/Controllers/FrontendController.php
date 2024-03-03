@@ -251,7 +251,8 @@ class FrontendController extends Controller
     }
 
     public function submitDoctorVisitRequest(Request $request){
-        DB::table('doctor_visit_requests')->insert([
+
+        $id = DB::table('doctor_visit_requests')->insertGetId([
             'user_id' => Auth::user()->id,
             'doctor_id' => $request->doctor_id,
             'name' => $request->name,
@@ -262,6 +263,11 @@ class FrontendController extends Controller
             'slug' => str::random(5) . time(),
             'status' => 0,
             'created_at' => Carbon::now()
+        ]);
+
+        $serialNo = $id.env("APP_NAME"). str_pad(DB::table('doctor_visit_requests')->count()+1, 5, "0", STR_PAD_LEFT);
+        DB::table('doctor_visit_requests')->where('id', $id)->update([
+            'serial_no' => $serialNo
         ]);
 
         Toastr::success('Request is Submitted', 'Success');

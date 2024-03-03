@@ -248,12 +248,41 @@ class ServiceController extends Controller
 
     // doctor appointments related functions here
     public function doctorAppoinments(){
+
         $data = DB::table('doctor_visit_requests')
+                ->leftJoin('doctors', 'doctor_visit_requests.doctor_id', 'doctors.id')
+                ->select('doctor_visit_requests.*', 'doctors.name as doctor_name', 'doctors.degree', 'doctors.institution', 'doctors.visiting_charge')
                 ->where('user_id', Auth::user()->id)
                 ->orderBy('id', 'desc')
                 ->paginate(10);
 
         return view('dashboard.doctor_appointments', compact('data'));
+    }
+
+    public function removeDoctorAppoinment($slug){
+        DB::table('doctor_visit_requests')->where('slug', $slug)->delete();
+        Toastr::error('Doctor Appointment had been Deleted', 'Removed');
+        return back();
+    }
+
+    public function editDoctorAppoinment($slug){
+        $appointmentInfo = DB::table('doctor_visit_requests')->where('slug', $slug)->first();
+        $data = DB::table('doctors')->where('id', $appointmentInfo->doctor_id)->first();
+        return view('edit_doctor_appointment', compact('data', 'appointmentInfo'));
+    }
+
+    public function updateDoctorAppoinment(Request $request){
+        DB::table('doctor_visit_requests')->where('id', $request->appointment_id)->where('user_id', Auth::user()->id)->update([
+            'name' => $request->name,
+            'phone' => $request->phone,
+            'age' => $request->age,
+            'weight' => $request->weight,
+            'visit_date_time' => $request->visit_date_time,
+            'updated_at' => Carbon::now()
+        ]);
+
+        Toastr::success('Appointment is Updated Successfully', 'Success');
+        return redirect('doctor/appoinments');
     }
 
 
