@@ -82,7 +82,7 @@
 
 @section('content')
     <!-- Start breadcrumb section -->
-    <section class="breadcrumb__section breadcrumb__bg">
+    <section class="breadcrumb__section breadcrumb__bg" @if($nursingService->banner) style="background-image: url('{{url(env('ADMIN_URL').'/'.$nursingService->banner)}}'); background-repeat: no-repeat; background-size: cover;" @endif>
         <div class="container">
             <div class="row row-cols-1">
                 <div class="col">
@@ -106,7 +106,7 @@
     <!-- End breadcrumb section -->
 
     <!-- Medicine Request Area -->
-    <section class="medicine-request-area">
+    <section class="medicine-request-area mb-5 pb-4">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-8 col-xl-5 col-md-8 col-12">
@@ -149,8 +149,6 @@
         </div>
     </section>
     <!-- End Medicine Request Area -->
-
-    @include('mobile_app')
 @endsection
 
 

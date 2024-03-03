@@ -234,7 +234,7 @@
                     <div class="main__logo">
                         <h1 class="main__logo--title">
                             <a class="main__logo--link" href="{{url('/')}}">
-                                <img class="main__logo--img" src="{{url('assets')}}/img/logo/logo-black.svg" alt="logo-img" />
+                                <img class="main__logo--img" src="{{url(env('ADMIN_URL').'/'.$generalInfo->logo_dark)}}" alt="" />
                             </a>
                         </h1>
                     </div>
@@ -252,7 +252,7 @@
                         <form class="d-flex header__search--form" action="{{url('search/for/products')}}" method="GET">
                             <div class="header__search--box">
                                 <label>
-                                    <input class="header__search--input" id="search_keyword" @if(isset($keyword) && $keyword != '') value="{{$keyword}}" @endif name="search_keyword" placeholder="Search Meidcine..." type="text" />
+                                    <input class="header__search--input" id="search_keyword" @if(isset($keyword) && $keyword != '') value="{{$keyword}}" @endif name="search_keyword" placeholder="Search Medicine, Generic, Brand" type="text" />
                                 </label>
                                 <button class="header__search--button bg__secondary text-white" type="submit" aria-label="search button">
                                     <svg class="header__search--button__svg" xmlns="http://www.w3.org/2000/svg" width="27.51" height="26.443" viewBox="0 0 512 512">
@@ -340,7 +340,7 @@
             <div class="offcanvas__inner">
                 <div class="offcanvas__logo">
                     <a class="offcanvas__logo_link" href="{{url('/')}}">
-                        <img src="{{url('assets')}}/img/logo/logo-black.svg" alt="Grocee Logo" width="158" height="36" />
+                        <img class="lazy" src="" data-src="{{url(env('ADMIN_URL').'/'.$generalInfo->logo_dark)}}" alt="" width="158" height="36" />
                     </a>
                     <button class="offcanvas__close--btn" data-offcanvas>close</button>
                 </div>

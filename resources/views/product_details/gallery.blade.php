@@ -7,7 +7,7 @@
                     @foreach ($variants as $variant)
                         @if($variant->image)
                             <div class="swiper-slide">
-                                <div class="product__media--preview__items">
+                                <div class="product__media--preview__items zoom zoomSingleImage">
                                     <img class="product__media--preview__items--img lazy" src="{{url('assets')}}/img/product-load.gif" data-src="{{env('ADMIN_URL')."/productImages/".$variant->image}}" alt="" />
                                 </div>
                             </div>
@@ -16,14 +16,14 @@
                 @elseif ($productMultipleImages && count($productMultipleImages) > 0)
                     @foreach ($productMultipleImages as $image)
                         <div class="swiper-slide">
-                            <div class="product__media--preview__items">
+                            <div class="product__media--preview__items zoom zoomSingleImage">
                                 <img class="product__media--preview__items--img lazy" src="{{url('assets')}}/img/product-load.gif" data-src="{{env('ADMIN_URL')."/productImages/".$image->image}}" alt="" />
                             </div>
                         </div>
                     @endforeach
                 @else
                 <div class="swiper-slide">
-                    <div class="product__media--preview__items">
+                    <div class="product__media--preview__items zoom zoomSingleImage">
                         <img class="product__media--preview__items--img lazy" src="{{url('assets')}}/img/product-load.gif" data-src="{{env('ADMIN_URL')."/".$product->image}}" alt="" />
                     </div>
                 </div>

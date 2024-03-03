@@ -16,7 +16,8 @@ class ServiceController extends Controller
     // nursing service related functions starts from here
     public function nursingService(){
         $services = DB::table('nursing_services')->orderBy('name', 'asc')->get();
-        return view('nursing_service', compact('services'));
+        $nursingService = DB::table('services')->where('id', 1)->first();
+        return view('nursing_service', compact('services', 'nursingService'));
     }
     public function submitNursingRequest(Request $request){
 
@@ -60,7 +61,8 @@ class ServiceController extends Controller
     public function editNursingRequest($slug){
         $services = DB::table('nursing_services')->orderBy('name', 'asc')->get();
         $data = DB::table('nursing_service_requests')->where('slug', $slug)->where('user_id', Auth::user()->id)->first();
-        return view('edit_nursing_service', compact('data', 'services'));
+        $nursingService = DB::table('services')->where('id', 1)->first();
+        return view('edit_nursing_service', compact('data', 'services', 'nursingService'));
     }
     public function updateNursingRequest(Request $request){
         DB::table('nursing_service_requests')->where('slug', $request->request_slug)->update([

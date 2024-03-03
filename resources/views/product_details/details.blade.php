@@ -154,7 +154,11 @@
 @endsection
 
 @section('footer_js')
+    <script src="{{ url('assets') }}/js/jquery.zoom.js"></script>
     <script>
+        $(document).ready(function(){
+        	$('.zoomSingleImage').zoom();
+        });
 
         // get the already clicked variant after page load
         $( document ).ready(function() {

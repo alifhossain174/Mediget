@@ -13,7 +13,7 @@
                     </li>
                     @endif
                     <li class="product__details--tab__list" data-toggle="tab" data-target="#information">
-                        Product review
+                        Customer review
                     </li>
                     @if($product->warrenty_policy)
                     <li class="product__details--tab__list" data-toggle="tab" data-target="#custom">

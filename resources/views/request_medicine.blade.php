@@ -33,6 +33,15 @@
     <!-- End Open Graph general (Facebook, Pinterest)-->
 @endpush
 
+@section('header_css')
+    <style>
+        .removeBtn::before{
+            top: 35px;
+            right: 10px;
+        }
+    </style>
+@endsection
+
 @section('content')
 
     <!-- Start breadcrumb section -->
@@ -61,7 +70,7 @@
 
 
     <!-- Medicine Request Area -->
-    <section class="medicine-request-area">
+    <section class="medicine-request-area mb-5 pb-4">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-8 col-xl-5 col-md-8 col-12">
@@ -114,8 +123,6 @@
         </div>
     </section>
     <!-- End Medicine Request Area -->
-
-    @include('mobile_app')
 @endsection
 
 @section('footer_js')
@@ -162,6 +169,18 @@
                 // Append the cloned widget to the container
                 document.getElementById("medicineContainer").appendChild(clone);
             });
+
+
+        document.addEventListener("click", function() {
+            // Attach event listeners for increment and decrement buttons in the cloned widget
+            var quantityBox = document.querySelector(".quantity__box2");
+            quantityBox
+                .querySelector(".decrease2")
+                .addEventListener("click", decreaseQuantity);
+            quantityBox
+                .querySelector(".increase2")
+                .addEventListener("click", increaseQuantity);
+        });
 
         // Event listener functions for increment and decrement buttons
         function decreaseQuantity() {

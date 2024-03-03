@@ -70,6 +70,4 @@
         </div>
     </section>
     <!-- Disease Wise Medicine Area -->
-
-    @include('mobile_app')
 @endsection

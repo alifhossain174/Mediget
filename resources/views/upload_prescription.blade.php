@@ -107,8 +107,6 @@
         </div>
     </section>
     <!-- End Upload Prescription section -->
-
-    @include('mobile_app')
 @endsection
 
 @section('footer_js')

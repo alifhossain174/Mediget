@@ -2,7 +2,7 @@
 <section class="product__section product__section--style3 section--padding">
     <div class="container product3__section--container">
         <div class="section__heading text-center mb-50">
-            <h2 class="section__heading--maintitle">You may also like</h2>
+            <h2 class="section__heading--maintitle">Alternative Brands</h2>
         </div>
         <div class="product__section--inner product__swiper--column4__activation swiper">
             <div class="swiper-wrapper">
