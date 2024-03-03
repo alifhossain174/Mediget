@@ -111,7 +111,7 @@ var swiper = new Swiper(".hero__slider--activation", {
     clickable: !0,
     speed: 800,
     spaceBetween: 30,
-    autoplay: false,
+    autoplay: true,
     pagination: {
       el: ".swiper-pagination",
       clickable: true,
